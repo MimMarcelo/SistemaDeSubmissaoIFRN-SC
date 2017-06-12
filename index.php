@@ -12,7 +12,7 @@ and open the template in the editor.
     <body>
         <?php
             echo "<h1>Hello World!</h1>";
-            echo "<h3>Demoradooo!</h3>";
+            echo "<h3>Teste!</h3>";
         ?>
     </body>
 </html>
