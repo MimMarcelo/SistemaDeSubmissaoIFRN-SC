@@ -6,11 +6,11 @@ class StatusInscricao{
     private $id;
     private $statusInscricao;
     
-	function __construct($id, $descricao){
-		$this->id = $id;
-		$this->descricao = $descricao;
+    function __construct($id, $descricao){
+            $this->id = $id;
+            $this->descricao = $descricao;
 
-	}
+    }
 
     public function getId(){
         return $this->id;
