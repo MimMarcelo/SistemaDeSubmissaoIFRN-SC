@@ -10,7 +10,7 @@
         <meta name="keywords" content="Evento, IFRN-SC, IFRN, Santa Cruz, sistema">
         <meta name="description" content="Página inicial do sistema de submissão de trabalhos do IFRN campus Santa Cruz">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SS IFRN-SC - Início</title>
+        <title>SS IFRN-SC - CRUD Status Inscrição</title>
         <?php include './includes/css.php'; ?>
         <?php include './includes/javascript.php'; ?>
     </head>
@@ -64,7 +64,7 @@
                 </select>
                 <input type="submit" value="Excluir">
             </form>
-        </sectio>
+        </section>
         <?php include './includes/rodape.php'; ?>
     </body>
 </html>
