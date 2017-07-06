@@ -13,7 +13,14 @@
     <body>
         <?php include './includes/cabecalho.php'; ?>
         <?php include './includes/menu.php'; ?>
+        
         <section id="conteudo">
+            <?php include './includes/popup.php'; 
+                /*
+                 * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
+                 */
+            ?>
+                
             <?php
                 //SESSAO PARA IMPORTS
                 require dirname(__FILE__).'/phpClasses/StatusInscricao.php';

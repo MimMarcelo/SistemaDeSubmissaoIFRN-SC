@@ -13,8 +13,9 @@
     <body>
         <?php include './includes/cabecalho.php'; ?>
         <?php include './includes/menu.php'; ?>
+        
         <section id="conteudo">
-            <div id="mensagem"></div>
+            <?php include './includes/popup.php'; ?>
             <h2>Consultar Avaliações</h2>
             <form action="phpFuncoes/consultarAvaliacoes.php" method="post">
                 <label for="sltEvento">Evento:</label>
