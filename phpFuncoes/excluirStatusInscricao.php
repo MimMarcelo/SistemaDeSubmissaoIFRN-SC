@@ -1,20 +1,24 @@
 <?php
 
-require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
+    require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
+    $mensagem = array();
 
-if(isset($_GET["pIdStatusInscricao"])){
-    if(!empty($_GET["pIdStatusInscricao"])){
-        if(StatusInscricao::excluirStatusInscricao($_GET["pIdStatusInscricao"]) === TRUE){
-            echo "Status Id: ".$_GET["pIdStatusInscricao"]." excluído com sucesso!";
-        }
-        else{
-            echo "Erro ao tentar excluir: ".$_GET["pIdStatusInscricao"];
+    if(isset($_POST["pIdStatusInscricao"])){
+        if(empty($_POST["pIdStatusInscricao"])){
+            $mensagem[] = "Informe um status de inscricao válido!";
         }
     }
     else{
-        echo "Informe um status de inscricao válido!";
+        $mensagem[] = "Status de inscricao não informado!";
     }
-}
-else{
-    echo "Status de inscricao não informado!";
-}
+    
+    if(count($mensagem) == 0){
+        if(StatusInscricao::excluirStatusInscricao($_POST["pIdStatusInscricao"]) === TRUE){
+            $mensagem[] = "Status Id: ".$_POST["pIdStatusInscricao"]." excluído com sucesso!";
+        }
+        else{
+            $mensagem[] = "Erro ao tentar excluir: ".$_POST["pIdStatusInscricao"];
+        }
+    }
+    
+    echo json_encode(array("mensagem" => $mensagem));

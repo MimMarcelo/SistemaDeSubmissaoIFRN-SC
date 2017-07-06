@@ -11,7 +11,7 @@ $(document).ready(function(){
             $.ajax({
                     url: href, //DEFINE O DESTINO
                     success: function(){		
-                        $("#conteudo").delay(200).hide().load(href+" #conteudo").fadeIn(1000);
+                        $("#conteudo").delay(200).load(href+" #conteudo").fadeIn(1000);
                         document.title = "SS IFRN-SC - "+titulo;
                         window.history.pushState({url: href}, document.title, href);
                     }
@@ -20,4 +20,8 @@ $(document).ready(function(){
     window.onpopstate = function(){ 
         window.history.go(0);
     };
+    formularios();
+});
+$(document).ajaxComplete(function(){
+    formularios(); 
 });

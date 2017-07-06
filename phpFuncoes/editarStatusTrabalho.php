@@ -1,31 +1,33 @@
 <?php
 
-require dirname(__FILE__).'/../phpClasses/StatusTrabalho.php';
+    require dirname(__FILE__).'/../phpClasses/StatusTrabalho.php';
 
-if(isset($_GET["pIdStatusTrabalho"])){
-    if(!empty($_GET["pIdStatusTrabalho"])){
-        
-        if(isset($_GET["pStatusTrabalho"])){
-            if(!empty($_GET["pStatusTrabalho"])){
-                if(StatusTrabalho::editarStatusTrabalho($_GET["pIdStatusTrabalho"], $_GET["pStatusTrabalho"]) === TRUE){
-                    echo "Status: ".$_GET["pStatusTrabalho"]." salvo com sucesso!";
-                }
-                else{
-                    echo "Erro ao tentar salvar: ".$_GET["pStatusTrabalho"]." no Id: ".$_GET["pIdStatusTrabalho"];
-                }
-            }
-            else{
-                echo "Nova descrição para o status '".$_GET["pIdStatusTrabalho"]." não informado!";
-            }
-        }
-        else{
-            echo "Nova descrição para o status '".$_GET["pIdStatusTrabalho"]." não informado!";
+    $mensagem = array();
+
+    if(isset($_POST["pIdStatusTrabalho"])){
+        if(empty($_POST["pIdStatusTrabalho"])){
+            $mensagem[] = "Informe um status de inscrição válido!";
         }
     }
     else{
-        echo "Informe um status de inscrição válido!";
+        $mensagem[] = "Status de inscricao não selecionado!";
     }
-}
-else{
-    echo "Status de inscricao não selecionado!";
-}
+    
+    if(isset($_POST["pStatusTrabalho"])){
+        if(empty($_POST["pStatusTrabalho"])){
+            $mensagem[] = "Nova descrição para o status '".$_POST["pIdStatusTrabalho"]."' não informada!";
+        }
+    }
+    else{
+        $mensagem[] = "Nova descrição para o status '".$_POST["pIdStatusTrabalho"]." não informada!";
+    }
+    
+    if(count($mensagem) == 0){
+        if(StatusTrabalho::editarStatusTrabalho($_POST["pIdStatusTrabalho"], $_POST["pStatusTrabalho"]) === TRUE){
+            $mensagem[] = "Status: ".$_POST["pStatusTrabalho"]." salvo com sucesso!";
+        }
+        else{
+            $mensagem[] = "Erro ao tentar salvar: ".$_POST["pStatusTrabalho"]." no Id: ".$_POST["pIdStatusTrabalho"];
+        }
+    }
+    echo json_encode(array("mensagem" => $mensagem));
