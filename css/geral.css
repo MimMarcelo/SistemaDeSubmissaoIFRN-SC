@@ -1,0 +1,39 @@
+/*
+------------------------- TAGs GERAIS
+*/
+*{
+    padding: 0;
+    margin: 0;
+    border-width: 0;
+    font-size: 16px;
+}
+body{
+    background-color: #444;
+    padding: 10px;
+    color: #FFE;
+}
+/*
+------------------------- TAGs ESTRUTURAIS
+*/
+nav{
+    text-align: left;
+}
+section{
+}
+/*
+------------------------- TAGs DISPLAY PADRÃO BLOCK
+*/
+h1{
+    font-size: 30px;
+}
+/*
+------------------------- TAGs DISPLAY PADRÃO INLINE
+*/
+/*
+------------------------- TAGs a
+*/
+a{
+    display: block;
+    color: #383;
+    font-size: 16px;
+}

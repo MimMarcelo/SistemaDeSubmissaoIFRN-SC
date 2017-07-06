@@ -13,6 +13,7 @@
     
     //ARRAY QUE LISTA AS MENSAGENS DE ERRO ENCONTRADOS
     $mensagem = array();
+    $titulo = "";
     
     //QUANDO O USUÁRIO REALIZA ALGUMA CONSULTA, VERIFICAR OS CAMPOS QUE FORAM INFORMADOS
     if(isset($_POST)){
@@ -69,8 +70,9 @@
     } else {
         //CASO NÃO TENHA ENCONTRADO NENHUM RESULTADO
         $mensagem[] = "Nenhum registro encontrado!";
+        $titulo = "Atenção";
     }
     
     if(count($mensagem) > 0){
-        echo json_encode(array("mensagem" => $mensagem));
+        echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
     }

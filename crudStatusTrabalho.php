@@ -17,9 +17,10 @@
     <body>
         <?php include './includes/cabecalho.php'; ?>
         <?php include './includes/menu.php'; ?>
+        
         <section id="conteudo">
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-            <div id="mensagem"></div>
+            <?php include './includes/popup.php'; ?>
             <h2>CRUDs para Status Trabalho</h2>
             <p>Lista todos Status já cadastrados</p>
             <div id="atualizavel">

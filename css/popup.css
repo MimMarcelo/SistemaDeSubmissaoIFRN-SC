@@ -1,0 +1,66 @@
+/*
+------------------------- CONFIGURAÇÕES GERAIS
+*/
+#popup { /* ESSA É A DIV QUE FICA MEIO TRANSPARENTE ATRÁS DA TELA */
+    
+    display: none; /* POR PADRÃO NÃO APARECE NA PÁGINA */
+    position: fixed; /* IGNORAR POSIÇÃO LOCAL */
+    padding-top: 100px; /* Location of the box */
+    left: 0; top: 0; /* INICIAR NAS POSIÇÕES 0x0 DA PÁGINA */
+    width: 100%; /* DA LARGURA DA PÁGINA */
+    height: 100%; /* DA ALTURA DA PÁGINA */
+    overflow: auto; /* PERMITIR SCROLL SE FOR NECESSÁRIO */
+    background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
+    background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
+}
+
+#popup > div { /* POPUP */
+    position: relative; /* ANIMAÇÃO SÓ FUNCIONA COM ESSE POSITION */
+    background-color: #EEE;
+    margin: auto; /* MANTÉM A POPUP CENTRALIZADA */
+    border-radius: 10px;
+    width: 50%; /* LARGURA DA POPUP */
+    animation-name: animatetop; /* NOME DA ANIMAÇÃO DEFINIDA ABAIXO */
+    animation-duration: 0.5s /* TEMPO DE EXECUÇÃO DA ANIMAÇÃO */
+}
+
+@keyframes animatetop {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE CIMA PARA A POSIÇÃO DEFINIDA) */
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+/*
+------------------------- CONFIGURAÇÕES DOS COMPONENTES DA POPUP
+*/
+#popup > div > header { /* CABEÇALHO */
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #444;
+    color: #FFE;
+    overflow: auto;
+}
+
+#popup > div > div { /* ÁREA DE CONTEÚDO */
+    padding: 10px;
+    color: #000;
+}
+
+#fecharPopup { /* BOTÃO DE FECHAR */
+    width: 25px;
+    height: auto;
+    color: #FFE;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+#fecharPopup:hover,
+#fecharPopup:focus { /* QUANDO O MOUSE PASSAR EM CIMA, OU ESTIVER EM FOCO */
+    border: 2px solid #FFF;
+    border-radius: 12px;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
