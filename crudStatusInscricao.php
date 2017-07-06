@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<?php
-    //SESSAO PARA IMPORTS
-    require dirname(__FILE__).'/phpClasses/StatusInscricao.php';
-?>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
@@ -18,28 +14,38 @@
         <?php include './includes/cabecalho.php'; ?>
         <?php include './includes/menu.php'; ?>
         <section id="conteudo">
+            <?php
+                //SESSAO PARA IMPORTS
+                require dirname(__FILE__).'/phpClasses/StatusInscricao.php';
+            ?>
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
+            <div id="mensagem"></div>
             <h2>Título</h2>
             <p id="content">Exemplo de como consultar o banco de dados</p>
             <p>Lista todos os Status de inscrição cadastrados</p>
-            <ul>
+            <div id="atualizavel">
                 <?php
                     $resultado = StatusInscricao::getTodosStatusInscricao();
-                    while($obj = $resultado->fetch_object()){
-                        echo "<li>Id: ".$obj->idStatusInscricao." - Descrição: ".$obj->descricao."</li>";
+                    if($resultado != null){
+                        echo "<ul>";
+                        while($obj = $resultado->fetch_object()){
+                            echo "<li>Id: ".$obj->idStatusInscricao." - Descrição: ".$obj->descricao."</li>";
+                        }
+                        echo "</ul>";
                     }
                 ?>
-            </ul>
+            </div>
             <p>Formulário para criar novo Status Inscrição</p>
-            <form action="phpFuncoes/cadastrarStatusInscricao.php" method="get">
+            <form action="phpFuncoes/cadastrarStatusInscricao.php" method="post">
                 <label for="txtNomeStatusInscricao">Nome do Status a ser criado: </label>
                 <input type="text" id="txtNomeStatusInscricao" name="pStatusInscricao" placeholder="Novo Status">
                 <input type="submit" value="Salvar">
             </form>
             <p>Formulário para editar Status Inscrição</p>
-            <form action="phpFuncoes/editarStatusInscricao.php" method="get">
+            <form action="phpFuncoes/editarStatusInscricao.php" method="post">
                 <label for="sltStatusInscricao">Selecione o Status a ser modificado: </label>
                 <select id="sltStatusInscricao" name="pIdStatusInscricao">
+                    <option value="">Selecione</option>
                     <?php
                         $resultado = StatusInscricao::getTodosStatusInscricao();
                         while($obj = $resultado->fetch_object()){
@@ -51,8 +57,8 @@
                 <input type="text" id="txtNovoNomeStatusInscricao" name="pStatusInscricao" placeholder="Novo Status">
                 <input type="submit" value="Salvar">
             </form>
-            <p>Formulário para editar Status Inscrição</p>
-            <form action="phpFuncoes/excluirStatusInscricao.php" method="get">
+            <p>Formulário para excluir Status Inscrição</p>
+            <form action="phpFuncoes/excluirStatusInscricao.php" method="post">
                 <label for="sltStatusInscricao">Selecione o Status a ser modificado: </label>
                 <select id="sltStatusInscricao" name="pIdStatusInscricao">
                     <?php

@@ -19,24 +19,29 @@
         <?php include './includes/menu.php'; ?>
         <section id="conteudo">
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
+            <div id="mensagem"></div>
             <h2>CRUDs para Status Trabalho</h2>
             <p>Lista todos Status já cadastrados</p>
-            <ul>
+            <div id="atualizavel">
                 <?php
                     $resultado = StatusTrabalho::getTodosStatusTrabalho();
-                    while($obj = $resultado->fetch_object()){
-                        echo "<li>Id: ".$obj->idStatusTrabalho." - Descrição: ".$obj->descricao."</li>";
+                    if($resultado != null){
+                        echo "<ul>";
+                        while($obj = $resultado->fetch_object()){
+                            echo "<li>Id: ".$obj->idStatusTrabalho." - Descrição: ".$obj->descricao."</li>";
+                        }
+                        echo "</ul>";
                     }
                 ?>
-            </ul>
+            </div>
             <p>Formulário para criar novo Status Trabalho</p>
-            <form action="phpFuncoes/cadastrarStatusTrabalho.php" method="get">
+            <form action="phpFuncoes/cadastrarStatusTrabalho.php" method="post">
                 <label for="txtNomeStatusTrabalho">Nome do Status a ser criado: </label>
                 <input type="text" id="txtNomeStatusTrabalho" name="pStatusTrabalho" placeholder="Novo Status">
                 <input type="submit" value="Salvar">
             </form>
             <p>Formulário para editar Status Trabalho</p>
-            <form action="phpFuncoes/editarStatusTrabalho.php" method="get">
+            <form action="phpFuncoes/editarStatusTrabalho.php" method="post">
                 <label for="sltStatusTrabalho">Selecione o Status a ser modificado: </label>
                 <select id="sltStatusTrabalho" name="pIdStatusTrabalho">
                     <?php
@@ -51,7 +56,7 @@
                 <input type="submit" value="Salvar">
             </form>
             <p>Formulário para excluir Status Trabalho</p>
-            <form action="phpFuncoes/excluirStatusTrabalho.php" method="get">
+            <form action="phpFuncoes/excluirStatusTrabalho.php" method="post">
                 <label for="sltStatusTrabalho">Selecione o Status a ser excluído: </label>
                 <select id="sltStatusTrabalho" name="pIdStatusTrabalho">
                     <?php

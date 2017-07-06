@@ -1,20 +1,29 @@
 <?php
 
-require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
+    require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
 
-if(isset($_GET["pStatusInscricao"])){
-    if(!empty($_GET["pStatusInscricao"])){
-        if(StatusInscricao::salvarStatusInscricao($_GET["pStatusInscricao"]) === TRUE){
-            echo "Status: ".$_GET["pStatusInscricao"]." salvo com sucesso!";
-        }
-        else{
-            echo "Erro ao tentar salvar: ".$_GET["pStatusInscricao"];
+    $mensagem = array();
+    //$sucesso = true;
+
+    if(isset($_POST["pStatusInscricao"])){
+        if(empty($_POST["pStatusInscricao"])){  
+            $mensagem[] = "Informe um status de inscricao válido!";
+            //$sucesso = false;
         }
     }
     else{
-        echo "Informe um status de inscricao válido!";
+        $mensagem[] = "Status de inscrição não informado!";
+        //$sucesso = false;
     }
-}
-else{
-    echo "Status de inscricao não informado!";
-}
+    
+    if(count($mensagem) == 0){
+        if(StatusInscricao::salvarStatusInscricao($_POST["pStatusInscricao"]) === TRUE){
+            $mensagem[] = "Status: ".$_POST["pStatusInscricao"]." salvo com sucesso!";
+        }
+        else{
+            $mensagem[] = "Erro ao tentar salvar: ".$_POST["pStatusInscricao"];
+            //$sucesso = false;
+        }
+    }
+    echo json_encode(array("mensagem" => $mensagem));
+    //echo json_encode(array("mensagem" => $mensagem, "sucesso" => $sucesso));

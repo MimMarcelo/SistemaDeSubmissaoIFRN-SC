@@ -1,31 +1,33 @@
 <?php
 
-require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
+    require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
 
-if(isset($_GET["pIdStatusInscricao"])){
-    if(!empty($_GET["pIdStatusInscricao"])){
-        
-        if(isset($_GET["pStatusInscricao"])){
-            if(!empty($_GET["pStatusInscricao"])){
-                if(StatusInscricao::editarStatusInscricao($_GET["pIdStatusInscricao"], $_GET["pStatusInscricao"]) === TRUE){
-                    echo "Status: ".$_GET["pStatusInscricao"]." salvo com sucesso!";
-                }
-                else{
-                    echo "Erro ao tentar salvar: ".$_GET["pStatusInscricao"]." no Id: ".$_GET["pIdStatusInscricao"];
-                }
-            }
-            else{
-                echo "Nova descrição para o status '".$_GET["pIdStatusInscricao"]." não informado!";
-            }
-        }
-        else{
-            echo "Nova descrição para o status '".$_GET["pIdStatusInscricao"]." não informado!";
+    $mensagem = array();
+
+    if(isset($_POST["pIdStatusInscricao"])){
+        if(empty($_POST["pIdStatusInscricao"])){
+            $mensagem[] = "Status de inscrição não informado!";
         }
     }
     else{
-        echo "Informe um status de inscrição válido!";
+        $mensagem[] = "Status de inscricao não selecionado!";
     }
-}
-else{
-    echo "Status de inscricao não selecionado!";
-}
+    
+    if(isset($_POST["pStatusInscricao"])){
+        if(empty($_POST["pStatusInscricao"])){
+            $mensagem[] = "Nova descrição para o status não informado!";
+        }
+    }
+    else{
+        $mensagem[] = "Nova descrição para o status não informado!";
+    }
+    
+    if(count($mensagem) == 0){
+        if(StatusInscricao::editarStatusInscricao($_POST["pIdStatusInscricao"], $_POST["pStatusInscricao"]) === TRUE){
+            $mensagem[] = "Status: ".$_POST["pStatusInscricao"]." salvo com sucesso!";
+        }
+        else{
+            $mensagem[] = "Erro ao tentar salvar: ".$_POST["pStatusInscricao"]." no Id: ".$_POST["pIdStatusInscricao"];
+        }
+    }
+    echo json_encode(array("mensagem" => $mensagem));

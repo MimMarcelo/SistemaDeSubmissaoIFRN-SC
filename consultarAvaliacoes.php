@@ -1,57 +1,4 @@
 <!DOCTYPE html>
-<?php
-    //SESSAO PARA IMPORTS
-    require dirname(__FILE__).'/phpClasses/Avaliacao.php';
-    
-    //INICIA AS VARIÁVEIS COM OS VALORES PADRÃO DO FORMULÁRIO
-    $idEvento=0;
-    $idUsuario=0;
-    $idStatusTrabalho=0;
-    $concluida=2;
-    $ehFinal=2;
-    $titulo='';
-    $resumo='';
-    
-    //QUANDO O USUÁRIO REALIZA ALGUMA CONSULTA, VERIFICAR OS CAMPOS QUE FORAM INFORMADOS
-    if(isset($_GET)){
-        if(isset($_GET["evento"])){
-            if(!empty($_GET["evento"])){
-                $idEvento = $_GET["evento"];
-            }
-        }
-        if(isset($_GET["avaliador"])){
-            if(!empty($_GET["avaliador"])){
-                $idUsuario = $_GET["avaliador"];
-            }
-        }
-        if(isset($_GET["statusTrabalho"])){
-            if(!empty($_GET["statusTrabalho"])){
-                $idStatusTrabalho = $_GET["statusTrabalho"];
-            }
-        }
-        if(isset($_GET["concluida"])){
-            //if(!empty($_GET["concluida"])){ //NÃO DEVE TESTAR O EMPTY POR CAUSA DA POSSIBILIDADE DE UM VALOR = 0
-                $concluida = $_GET["concluida"];
-            //}
-        }
-        if(isset($_GET["escopo"])){
-            //if(!empty($_GET["escopo"])){ //NÃO DEVE TESTAR O EMPTY POR CAUSA DA POSSIBILIDADE DE UM VALOR = 0
-                $ehFinal = $_GET["escopo"];
-            //}
-        }
-        if(isset($_GET["titulo"])){
-            if(!empty($_GET["titulo"])){
-                $titulo = $_GET["titulo"];
-            }
-        }
-        if(isset($_GET["resumo"])){
-            if(!empty($_GET["resumo"])){
-                $resumo = $_GET["resumo"];
-            }
-        }
-    }
-    $resultado = Avaliacao::getAvaliacoes($idEvento, 0, 0, $idUsuario, $idStatusTrabalho, $concluida, $ehFinal, $titulo, $resumo);
-?>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
@@ -67,9 +14,9 @@
         <?php include './includes/cabecalho.php'; ?>
         <?php include './includes/menu.php'; ?>
         <section id="conteudo">
+            <div id="mensagem"></div>
             <h2>Consultar Avaliações</h2>
-            <form>
-                <input type="hidden" value="consultarAvaliacoes" name="pagina">
+            <form action="phpFuncoes/consultarAvaliacoes.php" method="post">
                 <label for="sltEvento">Evento:</label>
                 <select id="sltEvento" name="evento" autofocus>
                     <option value="0">Selecione</option>
@@ -156,19 +103,13 @@
                 </select>
                 
                 <label for="txtTitulo">Trecho do título:</label>
-                <input type="text" id="txtTitulo" name="titulo" value="<?php echo $titulo; ?>">
+                <input type="text" id="txtTitulo" name="titulo">
                 <label for="txtResumo">Trecho do resumo:</label>
-                <input type="text" id="txtResumo" name="resumo" value="<?php echo $resumo; ?>">
+                <input type="text" id="txtResumo" name="resumo">
                 <input type="submit" value="Consultar">
             </form>
-            <ul>
-                <?php
-
-                    while($obj = $resultado->fetch_object()){
-                        echo "<li>Id: ".$obj->idAvaliacaoTrabalho." - Título: ".$obj->titulo."</li>";
-                    }
-                ?>
-            </ul>
+            <div id="atualizavel">
+            </div>
         </section>
         <?php include './includes/rodape.php'; ?>
     </body>
