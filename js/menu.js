@@ -20,10 +20,4 @@ $(document).ready(function(){
     window.onpopstate = function(){ 
         window.history.go(0);
     };
-    formularios();
-    popup();
-});
-$(document).ajaxComplete(function(){
-    formularios(); 
-    popup();
 });

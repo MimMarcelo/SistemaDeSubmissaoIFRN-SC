@@ -1,0 +1,90 @@
+#ui-datepicker-div{ /* DIV DO CALENDÁRIO */
+    display: none;
+    background-color: #FFF;
+    border-radius: 10px;
+    border-color: #BBC;
+    border-width: 3px;
+    border-style: solid;
+    width: 250px;
+    padding-bottom: 5px;
+}
+#ui-datepicker-div > div:first-child{ /* DIV DO CABECALHO */
+    background-color: #444;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 2px;
+}
+#ui-datepicker-div > div > a{ /* LINKs PARA "MÊS ANTERIOR" E "MÊS POSTERIOR" */
+    background-image: url('../img/iconVoltar.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-style: none;
+    border-width: 0;
+    border-radius: 12px;
+    float: left;
+    cursor: pointer;
+}
+#ui-datepicker-div > div > a:nth-child(2){ /*LINK PARA "MÊS POSTERIOR" */
+    background-image: url('../img/iconAvancar.png');
+    float: right;
+}
+#ui-datepicker-div > div > a:hover{
+    background-size: 110%;
+}
+#ui-datepicker-div > div > div{ /* TÍTULOS "MÊS ANO" */
+    display: block;
+    padding-bottom: 5px;
+    padding-top: 3px;
+    text-align: center;
+    font-weight: bolder;
+}
+#ui-datepicker-div > table{ /* TABELA COM OS DIAS DO MÊS */
+    width: 100%;
+    border-width: 0;
+    text-align: center;
+}
+#ui-datepicker-div td, #ui-datepicker-div th{ /* CÉLULAS DA TABELA */
+    background-color: #EEF;
+    border-color: #FFF;
+    border-style: none;
+    border-width: 0;
+    border-radius: 3px;
+}
+#ui-datepicker-div th{ /* LINHA COM OS TÍTULOS DOS DIAS DA SEMANA */
+    background-color: #444;
+}
+#ui-datepicker-div td.ui-datepicker-week-end{ /* CÉLULAS DA TABELA */
+    background-color: #FEE;
+}
+#ui-datepicker-div td:hover{ /* CÉLULAS DA TABELA */
+    background-color: #CCF;
+}
+#ui-datepicker-div td.ui-state-disabled, #ui-datepicker-div td.ui-state-disabled:hover{ /* CÉLULAS DA TABELA QUE ESTÃO DESABILITADAS*/
+    background-color: #EEF; /* MESMA COR DA CÉLULA PADRÃO */
+}
+#ui-datepicker-div td.ui-datepicker-today{ /* DIA ATUAL (HOJE) */
+    background-color: #AFA;
+}
+#ui-datepicker-div td.ui-datepicker-current-day{ /* DIA ATUALMENTE SELECIONADO */
+    background-color: #AAF;
+}
+#ui-datepicker-div > div:last-child{ /* DIV DOS BOTÕES "MÊS ATUAL" E "FECHAR" */
+    margin-top: 10px;
+}
+#ui-datepicker-div button{ /* BOTÕES PARA "MÊS ATUAL" E "FECHAR" */
+    width: 100px;
+    font-size: 14px;
+    padding: 4px;
+    margin: 0;
+}
+#ui-datepicker-div button:last-child{ /* BOTÃO PARA "FECHAR" */
+    float: right;
+    background-color: #777;
+}
+#ui-datepicker-div button:last-child:hover{ /* BOTÃO PARA "FECHAR" */
+    background-color: #555;
+}
