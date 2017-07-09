@@ -4,32 +4,156 @@
 form{
     margin: auto;
     display: block;
+    max-width: 320px;
     background-color: #EEE;
-    color: #000;
-    padding: 10px;
+    color: #444;
+    font-weight: bold;
+    padding: 20px;
     border-radius: 10px;
     text-align: left;
+}
+fieldset{
+    border-color: #BBC;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 10px;
+    margin-top: 15px;
 }
 /*
 ------------------------- TAGs DE CONTEÚDO
 */
-label{
-    display: block;
+form span{/* PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
+    color: red;
+    margin-left: 3px;
+    font-weight: bolder;
+    font-size: 25px;
+    vertical-align: top;
 }
-input, select{
+label, button, input[type="button"], input[type="submit"], input[type="reset"]{/* PARA SEPARAR OS CAMPOS */
+    margin-top: 10px;
+}
+legend{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+label{
+    padding-top: 5px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border:1px solid #EEE;
+    display: block;
+    font-weight: 400;
+    width: 300px;
+    box-sizing: border-box;
+}
+input, select, textarea, button{
     padding: 5px;
     border-radius: 5px;
     border:1px solid #008f36;
     display: inline-block;
     width: 300px;
     box-sizing: border-box;
+    resize: none; /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
+}
+fieldset > label, fieldset > input, fieldset > select, fieldset > textarea, fieldset > button{
+    width: 285px; /* NECESSÁRIO, POR CONTA DO PADDING DO FIELDSET */
+}
+input:hover, select:hover, textarea:hover{
+    background-color: #EEF;
+}
+input:focus, select:focus, textarea:focus{
+    background-color: #CCF;
+    outline: none;
+}
+optgroup{
+    background-color: #FFF;
+    font-style: normal;
+    color: #444;
+}
+option{
+    padding: 5px;
+    padding-left: 10px;
+    color: #444;
+}
+/*
+------------------------- TIPOS DE INPUT E COMBINAÇÕES
+*/
+label > input{ /* RADIOBUTTONs E CHECKBOXes */
+    width: auto;
+    float: right;
+}
+input[type="button"], input[type="reset"], input[type="submit"], button{
+    margin-top: 20px;
+    padding: 10px;
+    width: 157px;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 2px 2px rgba(0, 0, 0, .5);
+    font-weight: bolder;
+    background-color: #44F;
+    border-radius: 20px;
+    border-color: #444;
+    border-width: 0;
+    border-bottom-width: 4px;
+    border-right-width: 3px;
+    cursor: pointer;
+}
+input[type="reset"]{
+    background-color: #777;
 }
 input[type="submit"]{
     background-color: #3A5;
-    color: #FFF;
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
     width: 100%;
-    border-radius: 25px;
+}
+input[type="button"]:focus, input[type="button"]:hover, button:focus, button:hover{
+    background-color: #44C;
+}
+input[type="reset"]:focus, input[type="reset"]:hover{
+    background-color: #555;
+}
+input[type="submit"]:focus, input[type="submit"]:hover{
+    background-color: #394;
+}
+/* ------------------------------------------------- */
+input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile */
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+    border: none;
+}
+.inputFile{
+    padding: 1px;
+    margin-top: 0;
+    border-radius: 5px;
+    border:1px solid #008f36;
+    display: inline-block;
+    width: 300px;
+    box-sizing: border-box;
+    background-color: #FFF;
+    line-break: strict;
+}
+.inputFile > span{/* LABEL QUE SUBSTITUI O INPUT TYPE=FILE */
+    display: inline-block;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: bolder;
+    vertical-align: middle;
+    text-shadow: 2px 2px rgba(0, 0, 0, .5);
+    
+    background-color: #44F;
+    border-radius: 5px;
+    border-color: #444;
+    border-width: 0;
+    border-bottom-width: 4px;
+    border-right-width: 3px;
+    
+    margin: 0;
+    margin-right: 5px;
+    padding: 5px;
+}
+.inputFile > span:hover{
+    background-color: #44C;    
 }

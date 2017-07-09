@@ -66,7 +66,7 @@
             </form>
             <p>Formulário para excluir Status Inscrição</p>
             <form action="phpFuncoes/excluirStatusInscricao.php" method="post">
-                <label for="sltStatusInscricao">Selecione o Status a ser modificado: </label>
+                <label for="sltStatusInscricao">Selecione o Status a ser excluído: </label>
                 <select id="sltStatusInscricao" name="pIdStatusInscricao">
                     <?php
                         $resultado = StatusInscricao::getTodosStatusInscricao();
