@@ -25,7 +25,7 @@
                 <label for="nome">Nome</label>
                 <input type="text" id="nome" name="nome" placeholder="Informe seu nome..." autofocus required>
                 <label for="sobrenome">Sobrenome</label>
-                <input type="text" id="sobrenome" name="sobrenome" placeholder="Informe seu sobrenome..." value="Júnior">
+                <input type="text" id="sobrenome" name="sobrenome" placeholder="Informe seu sobrenome..." value="Júnior" required>
                 <label for="senha">Senha</label>
                 <input type="password" id="senha" name="senha" placeholder="Informe sua senha..." required>
                 <label for="email">e-mail</label>
