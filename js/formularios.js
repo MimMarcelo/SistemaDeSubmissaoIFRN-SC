@@ -5,6 +5,7 @@ $(document).ready(function(){
     formularios();
     focaLabel();
     habilitaCalendarios();
+    habilitaCpf();
     mostraNomeInputFile();
     camposObrigatorios();
 });
@@ -15,6 +16,7 @@ $(document).ajaxComplete(function(){
     formularios(); 
     focaLabel();
     habilitaCalendarios();
+    habilitaCpf();
     mostraNomeInputFile();
     camposObrigatorios();
 });
@@ -147,6 +149,15 @@ function habilitaCalendarios(){
         $(input).datepicker({
             showButtonPanel:true
         });
+    });
+}
+/**
+ * FAZ COM QUE OS CAMPOS COM A CLASSE .cpf APRESENTEM UMA MÁSCARA PARA PREENCHIMENTO
+ * @returns NENHUM
+ */
+function habilitaCpf(){
+    $(".cpf").each(function(i, input){
+        $(input).mask("999.999.999-99");
     });
 }
 /**
