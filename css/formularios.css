@@ -44,7 +44,7 @@ label{
     border:1px solid #EEE;
     display: block;
     font-weight: 400;
-    width: 300px;
+    width: 100%;
     box-sizing: border-box;
 }
 input, select, textarea, button{
@@ -52,12 +52,9 @@ input, select, textarea, button{
     border-radius: 5px;
     border:1px solid #008f36;
     display: inline-block;
-    width: 300px;
+    width: 90%;
     box-sizing: border-box;
     resize: none; /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
-}
-fieldset > label, fieldset > input, fieldset > select, fieldset > textarea, fieldset > button{
-    width: 285px; /* NECESSÁRIO, POR CONTA DO PADDING DO FIELDSET */
 }
 input:hover, select:hover, textarea:hover{
     background-color: #EEF;
@@ -130,7 +127,7 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
     border-radius: 5px;
     border:1px solid #008f36;
     display: inline-block;
-    width: 300px;
+    width: 90%;
     box-sizing: border-box;
     background-color: #FFF;
     line-break: strict;
@@ -156,4 +153,24 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
 }
 .inputFile > span:hover{
     background-color: #44C;    
+}
+/*
+------------------------- OUTRAS TAGS
+*/
+form img{
+    width: 100%;
+    height: auto;
+}
+form a{
+    color: #3A5;
+    border-style: none;
+    font-weight: 100;
+    font-size: 12px;
+    padding: 0;
+    padding-top: 10px;
+    margin: 0;
+}
+form a:hover{
+    color: #333;
+    text-decoration: underline;
 }

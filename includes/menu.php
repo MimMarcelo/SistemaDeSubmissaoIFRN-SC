@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li><a href="index.php" title="Início">Home</a></li>
+        <li><a href="inicio.php" title="Início">Home</a></li>
         <li><a href="cadastrarEvento.php" title="Cadastrar evento">Cadastrar Evento</a></li>
         <li><a href="crudStatusInscricao.php" title="Status inscricao">CRUD Status Inscrição</a></li>
         <li><a href="crudStatusTrabalho.php" title="Status trabalho">CRUD Status Trabalho</a></li>

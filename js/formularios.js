@@ -44,10 +44,14 @@ function formularios(){
             cache: false,
             data: new FormData($(this)[0]), // DADOS A SEREM ENVIADOS PARA O .PHP
             success: function(data){
-
+                //console.log(data);
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
-
+                    
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
+                    if(o.redirecionar){
+                        //window.location.replace(o.redirecionar);
+                        window.location.href = o.redirecionar;
+                    }
                     listaMensagens(o);
 
                     //RECARREGA A div#atualizavel DA PÁGINA
@@ -158,6 +162,24 @@ function habilitaCalendarios(){
 function habilitaCpf(){
     $(".cpf").each(function(i, input){
         $(input).mask("999.999.999-99");
+        $(input).val("");
+        $(input).keydown(function (e) {
+            // Permite: "backspace" "delete" "tab" "escape" "enter" "-" "."
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 116, 189, 190]) !== -1 ||
+                 // Permite: "Ctrl+A" "Command+A"
+                (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+                 // Permite: "home" "end" "left" "right" "down" "up"
+                (e.keyCode >= 35 && e.keyCode <= 40) ||
+                // Permite: "F5" "Ctrl+F5"
+                (e.keyCode === 116)) {
+                     // SE FOR QUALQUER DESSES, NADA ACONTECE
+                     return;
+            }
+            // GARANTE QUE É UM NÚMERO, E EVITA O keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
     });
 }
 /**
