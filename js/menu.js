@@ -10,8 +10,9 @@ $(document).ready(function(){
             //RESPONSÁVEL POR MUDAR O CONTEÚDO DA PÁGINA SEM RECARREGÁ-LA
             $.ajax({
                     url: href, //DEFINE O DESTINO
-                    success: function(){		
-                        $("#conteudo").delay(200).load(href+" #conteudo").fadeIn(1000);
+                    success: function(){
+                        $('#carregaPagina').load(href+" #conteudo").fadeIn();
+                                      
                         document.title = "SS IFRN-SC - "+titulo;
                         window.history.pushState({url: href}, document.title, href);
                     }
