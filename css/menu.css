@@ -1,0 +1,43 @@
+/*
+------------------------- TAGs GERAIS
+*/
+nav{
+    background-color: rgb(51,51,51);
+    margin: auto;
+    color: #DDD;
+}
+a{
+    color: #DDD;
+    text-decoration: none;
+    font-weight: bolder;
+    padding: 10px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+a:last-child{
+    border-bottom-style: none;
+}
+a:hover{
+    color: #3A5;
+}
+/*
+------------------------- CONFIGURAÇÕES ESPECÍFICAS DA PÁGINA DE LOGIN
+*/
+#paginaLogin{
+    width: 80%;
+    height: 400px;
+    margin-top: 60px;
+    margin-bottom: 120px;
+}
+#paginaLogin > div{
+    display: inline-block;
+    width: 48%;
+    vertical-align: middle;
+}
+#paginaLogin > div > hr{
+    height: 1px;
+    background-color: #DDD;
+}
+#paginaLogin > div:first-child{
+    margin-top: -50px;
+}

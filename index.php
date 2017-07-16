@@ -12,15 +12,34 @@
     </head>
     <body>
         <section id="conteudo">
+            <?php include './includes/popup.php'; 
+                /*
+                 * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
+                 */
+            ?>
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-            <h1>Login</h1>
-            <form>
-                <label for="txtCpf">CPF:</label>
-                <input type="text" id="txtCpf" name="cpf" class="cpf" autofocus required>
-                <label for="txtSenha">Senha:</label>
-                <input type="password" id="txtSenha" name="senha" required>
-                <input type="submit" value="LOGIN"> 
-            </form>
+            <nav id="paginaLogin">
+                <div>
+                    <form action="phpFuncoes/login.php" method="post" autocomplete="off" class="sincrono">
+                        <img id="logo" src="img/logo250.png" alt="Logomarca do Sistema de Submissão do IFRN-Santa Cruz">
+                        <label for="txtCpf">CPF</label>
+                        <input type="text" id="txtCpf" name="cpf" class="cpf" autofocus required>
+                        <label for="txtSenha">Senha</label>
+                        <input type="password" id="pasSenha" name="senha" required>
+                        <input type="submit" class="botao" value="Acessar">
+
+                        <a href="index.html">Cadastre-se</a>
+                        <a href="index.html">Esqueceu sua senha?</a>
+
+                    </form>
+                </div>
+                <div>
+                    <a id="texto" href="index.html">CADASTRE-SE</a>
+                    <a id="texto" href="inscricaoUsuario.php">INSCREVER-SE EM EVENTO </a>
+                    <a id="texto" href="index.html">SUBMETER TRABALHOS </a>
+                    <a id="texto" href="index.php" >CADASTRAR EVENTO </a>
+                </div>
+            </nav>
         </section>
         <?php include './includes/rodape.php'; ?>
     </body>
