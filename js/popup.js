@@ -38,3 +38,14 @@ function popup(){
     });
     
 }
+function abrePopup(titulo, mensagem){
+    
+    $("#conteudoPopup").html("");// LIMPA QUAISQUER MENSAGENS QUE JÁ ESTEJAM NA POPUP
+    
+    p = document.createElement("p");//CRIA UM ELEMENTO <p> PARA CADA MENSAGEM DO JSON
+    p.innerHTML = mensagem;//INSERE A MENSAGEM DO JSON NO <p> RECÉM CRIADO
+    $("#conteudoPopup").append(p);//ADICIONA O <p> NA POPUP
+    
+    $("#tituloPopup").html(titulo);//ATRIBUI O TÍTULO DA POPUP
+    $("#popup").css("display", "block");//ABRE A POPUP
+};

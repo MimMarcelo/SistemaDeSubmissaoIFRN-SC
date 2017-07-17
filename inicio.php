@@ -16,7 +16,6 @@
         <div id="carregaPagina">
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-                <h2>Bem vindo!</h2>
                 <p>Você é um visitante!</p>
             </section>
         </div>

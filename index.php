@@ -1,3 +1,10 @@
+<?php
+    require dirname(__FILE__).'/phpClasses/Usuario.php';
+    session_start();
+    if(isset($_SESSION["usuario"])){
+        header("location: inicio.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -16,11 +23,15 @@
                 /*
                  * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
                  */
+                if(isset($_SESSION["mensagem"])){
+                    echo "<script>abrePopup('Atenção', '".$_SESSION["mensagem"]."');</script>";
+                    $_SESSION["mensagem"] = null;
+                }
             ?>
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
             <nav id="paginaLogin">
                 <div>
-                    <form action="phpFuncoes/login.php" method="post" autocomplete="off" class="sincrono">
+                    <form action="<?php echo htmlspecialchars("phpFuncoes/login.php"); ?>" method="post" autocomplete="off" class="sincrono">
                         <img id="logo" src="img/logo250.png" alt="Logomarca do Sistema de Submissão do IFRN-Santa Cruz">
                         <label for="txtCpf">CPF</label>
                         <input type="text" id="txtCpf" name="cpf" class="cpf" autofocus required>
