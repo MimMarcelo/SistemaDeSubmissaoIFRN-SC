@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<?php
-    //SESSAO PARA IMPORTS
-    require dirname(__FILE__).'/phpClasses/StatusTrabalho.php';
-?>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
@@ -22,6 +18,10 @@
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
                 <?php include './includes/popup.php'; ?>
+                <?php
+                    //SESSAO PARA IMPORTS
+                    require_once dirname(__FILE__).'/phpClasses/StatusTrabalho.php';
+                ?>
                 <h2>CRUDs para Status Trabalho</h2>
                 <p>Lista todos Status já cadastrados</p>
                 <div id="atualizavel">

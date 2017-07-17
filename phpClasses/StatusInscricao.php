@@ -3,33 +3,56 @@
     require_once dirname(__FILE__).'/../phpDao/StatusInscricaoDao.php';
 
 class StatusInscricao{
-    private $id;
-    private $statusInscricao;
+    private $idStatusInscricao;
+    private $descricao;
     
-    function __construct($id, $descricao){
-            $this->id = $id;
-            $this->descricao = $descricao;
-
-    }
-
     public function getId(){
-        return $this->id;
+        return $this->idStatusInscricao;
     }
     
     public function setId($id){
-        $this->id = $id;
+        $this->idStatusInscricao = $id;
     }
     
     public function getStatusInscricao(){
-        return $this->statusInscricao;
+        return $this->descricao;
     }
     
     public function setStatusInscricao($statusInscricao){
-        $this->statusInscricao = $statusInscricao;
+        $this->descricao = $statusInscricao;
     }
     
     public static function getTodosStatusInscricao(){
         return StatusInscricaoDao::getStatusInscricao(0, '');
+    }
+    
+    public static function getStatusInscricaoPorId($id){
+        $mensagem = array();
+        $statusInscricao = null;
+        
+        $dado = StatusInscricaoDao::getStatusInscricao($id, '');
+        if($dado == null){
+            $mensagem[] = "Status Inscricao não encontrado!";
+        }
+        else{
+            $statusInscricao = new StatusInscricao();
+            try{
+                while($obj = $dado->fetch_assoc()) {
+                    foreach ($obj as $key => $value) {
+                        $statusInscricao->{$key} = $value;
+                    }
+                }
+            } catch (Exception $e) {
+                $statusInscricao = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $statusInscricao;
+        }
     }
     
     public static function salvarStatusInscricao($descricao){

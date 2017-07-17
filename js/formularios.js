@@ -44,7 +44,7 @@ function formularios(){
             cache: false,
             data: new FormData($(this)[0]), // DADOS A SEREM ENVIADOS PARA O .PHP
             success: function(data){
-                //console.log(data);
+                console.log(data);
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
                     
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
@@ -56,6 +56,12 @@ function formularios(){
 
                     //RECARREGA A div#atualizavel DA PÁGINA
                     $("#atualizavel").hide().load(window.location.href+" #atualizavel").fadeIn(1000);
+                }
+                else if(data.toString().indexOf("Fatal error") !== -1){//Erros do Sistema 
+                    /*
+                     * PRECISA MELHORAR
+                     */
+                    abrePopup("Erro do Sistema", data.toString().substring(data.toString().indexOf(":")+2));
                 }
                 else{
                     //ATUALIZA A div#atualizavel DA PÁGINA COM OS DADOS RECEBIDOS
@@ -171,7 +177,13 @@ function habilitaCpf(){
                  // Permite: "home" "end" "left" "right" "down" "up"
                 (e.keyCode >= 35 && e.keyCode <= 40) ||
                 // Permite: "F5" "Ctrl+F5"
-                (e.keyCode === 116)) {
+                (e.keyCode === 116) ||
+                // Permite: "Ctrl+V"
+                (e.keyCode === 86 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Permite: "Ctrl+C"
+                (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                // Permite: "Ctrl+X"
+                (e.keyCode === 88 && (e.ctrlKey === true || e.metaKey === true))) {
                      // SE FOR QUALQUER DESSES, NADA ACONTECE
                      return;
             }

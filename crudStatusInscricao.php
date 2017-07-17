@@ -21,10 +21,9 @@
                      * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
                      */
                 ?>
-
                 <?php
                     //SESSAO PARA IMPORTS
-                    require dirname(__FILE__).'/phpClasses/StatusInscricao.php';
+                    require_once dirname(__FILE__).'/phpClasses/StatusInscricao.php';
                 ?>
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
                 <div id="mensagem"></div>

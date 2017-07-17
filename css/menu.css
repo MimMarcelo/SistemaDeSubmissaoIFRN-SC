@@ -34,10 +34,6 @@ a:hover{
     width: 48%;
     vertical-align: middle;
 }
-#paginaLogin > div > hr{
-    height: 1px;
-    background-color: #DDD;
-}
 #paginaLogin > div:first-child{
     margin-top: -50px;
 }
