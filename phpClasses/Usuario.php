@@ -2,7 +2,7 @@
 
     require_once dirname(__FILE__).'/../phpDao/UsuarioDao.php';
     require_once dirname(__FILE__).'/StatusInscricao.php';
-    //require_once dirname(__FILE__).'/NivelAcesso.php';
+    require_once dirname(__FILE__).'/NivelAcesso.php';
     
 class Usuario{
     private $idUsuario;
