@@ -11,8 +11,10 @@ class _Conexao{
     
     private $servidor = "localhost";
     private $banco = "sistemaifrnsc";
-    private $usuario = "root";
-    private $senha = "Senha123";
+//    private $usuario = "root";
+//    private $senha = "Senha123";
+    private $usuario = "sisIfrnSc";
+    private $senha = "f3jHjUm@m@r4";
     
     //Conecta usando MySQLi
     private function getConexao(){
