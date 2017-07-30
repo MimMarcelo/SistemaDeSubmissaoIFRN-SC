@@ -8,6 +8,7 @@ $(document).ready(function(){
     habilitaCpf();
     mostraNomeInputFile();
     camposObrigatorios();
+    confirmarSenha();
 });
 /**
  * CARREGA AS FUNÇÕES DOS FORMULÁRIOS QUANDO HÁ REQUISIÇÕES AJAX
@@ -19,6 +20,7 @@ $(document).ajaxComplete(function(){
     habilitaCpf();
     mostraNomeInputFile();
     camposObrigatorios();
+    confirmarSenha();
 });
 /**
  * CONFIGURA OS FORMULÁRIOS PARA TRABALHAR DE FORMA ASSÍNCRONA
@@ -34,6 +36,7 @@ function formularios(){
      */
     $("form").unbind('submit').submit(function(e){
         var href = $(this).attr("action");//PEGA O DESTINO DO FORMULÁRIO
+        var formulario = $(this);
         
         //RESPONSÁVEL POR MUDAR O CONTEÚDO DA PÁGINA SEM RECARREGÁ-LA
         $.ajax({
@@ -44,7 +47,11 @@ function formularios(){
             cache: false,
             data: new FormData($(this)[0]), // DADOS A SEREM ENVIADOS PARA O .PHP
             success: function(data){
-                console.log(data);
+                //console.log(data);
+        
+                formulario.each(function(){
+                    this.reset();
+                });        
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
                     
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
@@ -202,18 +209,24 @@ function mostraNomeInputFile(){
     $("input[type='file']").each(function(i, input){
         btn = "<span>Selecione</span>";
         label = "<label for='"+$(input).attr("id")+"' class='inputFile'>"+btn+"</label>";
+        if($(input).attr("class") === "upImagem"){
+            label = label+"<img src='img/iconSemFoto.gif' alt='preview da imagem'>";
+        }
         
         if($(input).next().attr("for") !== $(input).attr("id")){
             $(input).after(label); //NECESSÁRIO NA HORA DA CRIAÇÃO DO ELEMENTO
         }
         $(input).change(function(){
-            //alert($(this)[0].value);
             $(this).next().text("");
             txt = $(this)[0].value.toString();
             if(txt.length > 20){
                 txt = "..." + txt.substr(txt.length-20);
             }
             $(this).next().append(btn+txt);
+            
+            if($(this).attr("class") === "upImagem"){
+                carregarImagem(this);
+            }
         });
         
         /* NECESSÁRIO POIS O COMBINADOR CSS "+" NÃO ESTÁ FUNCIONANDO DE ACORDO NO FIREFOX */
@@ -233,6 +246,47 @@ function mostraNomeInputFile(){
         });
         $(input).focusout(function(){
             $(this).next().css("background-color", "#FFF");
+        });
+    });
+}
+function carregarImagem(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        var imagem = $(input).next().next();
+//        console.log("1 - "+$(input).next().next().attr("src"));
+//        console.log("2 - "+$("#imgImagem").attr('src'));
+        if($(input).attr('required') === 'required'){
+            imagem = imagem.next();
+        }
+        
+        reader.onload = function (e) {
+            imagem.attr("src", e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+
+    }
+}
+
+function confirmarSenha(){
+    $(".confirmarSenha").each(function(i, input){
+        $(input).keyup(function (e) {
+            var label = $(input).prev();
+            var senha = $(input).prev().prev().prev().val();
+//            console.log(senha);
+//            console.log($(this).val());
+            if(senha === $(this).val()){
+                //console.log(label.html());
+                //console.log(label.html().indexOf("<span>"));
+                if(label.html().indexOf("<span>") !== -1){
+                    label.html(label.html().substring(0, label.html().indexOf("<span>")));
+                }
+            }
+            else{
+                //console.log(label.html());
+                if(label.html().indexOf("<span>") === -1){
+                    label.append("<span>(Não confere)</span>");
+                }
+            }
         });
     });
 }

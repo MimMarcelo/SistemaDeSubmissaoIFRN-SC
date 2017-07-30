@@ -23,7 +23,35 @@ class StatusInscricao{
     }
     
     public static function getTodosStatusInscricao(){
-        return StatusInscricaoDao::getStatusInscricao(0, '');
+        $mensagem = array();
+        $listaStatusInscricao = array();
+        
+        $dados = StatusInscricaoDao::getStatusInscricao(0, '');
+        if($dados == null){
+            $mensagem[] = "Nenhum status de inscricao encontrado!";
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $statusInscricao = new StatusInscricao();
+                    
+                    foreach ($obj as $key => $value) {
+                        $statusInscricao->{$key} = $value;
+                    }
+                    
+                    $listaStatusInscricao[] = $statusInscricao;
+                }
+            } catch (Exception $e) {
+                $listaStatusInscricao = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $listaStatusInscricao;
+        }
     }
     
     public static function getStatusInscricaoPorId($id){

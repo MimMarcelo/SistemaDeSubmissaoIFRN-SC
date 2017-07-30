@@ -19,4 +19,16 @@ class UsuarioDao{
             return null;
         }
     }
+    
+    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pIdNivelAcesso, $pIdStatusInscricao, $pAvaliador, $pImagem, $pIdUsuario){
+        
+        $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pIdNivelAcesso, $pIdStatusInscricao, $pAvaliador, '".$pImagem."', $pIdUsuario);");
+        
+        if($resultado->num_rows > 0){
+            return $resultado;
+        }
+        else{
+            return null;
+        }
+    }
 }

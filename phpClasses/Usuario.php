@@ -14,9 +14,10 @@ class Usuario{
     private $nivelAcesso;
     private $statusInscricao;
     private $avaliador;
+    private $imagem;
     private $trabalhos;
     
-    public function getIdUsuario() {
+    public function getId() {
         return $this->idUsuario;
     }
 
@@ -41,9 +42,9 @@ class Usuario{
     }
 
     public function getNivelAcesso() {
-        return $this->idNivelAcesso;
+        return $this->nivelAcesso;
     }
-
+    
     public function getStatusInscricao() {
         return $this->statusInscricao;
     }
@@ -52,8 +53,75 @@ class Usuario{
         return $this->avaliador;
     }
 
+    public function getImagem() {
+        return $this->imagem;
+    }
+
     public function getTrabalhos() {
         return $this->trabalhos;
+    }
+
+    public function setId($id){
+        $this->idUsuario = $id;
+    }
+    
+    public function setCpf($cpf) {
+        if(strlen($cpf) == 14){
+            $this->cpf = $cpf;
+            return "";
+        }
+        else{
+            return "O valor '".$cpf."' é inválido para CPF";
+        }
+    }
+
+    public function setSenha($senha) {
+        if(strlen($senha) >= 3){
+            $this->senha = $senha;
+            return "";
+        }
+        else{
+            return "A senha deve possuir no mínimo três caracteres";
+        }
+    }
+
+    public function setNome($nome) {
+        $this->nome = $nome;
+    }
+
+    public function setMatricula($matricula) {
+        $this->matricula = $matricula;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setNivelAcesso($nivelAcesso) {
+        if(is_int($nivelAcesso) || is_string($nivelAcesso)){
+            $this->nivelAcesso = NivelAcesso::getNivelAcessoPorId($nivelAcesso);
+        }
+        else{
+            $this->nivelAcesso = $nivelAcesso;
+        }
+    }
+
+    public function setStatusInscricao($statusInscricao) {
+        if(is_int($statusInscricao) || is_string($statusInscricao)){
+            $this->statusInscricao = new StatusInscricao();
+            $this->statusInscricao->setId($statusInscricao);
+        }
+        else{
+            $this->statusInscricao = $statusInscricao;
+        }
+    }
+
+    public function setAvaliador($avaliador) {
+        $this->avaliador = $avaliador;
+    }
+
+    public function setImagem($imagem) {
+        $this->imagem = $imagem;
     }
 
     public function setTrabalhos($trabalhos) {
@@ -75,6 +143,15 @@ class Usuario{
         }
     }
     
+    public function ehAdministrador(){
+        if($this->getNivelAcesso() != null){
+            return $this->getNivelAcesso()->getDescricao() == "Administrador";
+        }
+        else{
+            return false;
+        }
+    }
+
     /**
      * VERIFICA SE O USUÁRIO EXISTE NO BANCO DE DADOS
      * @param String $cpf CPF DO USUÁRIO
@@ -131,5 +208,26 @@ class Usuario{
         }
     }
 
-    
+    public function salvar(){
+        $mensagem = array();
+        
+        $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->nivelAcesso->getId(), $this->statusInscricao->getId(), $this->avaliador, $this->imagem, $this->idUsuario);
+        
+        if($dado == null){
+            $mensagem[] = "Não foi possível cadastrar o usuário";
+        }
+        else{
+            try{
+                while($obj = $dado->fetch_assoc()) {
+                    return $obj["idUsuario"];
+                }
+            }
+            catch (Exception $e){
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+    }
 }    
