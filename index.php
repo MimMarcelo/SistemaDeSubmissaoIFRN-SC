@@ -1,7 +1,6 @@
 <?php
-    require dirname(__FILE__).'/phpClasses/Usuario.php';
-    session_start();
-    if(isset($_SESSION["usuario"])){
+    require dirname(__FILE__).'/includes/sessaoDeUsuario.php';
+    if(!empty($usuario->getId())){//SE JÁ ESTIVER LOGADO, REDIRECIONAR PARA A TELA DE INÍCIO
         header("location: inicio.php");
     }
 ?>
@@ -19,19 +18,10 @@
     </head>
     <body>
         <section id="conteudo">
-            <?php include './includes/popup.php'; 
-                /*
-                 * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
-                 */
-                if(isset($_SESSION["mensagem"])){
-                    echo "<script>abrePopup('Atenção', '".$_SESSION["mensagem"]."');</script>";
-                    $_SESSION["mensagem"] = null;
-                }
-            ?>
             <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
             <nav id="paginaLogin">
                 <div>
-                    <form action="<?php echo htmlspecialchars("phpFuncoes/login.php"); ?>" method="post" autocomplete="off" class="sincrono">
+                    <form action="<?php echo htmlspecialchars("phpFuncoes/login.php"); ?>" method="post" autocomplete="off">
                         <img id="logo" src="img/logo250.png" alt="Logomarca do Sistema de Submissão do IFRN-Santa Cruz">
                         <label for="txtCpf">CPF</label>
                         <input type="text" id="txtCpf" name="cpf" class="cpf" autofocus required>
@@ -39,13 +29,13 @@
                         <input type="password" id="pasSenha" name="senha" required>
                         <input type="submit" class="botao" value="Acessar">
 
-                        <a href="index.html">Cadastre-se</a>
+                        <a href="cadastrarUsuario.php">Cadastre-se</a>
                         <a href="index.html">Esqueceu sua senha?</a>
 
                     </form>
                 </div>
                 <div>
-                    <a id="texto" href="index.html">CADASTRE-SE</a>
+                    <a id="texto" href="cadastrarUsuario.php">CADASTRE-SE</a>
                     <a id="texto" href="inscricaoUsuario.php">INSCREVER-SE EM EVENTO </a>
                     <a id="texto" href="index.html">SUBMETER TRABALHOS </a>
                     <a id="texto" href="index.php" >CADASTRAR EVENTO </a>

@@ -26,4 +26,16 @@ class _Conexao{
         $con->close();
         return $resultado;
     }
+    
+    public static function executarVarias($sql){
+        $obj = new _Conexao();
+        $con = $obj->getConexao();
+        $con->multi_query($sql);
+        while ($con->next_result()) { }
+        $resultado = $con->store_result();
+        
+        $con->close();
+        
+        return $resultado;
+    }
 }

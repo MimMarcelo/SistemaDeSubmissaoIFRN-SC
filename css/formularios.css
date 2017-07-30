@@ -30,6 +30,10 @@ form span{/* PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
     font-size: 25px;
     vertical-align: top;
 }
+form label > span{
+    font-size: 12px;
+    font-weight: normal;
+}
 label, button, input[type="button"], input[type="submit"], input[type="reset"]{/* PARA SEPARAR OS CAMPOS */
     margin-top: 10px;
 }
@@ -44,7 +48,7 @@ label{
     border:1px solid #EEE;
     display: block;
     font-weight: 400;
-    width: 100%;
+    width: 90%;
     box-sizing: border-box;
 }
 input, select, textarea, button{
@@ -158,8 +162,9 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
 ------------------------- OUTRAS TAGS
 */
 form img{
-    width: 100%;
+    width: 90%;
     height: auto;
+    border-radius: 7px;
 }
 form a{
     color: #3A5;

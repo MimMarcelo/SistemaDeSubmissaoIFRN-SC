@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     //QUANDO UMA OPÇÃO DO MENU É CLICADA
-    $("nav a").click(function( e ){
+    $("nav ul li a").click(function( e ){
             e.preventDefault();//EVITA A AÇÃO PADRÃO DA TAG, QUE NO CASO SERIA: REDIRECIONAR A PÁGINA
             
             var href = $(this).attr('href');//PEGA O ENDEREÇO DO href DA TAG

@@ -22,10 +22,47 @@ class NivelAcesso{
         $this->descricao = $descricao;
     }
     
+    /**
+     * CONSULTA TODOS OS NÍVEIS DE ACESSO REGISTRADOS NO BANCO DE DADOS
+     * @return array de objetos NivelAcesso
+     */
     public static function getTodosNiveisAcesso(){
-        return getNivelAcessoPorId(0);
+        $mensagem = array();
+        $niveisAcesso = array();
+        
+        $dados = NivelAcessoDao::getNivelAcesso(0, '');
+        if($dados == null){
+            $mensagem[] = "Nenhum nível de acesso encontrado!";
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $nivelAcesso = new NivelAcesso();
+                    
+                    foreach ($obj as $key => $value) {
+                        $nivelAcesso->{$key} = $value;
+                    }
+                    
+                    $niveisAcesso[] = $nivelAcesso;
+                }
+            } catch (Exception $e) {
+                $niveisAcesso = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $niveisAcesso;
+        }
     }
     
+    /**
+     * CONSULTA NÍVEL DE ACESSO ATRAVÉS DO ID
+     * @param INT $id ID DO NÍVEL DE ACESSO A SER CONSULTADO
+     * @return NivelAcesso
+     */
     public static function getNivelAcessoPorId($id){
         $mensagem = array();
         $nivelAcesso = null;

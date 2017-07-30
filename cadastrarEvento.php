@@ -1,3 +1,13 @@
+<?php
+    require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
+    
+    loginObrigatorio();//LOGIN OBRIGATÓRIO
+    
+    if(!$usuario->ehAdministrador() && !empty($usuario->getId())){//SE ESTIVER LOGADO E
+        header("location: inicio.php");//NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>

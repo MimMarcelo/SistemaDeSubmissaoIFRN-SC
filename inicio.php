@@ -1,3 +1,8 @@
+<?php
+    require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
+
+    loginObrigatorio();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
