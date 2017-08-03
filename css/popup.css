@@ -45,7 +45,7 @@
     color: #000;
 }
 
-#fecharPopup { /* BOTÃO DE FECHAR */
+#popup img.fecharPopup { /* BOTÃO DE FECHAR */
     width: 25px;
     height: auto;
     color: #FFE;
@@ -55,12 +55,21 @@
     box-sizing: border-box;
 }
 
-#fecharPopup:hover,
-#fecharPopup:focus { /* QUANDO O MOUSE PASSAR EM CIMA, OU ESTIVER EM FOCO */
+#popup img.fecharPopup:hover,
+#popup img.fecharPopup:focus { /* QUANDO O MOUSE PASSAR EM CIMA, OU ESTIVER EM FOCO */
     border: 2px solid #FFF;
     border-radius: 12px;
     color: #000;
     text-decoration: none;
     cursor: pointer;
 }
-
+#popup input[type="submit"], #popup input[type="button"]{
+    width: 48%;
+}
+#popup input[type="button"].fecharPopup {
+    background-color: #B00;
+    margin-left: 3px;
+}
+#popup input[type="button"].fecharPopup:hover {
+    background-color: #900;
+}

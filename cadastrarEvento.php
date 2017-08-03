@@ -1,13 +1,3 @@
-<?php
-    require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
-    
-    loginObrigatorio();//LOGIN OBRIGATÓRIO
-    
-    if(!$usuario->ehAdministrador() && !empty($usuario->getId())){//SE ESTIVER LOGADO E
-        header("location: inicio.php");//NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
-    }
-    
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -17,8 +7,17 @@
         <meta name="description" content="Formulario para fazer os cadastros de eventos para o IFRN-SC">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - Cadastrar evento</title>
-        <?php include './includes/css.php'; ?>
-        <?php include './includes/javascript.php'; ?>
+        <?php 
+        include './includes/css.php';
+        include './includes/javascript.php';
+        require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
+
+        loginObrigatorio(); //LOGIN OBRIGATÓRIO
+
+        if (!$usuario->ehAdministrador() && !empty($usuario->getId())) {//SE ESTIVER LOGADO E
+            header("location: inicio.php"); //NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
+        }
+        ?>
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>

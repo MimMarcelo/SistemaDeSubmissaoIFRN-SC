@@ -179,3 +179,25 @@ form a:hover{
     color: #333;
     text-decoration: underline;
 }
+/*
+------------------------- FORMS DENTRO DE TABELA
+*/
+td form{
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+td form input[type="image"]{
+    padding: 0;
+    margin: 0;
+    width: 25px;
+    height: auto;
+    border: none;
+    border-radius: 12px;
+}
+td form input[type="image"]:hover{
+    padding: 2px;
+    background-color: #333;
+}

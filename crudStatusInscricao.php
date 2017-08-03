@@ -1,8 +1,3 @@
-<?php
-    require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
-    
-    loginObrigatorio();//LOGIN OBRIGATÓRIO
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -12,8 +7,17 @@
         <meta name="description" content="Página inicial do sistema de submissão de trabalhos do IFRN campus Santa Cruz">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - CRUD Status Inscrição</title>
-        <?php include './includes/css.php'; ?>
-        <?php include './includes/javascript.php'; ?>
+        <?php 
+        include './includes/css.php';
+        include './includes/javascript.php';
+        require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
+
+        loginObrigatorio(); //LOGIN OBRIGATÓRIO
+
+        if (!$usuario->ehAdministrador()) {//SE
+            header("location: inicio.php"); //NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
+        }
+        ?>
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
@@ -21,67 +25,78 @@
         
         <div id="carregaPagina">
             <section id="conteudo">
-                <?php include './includes/popup.php'; 
-                    /*
-                     * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
-                     */
-                ?>
-                <?php
-                    //SESSAO PARA IMPORTS
-                    require_once dirname(__FILE__).'/phpClasses/StatusInscricao.php';
-                ?>
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
                 <div id="mensagem"></div>
-                <h2>Título</h2>
-                <p id="content">Exemplo de como consultar o banco de dados</p>
-                <p>Lista todos os Status de inscrição cadastrados</p>
+                <h2>Gerenciar Status Inscrição</h2>
+                <button src="img/iconEditar.png"
+                     onclick='abrePopupForm("Criar Status Inscrição",
+                                 "Criar", "phpFuncoes/cadastrarStatusInscricao.php",
+                                 <?php
+                                 echo json_encode(array(
+                                     "pStatusInscricao"=>""));
+                                 ?>,
+                                 {
+                                     pStatusInscricao:["text", "Status inscrição"]
+                                 });
+                                 return false;'>
+                    Criar Status Inscrição
+                </button>
                 <div id="atualizavel">
-                    <?php
-                        $resultado = StatusInscricao::getTodosStatusInscricao();
-                        if($resultado != null){
-                            echo "<ul>";
-                            while($obj = $resultado->fetch_object()){
-                                echo "<li>Id: ".$obj->idStatusInscricao." - Descrição: ".$obj->descricao."</li>";
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Descrição</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $listaStatusInscricao = StatusInscricao::getTodosStatusInscricao();
+                            if($listaStatusInscricao != null){
+                                foreach($listaStatusInscricao as $status){
+                            ?>
+                                    <tr>
+                                        <td><?php echo $status->getId() ?></td>
+                                        <td><?php echo $status->getStatusInscricao() ?></td>
+                                        <td>
+                                            <span>
+                                                <img src="img/iconEditar.png"
+                                                     onclick='abrePopupForm("Editar Status Inscrição",
+                                                                 "Editar", "phpFuncoes/editarStatusInscricao.php",
+                                                                 <?php
+                                                                 echo json_encode(array(
+                                                                     "pIdStatusInscricao"=>$status->getId(),
+                                                                     "pStatusInscricao"=>$status->getStatusInscricao()));
+                                                                 ?>,
+                                                                 {
+                                                                     pIdStatusInscricao:["hidden", ""],
+                                                                     pStatusInscricao:["text", "Status inscrição"]
+                                                                 });
+                                                                 return false;'>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <img src="img/iconFechar.png"
+                                                     onclick='abrePopupConfirm("Confirma a exclusão do status \"<?php echo $status->getStatusInscricao(); ?>\"?",
+                                                                 "phpFuncoes/excluirStatusInscricao.php",
+                                                                 "<?php echo $status->getId(); ?>",
+                                                                 "<?php echo $status->getStatusInscricao(); ?>")'>
+                                            </span>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
                             }
-                            echo "</ul>";
-                        }
-                    ?>
+                            else{
+                                echo "Nenhum registro encontrado!";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-                <p>Formulário para criar novo Status Inscrição</p>
-                <form action="phpFuncoes/cadastrarStatusInscricao.php" method="post">
-                    <label for="txtNomeStatusInscricao">Nome do Status a ser criado: </label>
-                    <input type="text" id="txtNomeStatusInscricao" name="pStatusInscricao" placeholder="Novo Status">
-                    <input type="submit" value="Salvar">
-                </form>
-                <p>Formulário para editar Status Inscrição</p>
-                <form action="phpFuncoes/editarStatusInscricao.php" method="post">
-                    <label for="sltStatusInscricao">Selecione o Status a ser modificado: </label>
-                    <select id="sltStatusInscricao" name="pIdStatusInscricao">
-                        <option value="">Selecione</option>
-                        <?php
-                            $resultado = StatusInscricao::getTodosStatusInscricao();
-                            while($obj = $resultado->fetch_object()){
-                                echo "<option value='".$obj->idStatusInscricao."'>".$obj->descricao."</option>";
-                            }
-                        ?>
-                    </select>
-                    <label for="txtNovoNomeStatusInscricao">Informe o status correto</label>
-                    <input type="text" id="txtNovoNomeStatusInscricao" name="pStatusInscricao" placeholder="Novo Status">
-                    <input type="submit" value="Salvar">
-                </form>
-                <p>Formulário para excluir Status Inscrição</p>
-                <form action="phpFuncoes/excluirStatusInscricao.php" method="post">
-                    <label for="sltStatusInscricao">Selecione o Status a ser excluído: </label>
-                    <select id="sltStatusInscricao" name="pIdStatusInscricao">
-                        <?php
-                            $resultado = StatusInscricao::getTodosStatusInscricao();
-                            while($obj = $resultado->fetch_object()){
-                                echo "<option value='".$obj->idStatusInscricao."'>".$obj->descricao."</option>";
-                            }
-                        ?>
-                    </select>
-                    <input type="submit" value="Excluir">
-                </form>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>

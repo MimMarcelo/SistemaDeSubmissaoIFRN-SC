@@ -1,0 +1,53 @@
+table{
+    width: 100%;
+}
+table thead{
+    background-color: #333;
+}
+
+table tbody{
+    background-color: #EEE;
+}
+table td, table th{
+    border-radius: 2px;
+    padding: 5px;
+}
+table tbody tr:hover{
+    background-color: #AAA;
+}
+table td{
+    color: #333;
+}
+td span{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+td span img{
+    padding: 0;
+    margin: 0;
+    width: 25px;
+    height: auto;
+    border: none;
+    border-radius: 12px;
+    box-sizing: border-box;
+}
+td span img:hover{
+    padding: 2px;
+    background-color: #333;
+}
+/*
+------------------------- BORDAS ARREDONDADAS DA TABELA
+*/
+table thead tr th:first-child{
+    border-top-left-radius: 10px;
+}
+table thead tr th:last-child{
+    border-top-right-radius: 10px;
+}
+table tbody tr:last-child td:first-child{
+    border-bottom-left-radius: 10px;
+}
+table tbody tr:last-child td:last-child{
+    border-bottom-right-radius: 10px;
+}

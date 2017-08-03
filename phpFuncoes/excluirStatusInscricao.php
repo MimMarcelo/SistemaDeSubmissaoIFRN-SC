@@ -3,27 +3,34 @@
     require dirname(__FILE__).'/../phpClasses/StatusInscricao.php';
     
     $mensagem = array();
-    $titulo = "";
-
-    if(isset($_POST["pIdStatusInscricao"])){
-        if(empty($_POST["pIdStatusInscricao"])){
-            $mensagem[] = "Informe um status de inscricao válido!";
-            $titulo = "Atenção";
+    $titulo = "Atenção";
+    $pId = 0;
+    $status = "";
+    
+    if(isset($_POST["pId"])){
+        if(empty($_POST["pId"])){
+            $mensagem[] = "Informe um status de inscrição válido!";
         }
     }
     else{
         $mensagem[] = "Status de inscricao não informado!";
-        $titulo = "Atenção";
     }
     
     if(count($mensagem) == 0){
-        if(StatusInscricao::excluirStatusInscricao($_POST["pIdStatusInscricao"]) === TRUE){
-            $mensagem[] = "Status Id: ".$_POST["pIdStatusInscricao"]." excluído com sucesso!";
+        if(isset($_POST["pDesc"])){
+            if(empty($_POST["pDesc"])){
+                $status = $_POST["pId"];
+            }
+            else{
+                $status = $_POST["pDesc"];
+            }
+        }
+        if(StatusInscricao::excluirStatusInscricao($_POST["pId"]) === TRUE){
+            $mensagem[] = "Status: '".$status."' excluído com sucesso!";
             $titulo = "Sucesso";
         }
         else{
-            $mensagem[] = "Erro ao tentar excluir: ".$_POST["pIdStatusInscricao"];
-            $titulo = "Atenção";
+            $mensagem[] = "Erro ao tentar excluir: '".$status."'";
         }
     }
     
