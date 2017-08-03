@@ -7,6 +7,7 @@
     border-width: 0;
     font-size: 16px;
     font-family: sans-serif;
+    box-sizing: border-box;
 }
 body{
     background-color: #444;
@@ -37,4 +38,13 @@ a{
     display: block;
     color: #383;
     font-size: 16px;
+}
+@media screen and (max-width: 600px){
+    *{
+        padding: 3px;
+        margin: 0;
+    }
+    body, #conteudo{
+        padding: 0;
+    }
 }

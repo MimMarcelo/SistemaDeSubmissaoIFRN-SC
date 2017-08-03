@@ -65,9 +65,9 @@
                         <select id="sltStatusInscricao" name="pStatusInscricao">
                             <option disabled selected>Selecione</option>
                             <?php
-                            $listaStatusInscricao = StatusInscricao::getTodosStatusInscricao();
-                            if (is_array($listaStatusInscricao)) {
-                                foreach ($listaStatusInscricao as $statusInscricao) {
+                            $listaStatusTrabalho = StatusInscricao::getTodosStatusInscricao();
+                            if (is_array($listaStatusTrabalho)) {
+                                foreach ($listaStatusTrabalho as $statusInscricao) {
                                     echo "<option value='" . $statusInscricao->getId() . "'>" . $statusInscricao->getStatusInscricao() . "</option>";
                                 }
                             }
