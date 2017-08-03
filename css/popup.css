@@ -1,8 +1,7 @@
 /*
 ------------------------- CONFIGURAÇÕES GERAIS
 */
-#popup { /* ESSA É A DIV QUE FICA MEIO TRANSPARENTE ATRÁS DA TELA */
-    
+#popup { /* ESSA É A DIV QUE FICA MEIO TRANSPARENTE ATRÁS DA TELA */    
     display: none; /* POR PADRÃO NÃO APARECE NA PÁGINA */
     position: fixed; /* IGNORAR POSIÇÃO LOCAL */
     padding-top: 100px; /* Location of the box */
@@ -12,6 +11,7 @@
     overflow: auto; /* PERMITIR SCROLL SE FOR NECESSÁRIO */
     background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
     background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
+    box-sizing: border-box;
 }
 
 #popup > div { /* POPUP */
@@ -21,7 +21,8 @@
     border-radius: 10px;
     width: 50%; /* LARGURA DA POPUP */
     animation-name: animatetop; /* NOME DA ANIMAÇÃO DEFINIDA ABAIXO */
-    animation-duration: 0.5s /* TEMPO DE EXECUÇÃO DA ANIMAÇÃO */
+    animation-duration: 0.5s; /* TEMPO DE EXECUÇÃO DA ANIMAÇÃO */
+    box-sizing: border-box;
 }
 
 @keyframes animatetop {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE CIMA PARA A POSIÇÃO DEFINIDA) */
@@ -72,4 +73,27 @@
 }
 #popup input[type="button"].fecharPopup:hover {
     background-color: #900;
+}
+/*
+------------------------- PARA TELAS PEQUENAS
+*/
+@media screen and (max-width: 600px){
+    #popup, #popup > div, #popup > div > header{
+        padding: 0;
+        margin: auto;
+        box-sizing: border-box;
+    }
+    #popup > div { /* POPUP */
+        width: 90%; /* LARGURA DA POPUP */
+    }
+    #popup > div > header{
+        padding: 10px;
+    }
+    #popup form{
+        width: 100%;
+        background-color: transparent;
+    }
+    #popup input[type="submit"], #popup input[type="button"]{
+        width: 90%;
+    }
 }

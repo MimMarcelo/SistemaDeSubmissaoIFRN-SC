@@ -26,9 +26,8 @@
         <div id="carregaPagina">
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-                <div id="mensagem"></div>
                 <h2>Gerenciar Status Inscrição</h2>
-                <button src="img/iconEditar.png"
+                <button 
                      onclick='abrePopupForm("Criar Status Inscrição",
                                  "Criar", "phpFuncoes/cadastrarStatusInscricao.php",
                                  <?php
@@ -53,9 +52,9 @@
                         </thead>
                         <tbody>
                             <?php
-                            $listaStatusInscricao = StatusInscricao::getTodosStatusInscricao();
-                            if($listaStatusInscricao != null){
-                                foreach($listaStatusInscricao as $status){
+                            $listaStatusTrabalho = StatusInscricao::getTodosStatusInscricao();
+                            if($listaStatusTrabalho != null){
+                                foreach($listaStatusTrabalho as $status){
                             ?>
                                     <tr>
                                         <td><?php echo $status->getId() ?></td>
@@ -91,7 +90,7 @@
                                 }
                             }
                             else{
-                                echo "Nenhum registro encontrado!";
+                                echo "<tr><td colspan='4'>Nenhum registro encontrado!</td></tr>";
                             }
                             ?>
                         </tbody>

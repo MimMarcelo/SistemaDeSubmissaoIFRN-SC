@@ -3,20 +3,15 @@
     require_once dirname(__FILE__).'/../phpDao/StatusTrabalhoDao.php';
 class StatusTrabalho {
 
-    private $id;
+    private $idStatusTrabalho;
     private $descricao;
 
-    function __construct($id, $descricao){
-            $this->id = $id;
-            $this->descricao = $descricao;
-    }
-
     public function getId(){
-            return $this->id;
+            return $this->idStatusTrabalho;
     }
 
     public function setId($id){
-            $this->id = $id;
+            $this->idStatusTrabalho = $id;
     }
 
     public function getDescricao(){
@@ -28,7 +23,35 @@ class StatusTrabalho {
     }
 
     public static function getTodosStatusTrabalho(){
-        return StatusTrabalhoDao::getStatusTrabalho(0, '');
+        $mensagem = array();
+        $listaStatusTrabalho = array();
+        
+        $dados = StatusTrabalhoDao::getStatusTrabalho(0, '');
+        if($dados == null){
+            $mensagem[] = "Nenhum status de inscricao encontrado!";
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $statusTrabalho = new StatusTrabalho();
+                    
+                    foreach ($obj as $key => $value) {
+                        $statusTrabalho->{$key} = $value;
+                    }
+                    
+                    $listaStatusTrabalho[] = $statusTrabalho;
+                }
+            } catch (Exception $e) {
+                $listaStatusTrabalho = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $listaStatusTrabalho;
+        }
     }
     
     public static function getStatusTrabalho($id, $statusTrabalho) {

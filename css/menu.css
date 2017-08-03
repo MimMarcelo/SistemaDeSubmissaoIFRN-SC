@@ -37,3 +37,22 @@ nav a:hover{
 #paginaLogin > div:first-child{
     margin-top: -50px;
 }
+@media only screen and (max-width: 600px){
+    #paginaLogin{
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+    }
+    #paginaLogin > div{
+        display: inline-block;
+        width: 100%;
+    }
+    #paginaLogin > div:last-child{
+        display: none;
+    }
+    #paginaLogin > div:first-child{
+        margin: 0;
+        background-color: transparent;
+    }
+}

@@ -13,6 +13,10 @@
         require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
 
         loginObrigatorio(); //LOGIN OBRIGATÓRIO
+        
+        if (!$usuario->ehAdministrador()) {//SE
+            header("location: inicio.php"); //NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
+        }
         ?>
     </head>
     <body>
@@ -21,60 +25,79 @@
         
         <div id="carregaPagina">
             <section id="conteudo">
-                <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-                <?php include './includes/popup.php'; ?>
                 <?php
-                    //SESSAO PARA IMPORTS
                     require_once dirname(__FILE__).'/phpClasses/StatusTrabalho.php';
                 ?>
-                <h2>CRUDs para Status Trabalho</h2>
-                <p>Lista todos Status já cadastrados</p>
+                <h2>Gerenciar Status Trabalho</h2>
+                <button 
+                     onclick='abrePopupForm("Criar Status Trabalho",
+                                 "Criar", "phpFuncoes/cadastrarStatusTrabalho.php",
+                                 <?php
+                                 echo json_encode(array(
+                                     "pStatusTrabalho"=>""));
+                                 ?>,
+                                 {
+                                     pStatusTrabalho:["text", "Status trabalho"]
+                                 });
+                                 return false;'>
+                    Criar Status Trabalho
+                </button>
                 <div id="atualizavel">
-                    <?php
-                        $resultado = StatusTrabalho::getTodosStatusTrabalho();
-                        if($resultado != null){
-                            echo "<ul>";
-                            while($obj = $resultado->fetch_object()){
-                                echo "<li>Id: ".$obj->idStatusTrabalho." - Descrição: ".$obj->descricao."</li>";
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Descrição</th>
+                                <th>Editar</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $listaStatusTrabalho = StatusTrabalho::getTodosStatusTrabalho();
+                            if($listaStatusTrabalho != null){
+                                foreach($listaStatusTrabalho as $status){
+                            ?>
+                                    <tr>
+                                        <td><?php echo $status->getId() ?></td>
+                                        <td><?php echo $status->getDescricao() ?></td>
+                                        <td>
+                                            <span>
+                                                <img src="img/iconEditar.png"
+                                                     onclick='abrePopupForm("Editar Status Trabalho",
+                                                                 "Editar", "phpFuncoes/editarStatusTrabalho.php",
+                                                                 <?php
+                                                                 echo json_encode(array(
+                                                                     "pIdStatusTrabalho"=>$status->getId(),
+                                                                     "pStatusTrabalho"=>$status->getDescricao()));
+                                                                 ?>,
+                                                                 {
+                                                                     pIdStatusTrabalho:["hidden", ""],
+                                                                     pStatusTrabalho:["text", "Status trabalho"]
+                                                                 });
+                                                                 return false;'>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <img src="img/iconFechar.png"
+                                                     onclick='abrePopupConfirm("Confirma a exclusão do status \"<?php echo $status->getDescricao(); ?>\"?",
+                                                                 "phpFuncoes/excluirStatusTrabalho.php",
+                                                                 "<?php echo $status->getId(); ?>",
+                                                                 "<?php echo $status->getDescricao(); ?>")'>
+                                            </span>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
                             }
-                            echo "</ul>";
-                        }
-                    ?>
+                            else{
+                                echo "<tr><td colspan='4'>Nenhum registro encontrado!</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-                <p>Formulário para criar novo Status Trabalho</p>
-                <form action="phpFuncoes/cadastrarStatusTrabalho.php" method="post">
-                    <label for="txtNomeStatusTrabalho">Nome do Status a ser criado: </label>
-                    <input type="text" id="txtNomeStatusTrabalho" name="pStatusTrabalho" placeholder="Novo Status">
-                    <input type="submit" value="Salvar">
-                </form>
-                <p>Formulário para editar Status Trabalho</p>
-                <form action="phpFuncoes/editarStatusTrabalho.php" method="post">
-                    <label for="sltStatusTrabalho">Selecione o Status a ser modificado: </label>
-                    <select id="sltStatusTrabalho" name="pIdStatusTrabalho">
-                        <?php
-                            $resultado = StatusTrabalho::getTodosStatusTrabalho();
-                            while($obj = $resultado->fetch_object()){
-                                echo "<option value='".$obj->idStatusTrabalho."'>".$obj->descricao."</option>";
-                            }
-                        ?>
-                    </select>
-                    <label for="txtNovoNomeStatusTrabalho">Informe a nova descrição do Status: </label>
-                    <input type="text" id="txtNovoNomeStatusTrabalho" name="pStatusTrabalho" placeholder="Nova descrição">
-                    <input type="submit" value="Salvar">
-                </form>
-                <p>Formulário para excluir Status Trabalho</p>
-                <form action="phpFuncoes/excluirStatusTrabalho.php" method="post">
-                    <label for="sltStatusTrabalho">Selecione o Status a ser excluído: </label>
-                    <select id="sltStatusTrabalho" name="pIdStatusTrabalho">
-                        <?php
-                            $resultado = StatusTrabalho::getTodosStatusTrabalho();
-                            while($obj = $resultado->fetch_object()){
-                                echo "<option value='".$obj->idStatusTrabalho."'>".$obj->descricao."</option>";
-                            }
-                        ?>
-                    </select>
-                    <input type="submit" value="Excluir">
-                </form>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>
