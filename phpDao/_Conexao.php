@@ -17,6 +17,7 @@ class _Conexao{
     public static function executar($sql){
         $obj = new _Conexao();
         $con = $obj->getConexao();
+        $con->query("SET NAMES 'utf8'");
         $resultado = $con->query($sql);
         $con->close();
         return $resultado;

@@ -1,9 +1,3 @@
-<?php
-    require dirname(__FILE__).'/includes/sessaoDeUsuario.php';
-    if(!empty($usuario->getId())){//SE JÁ ESTIVER LOGADO, REDIRECIONAR PARA A TELA DE INÍCIO
-        header("location: inicio.php");
-    }
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -13,8 +7,15 @@
         <meta name="keywords" content="usuario, ifrn, login">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - Login</title>
-        <?php include './includes/css.php'; ?>
-        <?php include './includes/javascript.php'; ?>
+        <?php 
+            include './includes/css.php';
+            include './includes/javascript.php';
+        
+            require dirname(__FILE__).'/includes/sessaoDeUsuario.php';
+            if(!empty($usuario->getId())){//SE JÁ ESTIVER LOGADO, REDIRECIONAR PARA A TELA DE INÍCIO
+                header("location: inicio.php");
+            }
+        ?>
     </head>
     <body>
         <section id="conteudo">
@@ -29,13 +30,13 @@
                         <input type="password" id="pasSenha" name="senha" required>
                         <input type="submit" class="botao" value="Acessar">
 
-                        <a href="cadastrarUsuario.php">Cadastre-se</a>
+                        <a href="cadastrarUsuario.php" title="Cadastre-se">Cadastre-se</a>
                         <a href="index.html">Esqueceu sua senha?</a>
 
                     </form>
                 </div>
                 <div>
-                    <a id="texto" href="cadastrarUsuario.php">CADASTRE-SE</a>
+                    <a id="texto" href="cadastrarUsuario.php" title="Cadastre-se">CADASTRE-SE</a>
                     <a id="texto" href="inscricaoUsuario.php">INSCREVER-SE EM EVENTO </a>
                     <a id="texto" href="index.html">SUBMETER TRABALHOS </a>
                     <a id="texto" href="index.php" >CADASTRAR EVENTO </a>

@@ -193,8 +193,9 @@
             $aux = $usuario->salvar();
             if(!is_array($aux)){
                 $usuario->setId($aux);
-                move_uploaded_file($foto["tmp_name"], "../img/fotosUsuarios/".$nomeImagem);
-                
+                if(!move_uploaded_file($foto["tmp_name"], "../img/fotosUsuarios/".$nomeImagem)){
+                    $mensagem[] = "Erro no envio da imagem";
+                }
                 session_start();
                 
                 //SE JÁ ESTIVER LOGADO COMO ADMINISTRADOR
@@ -204,16 +205,16 @@
                         if($administrador->ehAdministrador()){
 //                            $_SESSION["mensagem"] = "Usuário: ";$usuario->getNome()." cadastrado com sucesso!";
 //                            echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
-                             $mensagem[] = "Usuário: ".$usuario->getNome()." cadastrado com sucesso!";
-                            echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
-                            exit();
+                            $mensagem[] = "Usuário: ".$usuario->getNome()." cadastrado com sucesso!";
+                            echo json_encode(array("mensagem" => $mensagem, "titulo" => "Sucesso"));
                         }
                     }
                 }
-                
-                $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
-                $_SESSION["mensagem"] = "Usuário: ";$usuario->getNome()." cadastrado com sucesso!";
-                echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
+                else{
+                    $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
+                    $_SESSION["mensagem"] = "Usuário: ";$usuario->getNome()." cadastrado com sucesso!";
+                    echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
+                }
             }
             else{
                 $mensagem[] = $aux;

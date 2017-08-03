@@ -1,8 +1,3 @@
-<?php
-    require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
-    
-    loginObrigatorio();//LOGIN OBRIGATÓRIO
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -12,8 +7,13 @@
         <meta name="description" content="Página inicial do sistema de submissão de trabalhos do IFRN campus Santa Cruz">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - CRUD Status Trabalho</title>
-        <?php include './includes/css.php'; ?>
-        <?php include './includes/javascript.php'; ?>
+        <?php 
+        include './includes/css.php';
+        include './includes/javascript.php';
+        require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
+
+        loginObrigatorio(); //LOGIN OBRIGATÓRIO
+        ?>
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
