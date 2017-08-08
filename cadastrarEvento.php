@@ -25,195 +25,59 @@
         
         <div id="carregaPagina">
             <section id="conteudo">
-                <?php include './includes/popup.php'; 
-                    /*
-                     * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
-                     */
+                <?php
+                    require_once dirname(__FILE__).'/phpClasses/Evento.php';
                 ?>
+                <h2>Cadastrar evento</h2>
+                <form action="phpFuncoes/cadastrarEvento.php" method="post">
+                    <label for="sltEventoPrincipal">Evento principal ou subevento</label>
+                    <select id="sltEventoPrincipal" name="pEventoPrincipal" autofocus required>
+                        <option value="0">Principal</option>
+                        <?php
+                        $listaEventos = Evento::getTodosEventos();
+                        if($listaEventos != null){
+                            foreach($listaEventos as $evento){
+                                echo "<option value='".$evento->getIdEvento()."'>".$evento->getNome()."</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                    <label for="txtNome">Nome do Evento</label>
+                    <input type="text" id="txtNome" name="pNome" placeholder="Nome do evento" required>
+                    <label for="txtDescricao">Descrição</label>
+                    <textarea id="txtDescricao" name="pDescricao" placeholder="Faça um resumo curto sobre o evento..." rows="10" required></textarea>
+                    <label for="txtLocal">Local do evento</label>
+                    <input type="text" id="txtLocal" name="pLocal" placeholder="Local" required>
+                    <label for="txtNumeroVagas">Numero de vagas</label>
+                    <input type="number" id="txtNumeroVagas" name="pNumeroVagas" placeholder="0 para ilimitado" min="0" required>
+                    <label for="txtLogo">Logo do evento</label>
+                    <input type="file" id="txtLogo" name="pImagem">
 
-            <form action="php/CadastrarEvento.php" method="post">
-                <h2>Cadastro de Eventos</h2>
-                <label for="txtNome">Nome do Evento:</label>
-                <input type="text" id="txtNome" name="pNome" placeholder="Evento">
-                <label for="txtDescricao">Descrição</label>
-                <textarea id="txtDescricao" name="pDescricao" title="Faça um resumo curto sobre o evento..." rows="10"></textarea>
-                <label for="txtLocal">Local do evento</label>
-                <input type="text" id="txtLocal" name="plocal" placeholder="local">
-                <label for="txtLogo">Logo do evento</label>
-                <input name="imagem" type="file" id="txtLogo"  name="pLogo" size="30">
-                <label for="txtNumeroVagas">Numero de vagas</label>
-                <input type="number" id="txtNumeroVagas" name="pNumeroVagas" placeholder="Numero de Vagas">
-
-                <!-- inicio das inscriçoes -->
-                <label for="sltII">Data de inicio das inscrições:</label>
-                <!-- diaII é o Dia em que Inicia as Inscriçoes-->
-                <select id="sltdiaII"  name="pdiaII">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesII"  name="pMesII">
-                    <!-- mesII é o Mes em que Inicia as Inscriçoes-->
-                    <?php
-                        $mesesII = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesII[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoII" name="pAnoII">
-                    <!-- anoII é o Ano em que Inicia as Inscriçoes-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <!-- fim das inscriçoes -->
-                <label for="sltFI">Data de termino das inscrições:</label>
-                <!-- diaFI é o Dia em que terminam as Inscriçoes-->
-                <select id="sltdiaFI"  name="pdiaFI">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesFI" name="pMesFI">
-                    <!-- mesFI é o Mes em que Terminam as Inscriçoes-->
-                    <?php
-                        $mesesFI = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesFI[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoFI" name="pAnoFI">
-                    <!-- anoFI é o Ano em que Inicia as Inscriçoes-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <!-- inicio das submissão -->
-                <label for="sltIS">Data de inicio da submissão:</label>
-                <!-- diaII é o Dia em que Inicia a submissão -->
-                <select id="sltdiaIS" name="pdiaIS">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesIS" name="pMesIS">
-                    <!-- mesIS é o Mes em que Inicia a submissao-->
-                    <?php
-                        $mesesIS = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesIS[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoIS" name="pAnoIS">
-                    <!-- anoII é o Ano em que Inicia a Submissao-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <!-- fim das inscriçoes -->
-                <label for="sltFS">Data de termino da submissão:</label>
-                <!-- diaFI é o Dia em que terminam as Inscriçoes-->
-                <select id="sltdiaFS" name="pdiaFS">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesFS" name="pMesFS">
-                    <!-- mesFI é o Mes em que Terminam as Inscriçoes-->
-                    <?php
-                        $mesesFS = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesFS[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoFI" name="pAnoFI">
-                    <!-- anoFI é o Ano em que Inicia as Inscriçoes-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <!-- inicio do Evento -->
-                <label for="sltIE">Data de inicio do evento:</label>
-                <!-- diaIE é o Dia em que Inicia o Evento-->
-                <select id="sltdiaIE" name="pdiaIE">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesIE" name="pMesIE">
-                    <!-- mesIE é o Mes em que Inicia o evento-->
-                    <?php
-                        $mesesIE = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesIE[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoIE" name="pAnoIE">
-                    <!-- anoIE é o Ano em que Inicia o Evento-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <!-- fim das inscriçoes -->
-                <label for="sltFE">Data de termino do evento:</label>
-                <!-- diaFI é o Dia em que terminam as Inscriçoes-->
-                <select id="sltdiaFE" name="pdiaFE">
-                    <?php
-                        for($i = 1; $i <= 31; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltMesFE" name="pMesFE">
-                    <!-- mesFE é o Mes em que Termina o Evento-->
-                    <?php
-                        $mesesFE= array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
-
-                        for($i = 1; $i <= 12; $i++){
-                            echo "<option value=\"$i\">".$mesesFE[$i-1]."</option>";                            
-                        }
-                    ?>
-                </select>
-                <select id="sltAnoFE" name="pAnoFE">
-                    <!-- anoFE é o Ano em que Inicia as Eevento-->
-                    <?php
-                        for($i = 2017; $i <= 2020; $i++){
-                            echo "<option value=\"$i\">$i</option>";                            
-                        }
-                    ?>
-                </select>
-                <input type="submit" value="Passo seguinte">
-             </form>
+                    <fieldset>
+                        <legend>Realização do evento</legend>
+                        <label for="txtDataInicioEvento">Início</label>
+                        <input type="text" id="txtDataInicioEvento" onchange="dataLimite(this, '#txtDataFimEvento')" name="pDataInicioEvento" class="calendario" required>
+                        <label for="txtDataFimEvento">Fim</label>
+                        <input type="text" id="txtDataFimEvento" name="pDataFimEvento" class="calendario" required>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Inscrições</legend>
+                        <label for="txtDataInicioInscricao">Início</label>
+                        <input type="text" id="txtDataInicioInscricao" onchange="dataLimite(this, '#txtDataFimInscricao')" name="pDataInicioInscricao" class="calendario" required>
+                        <label for="txtDataFimInscricao">Fim</label>
+                        <input type="text" id="txtDataFimInscricao" name="pDataFimInscricao" class="calendario" required>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Submissão de trabalhos</legend>
+                        <label for="txtDataInicioTrabalho">Início</label>
+                        <input type="text" id="txtDataInicioTrabalho" onchange="dataLimite(this, '#txtDataFimTrabalho')" name="pDataInicioTrabalho" class="calendario">
+                        <label for="txtDataFimTrabalho">Fim</label>
+                        <input type="text" id="txtDataFimTrabalho" name="pDataFimTrabalho" class="calendario">
+                    </fieldset>
+                    <input type="submit" value="Cadastrar Evento">
+                 </form>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>

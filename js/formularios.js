@@ -36,7 +36,6 @@ function formularios(){
      */
     $("form").unbind('submit').submit(function(e){
         var href = $(this).attr("action");//PEGA O DESTINO DO FORMULÁRIO
-        var formulario = $(this);
         
         //RESPONSÁVEL POR MUDAR O CONTEÚDO DA PÁGINA SEM RECARREGÁ-LA
         $.ajax({
@@ -49,9 +48,6 @@ function formularios(){
             success: function(data){
                 //console.log(data);
         
-                formulario.each(function(){
-                    this.reset();
-                });        
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
                     
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
@@ -164,9 +160,19 @@ function habilitaCalendarios(){
     $(".calendario").each(function(i, input){
         $(input).mask("99/99/9999");
         $(input).datepicker({
-            showButtonPanel:true
+            showButtonPanel:true,
+            minDate: 0
         });
     });
+}
+/**
+ * DEFINE A DATA MÍNIMA EM CAMPOS DE CALENDÁRIO (PERÍODO)
+ * @param {this} de É ENVIADA A PALAVRA RESERVADA 'this'
+ * @param {#ID_campo_data_fim} ate É ENVIADO O '#' + ID_DO_CAMPO_DA_DATA_FIM
+ * @returns {undefined}
+ */
+function dataLimite(de, ate){
+    $(ate).datepicker("option", "minDate", $(de).datepicker('getDate'));
 }
 /**
  * FAZ COM QUE OS CAMPOS COM A CLASSE .cpf APRESENTEM UMA MÁSCARA PARA PREENCHIMENTO
@@ -219,8 +225,8 @@ function mostraNomeInputFile(){
         $(input).change(function(){
             $(this).next().text("");
             txt = $(this)[0].value.toString();
-            if(txt.length > 20){
-                txt = "..." + txt.substr(txt.length-20);
+            if(txt.length > 16){
+                txt = "..." + txt.substr(txt.length-16);
             }
             $(this).next().append(btn+txt);
             
