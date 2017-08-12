@@ -2,6 +2,9 @@ $(document).ready(function(){
 
     //QUANDO UMA OPÇÃO DO MENU É CLICADA
     $("li>a").click(function( e ){
+            if($(this).attr('target') === "_blank"){
+                return;
+            }
             e.preventDefault();//EVITA A AÇÃO PADRÃO DA TAG, QUE NO CASO SERIA: REDIRECIONAR A PÁGINA
             
             var href = $(this).attr('href');//PEGA O ENDEREÇO DO href DA TAG

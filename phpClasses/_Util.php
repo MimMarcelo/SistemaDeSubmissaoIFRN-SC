@@ -22,6 +22,15 @@ class _Util {
         }
     }
     
+    public static function getDataDoBd($data) {
+        if($data == ''){
+            return $data;
+        }
+        else{
+            return date('d/m/Y', strtotime($data));
+        }
+    }
+    
     public static function periodoValido($inicio, $fim){
         if($inicio > $fim){
             return false;

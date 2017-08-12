@@ -25,6 +25,9 @@
         
         <div id="carregaPagina">
             <section id="conteudo">
+                <?php
+                    require_once dirname(__FILE__).'/phpClasses/StatusInscricao.php';
+                ?>
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
                 <h2>Gerenciar Status Inscrição</h2>
                 <button 

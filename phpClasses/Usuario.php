@@ -1,8 +1,7 @@
 <?php
 
     require_once dirname(__FILE__).'/../phpDao/UsuarioDao.php';
-    require_once dirname(__FILE__).'/StatusInscricao.php';
-    require_once dirname(__FILE__).'/NivelAcesso.php';
+    require_once dirname(__FILE__).'/UsuarioEvento.php';
     
 class Usuario{
     private $idUsuario;
@@ -11,11 +10,11 @@ class Usuario{
     private $nome;
     private $email;
     private $matricula;
-    private $nivelAcesso;
-    private $statusInscricao;
+    private $administrador;
     private $avaliador;
     private $imagem;
     private $trabalhos;
+    private $evento;
     
     public function getId() {
         return $this->idUsuario;
@@ -42,7 +41,7 @@ class Usuario{
     }
 
     public function getNivelAcesso() {
-        return $this->nivelAcesso;
+        return $this->administrador;
     }
     
     public function getStatusInscricao() {
@@ -60,7 +59,17 @@ class Usuario{
     public function getTrabalhos() {
         return $this->trabalhos;
     }
-
+    
+    public function getEvento($idEvento){
+        if($this->evento == null || !is_object($this->evento)){
+            $this->evento = new UsuarioEvento();
+        }
+        if($this->evento->getIdEvento() != $idEvento){
+            $this->evento = UsuarioEvento::getUsuarioEvento($this->idUsuario, $idEvento, 0, 0)[0];
+        }
+        return $this->evento;
+    }
+    
     public function setId($id){
         $this->idUsuario = $id;
     }
@@ -97,23 +106,8 @@ class Usuario{
         $this->email = $email;
     }
 
-    public function setNivelAcesso($nivelAcesso) {
-        if(is_int($nivelAcesso) || is_string($nivelAcesso)){
-            $this->nivelAcesso = NivelAcesso::getNivelAcessoPorId($nivelAcesso);
-        }
-        else{
-            $this->nivelAcesso = $nivelAcesso;
-        }
-    }
-
-    public function setStatusInscricao($statusInscricao) {
-        if(is_int($statusInscricao) || is_string($statusInscricao)){
-            $this->statusInscricao = new StatusInscricao();
-            $this->statusInscricao->setId($statusInscricao);
-        }
-        else{
-            $this->statusInscricao = $statusInscricao;
-        }
+    public function setNivelAcesso($nivelAcesso){
+        $this->administrador = $nivelAcesso;
     }
 
     public function setAvaliador($avaliador) {
@@ -144,12 +138,7 @@ class Usuario{
     }
     
     public function ehAdministrador(){
-        if($this->getNivelAcesso() != null){
-            return $this->getNivelAcesso()->getDescricao() == "Administrador";
-        }
-        else{
-            return false;
-        }
+        return $this->getNivelAcesso() == 1;
     }
 
     /**
@@ -172,27 +161,7 @@ class Usuario{
             try{
                 while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
-                        if($key == 'idNivelAcesso'){
-                            $nivel = NivelAcesso::getNivelAcessoPorId($value);
-                            if(is_array($nivel)){
-                                $mensagem[] = $nivel;
-                            }
-                            else{
-                                $usuario->nivelAcesso = $nivel;
-                            }
-                        }
-                        else if($key == 'idStatusInscricao'){
-                            $status = StatusInscricao::getStatusInscricaoPorId($value);
-                            if(is_array($status)){
-                                $mensagem[] = $status;
-                            }
-                            else{
-                                $usuario->statusInscricao = $status;
-                            }
-                        }
-                        else{
-                            $usuario->{$key} = $value;
-                        }
+                        $usuario->{$key} = $value;
                     }
                 }
             } catch (Exception $e){
@@ -211,7 +180,7 @@ class Usuario{
     public function salvar(){
         $mensagem = array();
         
-        $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->nivelAcesso->getId(), $this->statusInscricao->getId(), $this->avaliador, $this->imagem, $this->idUsuario);
+        $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario);
         
         if($dado == null){
             $mensagem[] = "Não foi possível cadastrar o usuário";
@@ -229,5 +198,9 @@ class Usuario{
         if(count($mensagem) > 0){
             return $mensagem;
         }
+    }
+    
+    public function inscreverEmEvento($idEvento){
+        return UsuarioDao::inscreverEmEvento($this->idUsuario, $idEvento);
     }
 }    

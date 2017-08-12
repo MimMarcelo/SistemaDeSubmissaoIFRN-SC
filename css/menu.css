@@ -13,6 +13,7 @@ nav a{
     padding: 10px;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+    display: block;
 }
 nav a:last-child{
     border-bottom-style: none;

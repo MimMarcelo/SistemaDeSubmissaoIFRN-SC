@@ -76,22 +76,13 @@
             $pMatricula = "";
         }
         
-        if(isset($pNivelAcesso)){
-            if(empty($pNivelAcesso)){
-                $pNivelAcesso = 1;
+        if(isset($pAdministrador)){
+            if(empty($pAdministrador)){
+                $pAdministrador = 0;
             }
         }
         else{
-            $pNivelAcesso = 1;
-        }
-        
-        if(isset($pStatusInscricao)){
-            if(empty($pStatusInscricao)){
-                $pStatusInscricao = 1;
-            }
-        }
-        else{
-            $pStatusInscricao = 1;
+            $pAdministrador = 0;
         }
         
         if(isset($pAvaliador)){
@@ -166,12 +157,7 @@
             $mensagem[] = $aux;
         }
            
-        $aux = $usuario->setNivelAcesso($pNivelAcesso);
-        if(strlen($aux) > 0){
-            $mensagem[] = $aux;
-        }
-           
-        $aux = $usuario->setStatusInscricao($pStatusInscricao);
+        $aux = $usuario->setNivelAcesso($pAdministrador);
         if(strlen($aux) > 0){
             $mensagem[] = $aux;
         }

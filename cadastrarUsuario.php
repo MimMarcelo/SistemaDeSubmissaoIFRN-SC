@@ -49,30 +49,10 @@
                     if ($usuario->ehAdministrador()) {
                         //INICIA ÁREA QUE APENAS O ADMINISTRADOR PODE EXECUTAR
                     ?>
-                        <label for="sltNivelAcesso">Nível Acesso</label>
-                        <select id="sltNivelAcesso" name="pNivelAcesso">
-                            <option disabled selected>Selecione</option>
-                            <?php
-                            $listaNivelAcesso = NivelAcesso::getTodosNiveisAcesso();
-                            if (is_array($listaNivelAcesso)) {
-                                foreach ($listaNivelAcesso as $nivelAcesso) {
-                                    echo "<option value='" . $nivelAcesso->getId() . "'>" . $nivelAcesso->getDescricao() . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                        <label for="sltStatusInscricao">Status da inscricao</label>
-                        <select id="sltStatusInscricao" name="pStatusInscricao">
-                            <option disabled selected>Selecione</option>
-                            <?php
-                            $listaStatusTrabalho = StatusInscricao::getTodosStatusInscricao();
-                            if (is_array($listaStatusTrabalho)) {
-                                foreach ($listaStatusTrabalho as $statusInscricao) {
-                                    echo "<option value='" . $statusInscricao->getId() . "'>" . $statusInscricao->getStatusInscricao() . "</option>";
-                                }
-                            }
-                            ?>
-                        </select>
+                        <label for="ckbAdministrador">
+                            Administrador
+                            <input type="checkbox" name="pAdministrador" id="ckbAdministrador">
+                        </label>
                         <label for="ckbAvaliador">
                             Avaliador
                             <input type="checkbox" name="pAvaliador" id="ckbAvaliador">

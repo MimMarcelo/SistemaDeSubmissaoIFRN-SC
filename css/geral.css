@@ -28,6 +28,19 @@ section{
 h1{
     font-size: 30px;
 }
+section h2, h2 span{
+    font-size: 30px;
+    display: inline-block;
+}
+section ul{
+    list-style: none;
+    overflow: auto;
+}
+section ul span, section h2 span{
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
 */
@@ -35,9 +48,16 @@ h1{
 ------------------------- TAGs a
 */
 a{
-    display: block;
     color: #383;
-    font-size: 16px;
+}
+footer{
+    clear: both;
+}
+#conteudo > img, #atualizavel > img{
+    display: inline-block;
+    width: 400px;
+    height: auto;
+    float: right;
 }
 @media screen and (max-width: 600px){
     *{
@@ -47,4 +67,15 @@ a{
     body, #conteudo{
         padding: 0;
     }
+    .desaparecer{
+        display: none;
+    }
+    section ul span, section h2 span{
+        display: block;
+    }
+    #conteudo img{
+        width: 100%;
+        height: auto;
+    }
+    
 }

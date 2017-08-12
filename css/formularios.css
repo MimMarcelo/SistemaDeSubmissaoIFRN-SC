@@ -180,6 +180,20 @@ form a:hover{
     text-decoration: underline;
 }
 /*
+------------------------- CANCELA FORMATAÇÕES DENTRO DE SPAN
+*/
+li form{
+    display: inline;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+}
+li > form input[type="submit"]{
+    display: inline;
+    margin: auto;
+    width: auto;
+}
+/*
 ------------------------- PARA TELAS PEQUENAS
 */
 @media screen and (max-width: 600px){

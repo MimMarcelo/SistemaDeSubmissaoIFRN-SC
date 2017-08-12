@@ -297,7 +297,17 @@ class Evento {
                     $evento = new Evento();
                     
                     foreach ($obj as $key => $value) {
-                        $evento->{$key} = $value;
+                        if($key == "inicioEvento" ||
+                                $key == "finalEvento" ||
+                                $key == "inicioSubmissao" ||
+                                $key == "finalSubmissao" ||
+                                $key == "inicioInscricao" ||
+                                $key == "finalInscricao"){
+                            $evento->{$key} = _Util::getDataDoBd($value);
+                        }
+                        else{
+                            $evento->{$key} = $value;
+                        }
                     }
                     
                     $listaEventos[] = $evento;
@@ -312,6 +322,42 @@ class Evento {
         }
         else{
             return $listaEventos;
+        }
+    }
+    
+    public static function getEventoPorId($pId){
+        $mensagem = array();
+        
+        $dados = EventoDao::getEventos($pId, '', '', '', '', '', '', '', '');
+        if($dados == null){
+            return null;
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $evento = new Evento();
+                    
+                    foreach ($obj as $key => $value) {
+                        if($key == "inicioEvento" ||
+                                $key == "finalEvento" ||
+                                $key == "inicioSubmissao" ||
+                                $key == "finalSubmissao" ||
+                                $key == "inicioInscricao" ||
+                                $key == "finalInscricao"){
+                            $evento->{$key} = _Util::getDataDoBd($value);
+                        }
+                        else{
+                            $evento->{$key} = $value;
+                        }
+                    }
+                    return $evento;
+                }
+            } catch (Exception $e) {
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
         }
     }
     
@@ -340,5 +386,9 @@ class Evento {
         if(count($mensagem) > 0){
             return $mensagem;
         }
+    }
+    
+    public static function excluirEvento($id){
+        return EventoDao::excluirEvento($id);
     }
 }

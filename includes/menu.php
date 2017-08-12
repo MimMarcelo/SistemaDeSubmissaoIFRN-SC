@@ -1,6 +1,7 @@
 <nav>
     <ul>
         <li><a href="inicio.php" title="Início">Home</a></li>
+        <li><a href="listarEventos.php" title="Lista de Eventos">Eventos</a></li>
         <li><a href="consultarAvaliacoes.php" title="Consultar avaliações">Consultar Avaliações</a></li>
         <li><a href="testeCamposFormulario.php" title="Campos dos forms">Campos dos FORMs</a></li>
         <?php
