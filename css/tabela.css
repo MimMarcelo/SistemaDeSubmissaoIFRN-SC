@@ -12,18 +12,28 @@ table td, table th{
     border-radius: 2px;
     padding: 5px;
 }
+table tbody tr.desabilitado{
+    background-color: #BBC;
+}
 table tbody tr:hover{
     background-color: #AAA;
 }
 table td{
     color: #333;
 }
+td form{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: center;
+    background-color: transparent;
+}
 td span{
     display: inline-block;
     width: 100%;
     text-align: center;
 }
-td span img{
+td span img, td span input[type='image']{
     padding: 0;
     margin: 0;
     width: 25px;
@@ -32,7 +42,7 @@ td span img{
     border-radius: 12px;
     box-sizing: border-box;
 }
-td span img:hover{
+td span img:hover, td span input[type='image']:hover{
     padding: 2px;
     background-color: #333;
 }

@@ -49,11 +49,16 @@ function formularios(){
                 //console.log(data);
         
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
-                    
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
                     if(o.redirecionar){
                         //window.location.replace(o.redirecionar);
                         window.location.href = o.redirecionar;
+                    }
+                    if(o.redirecionarConteudo){
+                        $("#carregaPagina").hide().load(o.redirecionarConteudo+" #conteudo").fadeIn(1000);
+                        
+                        window.history.pushState({url: o.redirecionarConteudo}, "SS IFRN-SC - "+o.titulo, o.redirecionarConteudo);
+                        return;
                     }
                     listaMensagens(o);
 

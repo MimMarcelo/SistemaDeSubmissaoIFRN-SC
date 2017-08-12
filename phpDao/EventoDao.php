@@ -35,4 +35,8 @@ class EventoDao {
             }
         }
     }
+    
+    public static function excluirEvento($id){
+        return _Conexao::executar("CALL excluirEvento($id)");
+    }
 }
