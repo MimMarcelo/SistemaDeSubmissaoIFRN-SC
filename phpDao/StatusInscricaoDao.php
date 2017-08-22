@@ -10,14 +10,7 @@ class StatusInscricaoDao{
     
     //Exemplo que consulta vários registros no banco
     public static function getStatusInscricao($id, $statusInscricao) {
-        $resultado = _Conexao::executar("CALL consultarStatusInscricao($id, '$statusInscricao')");
-        
-        if($resultado->num_rows > 0){
-            return $resultado;
-        }
-        else{
-            return null;
-        }
+        return _Conexao::executar("CALL consultarStatusInscricao($id, '$statusInscricao')");
     }
     
     //Exemplo que insere no banco

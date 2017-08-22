@@ -21,14 +21,7 @@ class AvaliacaoDao{
      * @param type $resumo (PARTE DO) RESUMO DO TRABALHO
      */
     public static function getAvaliacoes($idEvento, $idTrabalho, $idAvaliacao, $idUsuario, $idStatusTrabalho, $concluida, $ehFinal, $titulo, $resumo) {
-        $resultado = _Conexao::executar("CALL consultarAvaliacao($idEvento, $idTrabalho, $idAvaliacao, $idUsuario, $idStatusTrabalho, $concluida, $ehFinal, '$titulo', '$resumo');");
-        
-        if($resultado->num_rows > 0){
-            return $resultado;
-        }
-        else{
-            return null;
-        }
+        return _Conexao::executar("CALL consultarAvaliacao($idEvento, $idTrabalho, $idAvaliacao, $idUsuario, $idStatusTrabalho, $concluida, $ehFinal, '$titulo', '$resumo');");
     }
     
     public static function avaliarTrabalho($idUsuarioAvaliador, $idAvaliacao, $nota, $comentario, $final){
