@@ -7,15 +7,7 @@ class EventoDao {
     
     //Exemplo que consulta vários registros no banco
     public static function getEventos($idEvento, $nome, $descricao, $inicioInscricao, $fimInscricao, $inicioSubmissao, $fimSubmissao, $inicioEvento, $fimEvento) {
-        
-        $resultado = _Conexao::executar("CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento');");
-        
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-        }
-        return null;
+        return _Conexao::executar("CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento');");
     }
     
     public static function salvar($idEvento, $idEventoPrincipal, $nome, $descricao, 
@@ -23,17 +15,9 @@ class EventoDao {
                                   $finalInscricao, $inicioSubmissao, $finalSubmissao,
                                   $inicioEvento, $finalEvento){
         
-        $resultado = _Conexao::executar("CALL cadastrarEvento($idEvento, $idEventoPrincipal, '$nome', '$descricao', "
+        return _Conexao::executar("CALL cadastrarEvento($idEvento, $idEventoPrincipal, '$nome', '$descricao', "
                 . "'$local', '$logoMarca', $numVagas, '$inicioInscricao', '$finalInscricao', '$inicioSubmissao', "
                 . "'$finalSubmissao', '$inicioEvento', '$finalEvento');");
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-            else{
-                return null;
-            }
-        }
     }
     
     public static function excluirEvento($id){

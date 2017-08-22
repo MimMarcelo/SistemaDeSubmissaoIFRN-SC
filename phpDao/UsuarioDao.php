@@ -10,26 +10,11 @@ require_once '_Conexao.php';
 class UsuarioDao{
     
     public static function login($cpf, $senha){
-        $resultado = _Conexao::executar("CALL login('$cpf', '$senha')");
-        
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-        }
-        return null;
+        return _Conexao::executar("CALL login('$cpf', '$senha')");
     }
     
     public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario){
-        
-        $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
-        
-        if($resultado->num_rows > 0){
-            return $resultado;
-        }
-        else{
-            return null;
-        }
+        return _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
     }
     
     public static function inscreverEmEvento($idUsuario, $idEvento){

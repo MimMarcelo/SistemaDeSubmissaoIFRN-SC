@@ -39,4 +39,20 @@ class _Util {
             return true;
         }
     }
+    
+    public static function validaImagem($imagem){
+        if(!empty($imagem["name"])){
+            $tamanhoMaximoDoArquivo = 5242880;//5MB
+            
+            // Verifica se o arquivo é uma imagem
+            if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $imagem["type"])){
+                return "Arquivo selecionado não é uma imagem.";
+            }
+            
+            // Verifica se o tamanho da imagem é maior que o tamanho permitido
+            if($imagem["size"] > $tamanhoMaximoDoArquivo) {
+                return "A imagem deve ter no máximo 5 MB";
+            }
+        }
+    }
 }
