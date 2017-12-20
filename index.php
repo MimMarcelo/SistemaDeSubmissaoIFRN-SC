@@ -35,7 +35,7 @@
 
                     </form>
                 </div>
-                <div>
+                <div class="desaparecer">
                     <a id="texto" href="cadastrarUsuario.php" title="Cadastre-se">CADASTRE-SE</a>
                     <a id="texto" href="inscricaoUsuario.php">INSCREVER-SE EM EVENTO </a>
                     <a id="texto" href="index.html">SUBMETER TRABALHOS </a>

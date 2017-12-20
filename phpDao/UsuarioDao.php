@@ -20,4 +20,8 @@ class UsuarioDao{
     public static function inscreverEmEvento($idUsuario, $idEvento){
         return _Conexao::executar("CALL inscreverEmEvento($idUsuario, $idEvento)");
     }
+    
+    public static function consultarUsuariosPorEvento($idEvento){
+        return _Conexao::executar("CALL consultarUsuarioEvento(0, $idEvento, 0, 0)");
+    }
 }

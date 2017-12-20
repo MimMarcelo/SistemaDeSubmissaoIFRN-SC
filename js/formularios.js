@@ -230,8 +230,8 @@ function mostraNomeInputFile(){
         $(input).change(function(){
             $(this).next().text("");
             txt = $(this)[0].value.toString();
-            if(txt.length > 16){
-                txt = "..." + txt.substr(txt.length-16);
+            if(txt.length > 10){
+                txt = "..." + txt.substr(txt.length-10);
             }
             $(this).next().append(btn+txt);
             
@@ -300,4 +300,17 @@ function confirmarSenha(){
             }
         });
     });
+}
+
+function addCoAutor(este, select, nome){
+    input = "<div class='autor'>";
+    input += "<img src='img/iconFechar.png' onClick='removerCoAutor(this)'>";
+    input += "<label>Co-autor: "+$(select +" option:selected").text()+"</label>";
+    input += "<label>Orientador <input type='checkbox' name='pOrientador'>";
+    input += "<input type='hidden' name='p"+nome+"' value='"+$(select).val()+"'></label></div>";
+    $(este).parent().parent().after(input);
+    focaLabel();
+}
+function removerCoAutor(este){
+    $(este).parent().remove();
 }

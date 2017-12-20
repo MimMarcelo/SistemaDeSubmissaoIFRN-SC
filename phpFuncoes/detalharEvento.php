@@ -5,7 +5,11 @@
     $titulo = "Atenção";
 
     if(isset($_POST) && !empty($_POST)){
-        $mensagem = Evento::getEventoPorId($_POST['pId']);
+        $principal = 1;
+        if(isset($_POST['pPrincipal'])){
+            $principal = 0;
+        }
+        $mensagem = Evento::getEventoPorId($_POST['pId'], $principal);
         //print_r($mensagem);
         if($mensagem instanceof Evento){
             session_start();

@@ -6,7 +6,7 @@ nav{
     margin: auto;
     color: #DDD;
 }
-nav a{
+nav > ul > li > a{
     color: #DDD;
     text-decoration: none;
     font-weight: bolder;
@@ -15,45 +15,12 @@ nav a{
     border-bottom-width: 1px;
     display: block;
 }
-nav a:last-child{
-    border-bottom-style: none;
-}
-nav a:hover{
+nav > ul > li > a:hover{
     color: #3A5;
+}
+nav > ul > li > a:last-child{
+    border-bottom-style: none;
 }
 /*
 ------------------------- CONFIGURAÇÕES ESPECÍFICAS DA PÁGINA DE LOGIN
 */
-#paginaLogin{
-    width: 80%;
-    height: 400px;
-    margin-top: 60px;
-    margin-bottom: 120px;
-}
-#paginaLogin > div{
-    display: inline-block;
-    width: 48%;
-    vertical-align: middle;
-}
-#paginaLogin > div:first-child{
-    margin-top: -50px;
-}
-@media only screen and (max-width: 600px){
-    #paginaLogin{
-        width: 100%;
-        height: auto;
-        margin: 0;
-        padding: 0;
-    }
-    #paginaLogin > div{
-        display: inline-block;
-        width: 100%;
-    }
-    #paginaLogin > div:last-child{
-        display: none;
-    }
-    #paginaLogin > div:first-child{
-        margin: 0;
-        background-color: transparent;
-    }
-}

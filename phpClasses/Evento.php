@@ -287,7 +287,7 @@ class Evento {
         $mensagem = array();
         $listaEventos = array();
         
-        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '');
+        $dados = EventoDao::getEventos(0, 1, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '');
         if($dados == null){
             return null;
         }
@@ -325,10 +325,10 @@ class Evento {
         }
     }
     
-    public static function getEventoPorId($pId){
+    public static function getEventoPorId($pId, $principal){
         $mensagem = array();
         
-        $dados = EventoDao::getEventos($pId, '', '', '', '', '', '', '', '');
+        $dados = EventoDao::getEventos($pId, $principal, '', '', '', '', '', '', '', '');
         if($dados == null){
             return null;
         }
@@ -361,6 +361,46 @@ class Evento {
         }
     }
     
+    public static function excluirEvento($id){
+        return EventoDao::excluirEvento($id);
+    }
+    
+    public function getSubEventos() {
+        $mensagem = array();
+        $listaEventos = array();
+        
+        $dados = EventoDao::getSubEventos($this->idEvento);
+        if($dados == null){
+            return null;
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $evento = new Evento();
+                    
+                    foreach ($obj as $key => $value) {
+                        if($key == "inicioEvento" ||
+                                $key == "finalEvento" ||
+                                $key == "inicioSubmissao" ||
+                                $key == "finalSubmissao" ||
+                                $key == "inicioInscricao" ||
+                                $key == "finalInscricao"){
+                            $evento->{$key} = _Util::getDataDoBd($value);
+                        }
+                        else{
+                            $evento->{$key} = $value;
+                        }
+                    }
+                    
+                    $listaEventos[] = $evento;
+                }
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        return $listaEventos;
+    }
+    
     public function salvar(){
         $mensagem = array();
         
@@ -388,7 +428,4 @@ class Evento {
         }
     }
     
-    public static function excluirEvento($id){
-        return EventoDao::excluirEvento($id);
-    }
 }
