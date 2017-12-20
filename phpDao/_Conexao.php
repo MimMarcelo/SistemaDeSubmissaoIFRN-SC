@@ -26,6 +26,9 @@ class _Conexao{
                 return $resultado;
             }
         }
+        else if(is_bool ($resultado)){
+            return $resultado;
+        }
         return null;
     }
 }

@@ -5,6 +5,7 @@
     padding: 0;
     margin: 0;
     border-width: 0;
+    border: none;
     font-size: 16px;
     font-family: sans-serif;
     box-sizing: border-box;
@@ -18,28 +19,25 @@ body{
 ------------------------- TAGs ESTRUTURAIS
 */
 nav{
-    text-align: left;
+    width: 100%;
 }
 section{
+}
+footer{
+    clear: both;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO BLOCK
 */
-h1{
-    font-size: 30px;
+h2{
+    width: 100%;
 }
 section h2, h2 span{
     font-size: 30px;
     display: inline-block;
 }
-section ul{
+ul{
     list-style: none;
-    overflow: auto;
-}
-section ul span, section h2 span{
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
@@ -50,32 +48,26 @@ section ul span, section h2 span{
 a{
     color: #383;
 }
-footer{
-    clear: both;
+/*
+------------------------- CLASSES GENÉRICAS
+*/
+.desaparecer{
+    display: none;
 }
+/*
+------------------------- IDs GENÉRICOS
+*/
 #conteudo > img, #atualizavel > img{
     display: inline-block;
     width: 400px;
     height: auto;
     float: right;
 }
-@media screen and (max-width: 600px){
-    *{
-        padding: 3px;
-        margin: 0;
-    }
-    body, #conteudo{
-        padding: 0;
-    }
+/*
+------------------------- DISPLAYS GRANDES
+*/
+@media screen and (min-width: 601px){
     .desaparecer{
-        display: none;
+        display: inline-block;
     }
-    section ul span, section h2 span{
-        display: block;
-    }
-    #conteudo img{
-        width: 100%;
-        height: auto;
-    }
-    
 }

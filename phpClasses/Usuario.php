@@ -227,7 +227,15 @@ class Usuario{
     public function ehAdministrador(){
         return $this->getNivelAcesso() == 1;
     }
-
+    
+    public function estaInscritoNoEvento($id){
+        if($this->getEvento($id) instanceof UsuarioEvento){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     /**
      * VERIFICA SE O USUÁRIO EXISTE NO BANCO DE DADOS
      * @param String $cpf CPF DO USUÁRIO
@@ -261,6 +269,35 @@ class Usuario{
         }
         else{
             return $usuario;
+        }
+    }
+    public static function consultarUsuariosPorEvento($idEvento){
+        $mensagem = array();
+        $usuarios = array();
+        
+        $dado = UsuarioDao::consultarUsuariosPorEvento($idEvento);// CONSULTA O BANCO DE DADOS
+        if($dado == null){
+            $mensagem[] = "Usuário não encontrado";
+        }
+        else{
+            try{
+                while($obj = $dado->fetch_assoc()) {
+                    $usuario = new Usuario();
+                    foreach ($obj as $key => $value) {
+                        $usuario->{$key} = $value;
+                    }
+                    $usuarios[] = $usuario;
+                }
+            } catch (Exception $e){
+                $usuarios = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $usuarios;
         }
     }
 

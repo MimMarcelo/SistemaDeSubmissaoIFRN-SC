@@ -11,7 +11,7 @@
         include './includes/css.php';
         include './includes/javascript.php';
         require_once dirname(__FILE__).'/phpClasses/Evento.php';
-        require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
+        require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
 
         loginObrigatorio(); //LOGIN OBRIGATÓRIO
         
@@ -28,7 +28,6 @@
                 if(isset($_SESSION["evento"])){
                     if(!empty($_SESSION["evento"])){
                         $evento = $_SESSION["evento"];
-                        //unset($_SESSION["evento"]);
                     }
                     else{
                         $_SESSION["mensagem"] = "Selecione um evento para detalhar!";
@@ -41,9 +40,11 @@
                 }
                 ?>
                 <div id="atualizavel">
-                    <h2><span>Evento: </span><?php echo $evento->getNome() ?></h2>
+                    <h2 class="detalhes"><span>Evento: </span><?php echo $evento->getNome() ?></h2>
+                    <?php if(strlen($evento->getLogoMarca()) > 0 ){ ?>
                     <img src="img/fotosEventos/<?php echo $evento->getLogoMarca() ?>" alt="<?php echo $evento->getDescricao() ?>">
-                    <ul>
+                    <?php }?>
+                    <ul class="detalhes">
                         <li>
                             <span>Descricao: </span>
                             <?php echo $evento->getDescricao() ?>
@@ -70,11 +71,11 @@
                             a <?php echo $evento->getFinalInscricao() ?>
                             
                             <?php
-                            //print_r($usuario->getEvento($evento->getIdEvento()));
+                            //var_dump($usuario->estaInscritoNoEvento($evento->getIdEvento()));
                             $hoje = date("Y-m-d");
-                            if((_Util::getDataParaBd($evento->getInicioInscricao())<= $hoje &&
-                                _Util::getDataParaBd($evento->getFinalInscricao())>=$hoje) &&
-                                !($usuario->getEvento($evento->getIdEvento()) instanceof UsuarioEvento)){
+                            if((_Util::getDataParaBd($evento->getInicioInscricao()) <= $hoje &&
+                                _Util::getDataParaBd($evento->getFinalInscricao()) >= $hoje) &&
+                                !$usuario->estaInscritoNoEvento($evento->getIdEvento())){
                             ?>
                             <form action="phpFuncoes/inscreverEmEvento.php" method="post">
                                 <input type="hidden" name="pIdEvento" value="<?php echo $evento->getIdEvento(); ?>">
@@ -85,17 +86,60 @@
                             }
                             ?>
                         </li>
+                        <?php
+                        if(strlen($evento->getInicioSubmissao()) > 0){
+                        ?>
                         <li>
                             <span>Submissão de trabalhos: </span>
                             de <?php echo $evento->getInicioSubmissao() ?>
                             a <?php echo $evento->getFinalSubmissao() ?>
+                            
+                            <?php
+                            if(_Util::getDataParaBd($evento->getInicioSubmissao()) <= $hoje &&
+                                _Util::getDataParaBd($evento->getFinalSubmissao()) >= $hoje){
+                            ?>
+                            <a href="submeterTrabalho.php">submeter</a>
+                            <?php
+                            }
+                        ?>
                         </li>
+                        <?php
+                        }
+                        ?>
                         <li>
                             <span>Realização: </span>
                             de <?php echo $evento->getInicioEvento() ?>
                             a <?php echo $evento->getFinalEvento() ?>
                         </li>
                     </ul>
+                    <?php
+                    if(strlen($evento->getIdEventoPrincipal()) > 0){
+                    ?>
+                    <form action="phpFuncoes/detalharEvento.php" method="post" class="itemAcessivel">
+                            <input type="hidden" value="<?php echo $evento->getIdEventoPrincipal() ?>" name="pId">
+                            <h3>Voltar para evento principal</h3>
+                            <input type="submit" value="Acessar">
+                        </form>
+                    <?php
+                    }
+                    if($usuario->estaInscritoNoEvento($evento->getIdEvento())){
+                        $subEventos = $evento->getSubEventos();
+
+                        if($subEventos != null){
+                            foreach ($subEventos as $subEvento){
+                        ?>
+                                <form action="phpFuncoes/detalharEvento.php" method="post" class="itemAcessivel">
+                                    <input type="hidden" value="<?php echo $subEvento->getIdEvento() ?>" name="pId">
+                                    <input type="hidden" value="0" name="pPrincipal">
+                                    <h3><?php echo $subEvento->getNome() ?></h3>
+                                    <p><?php echo substr($subEvento->getDescricao(), 0, 68)."..."; ?></p>
+                                <input type="submit" value="Acessar">
+                                </form>
+                        <?php
+                            }
+                        }
+                    }
+                    ?>
                 </div>
             </section>
         </div>
