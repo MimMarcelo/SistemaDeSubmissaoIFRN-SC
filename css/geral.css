@@ -6,40 +6,31 @@
     margin: 0;
     border-width: 0;
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
     box-sizing: border-box;
 }
 body{
-    background-color: #444;
-    padding: 10px;
-    color: #FFE;
+    background-color: #FFF;
+    color: #006;
 }
 /*
 ------------------------- TAGs ESTRUTURAIS
 */
-nav{
-    text-align: left;
+header{
 }
-section{
+nav{
+}
+section#conteudo{
+    margin-top: 45px;
+}
+footer{
+    clear: both;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO BLOCK
 */
 h1{
-    font-size: 30px;
-}
-section h2, h2 span{
-    font-size: 30px;
-    display: inline-block;
-}
-section ul{
-    list-style: none;
-    overflow: auto;
-}
-section ul span, section h2 span{
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
@@ -48,34 +39,35 @@ section ul span, section h2 span{
 ------------------------- TAGs a
 */
 a{
-    color: #383;
+    color: rgb(50, 180, 50);
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+    display: inline-block;
 }
-footer{
-    clear: both;
+a:hover{
+    color: rgb(50, 220, 220);
+    text-decoration: underline;
+}
+a:visited{
+    color: rgb(200, 200, 50);
+}
+/*
+------------------------- CLASSES CONTROLADORAS DO LAYOUT
+*/
+.coluna{
+    width: 100%;
+    display: block;
+    padding: 5px;
+}
+.coluna > img{
+    width: 50%;
+    display: block;
+    margin: auto;
 }
 #conteudo > img, #atualizavel > img{
     display: inline-block;
     width: 400px;
     height: auto;
     float: right;
-}
-@media screen and (max-width: 600px){
-    *{
-        padding: 3px;
-        margin: 0;
-    }
-    body, #conteudo{
-        padding: 0;
-    }
-    .desaparecer{
-        display: none;
-    }
-    section ul span, section h2 span{
-        display: block;
-    }
-    #conteudo img{
-        width: 100%;
-        height: auto;
-    }
-    
 }

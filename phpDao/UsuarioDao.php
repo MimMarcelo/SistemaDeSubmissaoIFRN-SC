@@ -19,17 +19,26 @@ class UsuarioDao{
         }
         return null;
     }
-    
+    public static function consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){ 
+        $resultado = _Conexao::executar("CALL consultarUsuario('$cpf', '$nome', '$email', '$matricula', $avaliador, $administrador, $idUsuario)");
+        
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+        }
+        return null;
+    }
     public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario){
         
         $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
         
-        if($resultado->num_rows > 0){
-            return $resultado;
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
         }
-        else{
-            return null;
-        }
+        return null;
     }
     
     public static function inscreverEmEvento($idUsuario, $idEvento){

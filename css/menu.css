@@ -2,58 +2,65 @@
 ------------------------- TAGs GERAIS
 */
 nav{
-    background-color: rgb(51,51,51);
-    margin: auto;
-    color: #DDD;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
-nav a{
-    color: #DDD;
-    text-decoration: none;
-    font-weight: bolder;
-    padding: 10px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+nav a {
     display: block;
+    font-weight: bolder;
+    color: #FFF;
+    background-color: #000;
+    padding: 14px 16px;
+    transition: 0.5s;
 }
-nav a:last-child{
-    border-bottom-style: none;
+nav a:first-child{
+    height: 45px;
 }
-nav a:hover{
-    color: #3A5;
+nav a:not(:first-child){
+    display: none;
+}
+nav a:first-child span{
+    display: block;
+    background-color: #FFF;
+    width: 20px;
+    height: 3px;
+    margin: 3px 0;
+    transition: 0.5s;
 }
 /*
-------------------------- CONFIGURAÇÕES ESPECÍFICAS DA PÁGINA DE LOGIN
+------------------------- TAGs COMPORTAMENTAIS
 */
-#paginaLogin{
-    width: 80%;
-    height: 400px;
-    margin-top: 60px;
-    margin-bottom: 120px;
+nav a:hover{
+    background-color: rgb(50, 180, 50);
+    color: #FFF;
 }
-#paginaLogin > div{
-    display: inline-block;
-    width: 48%;
-    vertical-align: middle;
+nav a:visited{
+    color: #FFF;
 }
-#paginaLogin > div:first-child{
-    margin-top: -50px;
+nav.menuAberto{
+    height: 100%;
+    background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
+    background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
 }
-@media only screen and (max-width: 600px){
-    #paginaLogin{
-        width: 100%;
-        height: auto;
-        margin: 0;
-        padding: 0;
-    }
-    #paginaLogin > div{
-        display: inline-block;
-        width: 100%;
-    }
-    #paginaLogin > div:last-child{
-        display: none;
-    }
-    #paginaLogin > div:first-child{
-        margin: 0;
-        background-color: transparent;
-    }
+nav.menuAberto a:not(:first-child){
+    position: relative;
+    display: block;
+    animation-name: animaMenuAbrir;
+    animation-duration: 0.5s;
+}
+nav.menuAberto a:first-child .barra1{
+    -webkit-transform: rotate(-45deg) translate(-6px, 0);
+    transform: rotate(-45deg) translate(-6px, 0);
+}
+nav.menuAberto a:first-child .barra2{
+    display: none;
+}
+nav.menuAberto a:first-child .barra3{
+    -webkit-transform: rotate(45deg) translate(-4px, 2px);
+    transform: rotate(45deg) translate(-4px, 2px);
+}
+@keyframes animaMenuAbrir {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE ESQUERDA PARA A POSIÇÃO DEFINIDA) */
+    from {left:-300px; opacity:0}
+    to {left:0; opacity:1}
 }

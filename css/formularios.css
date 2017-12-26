@@ -2,15 +2,13 @@
 ------------------------- TAGs GERAIS
 */
 form{
-    margin: auto;
     display: block;
-    max-width: 320px;
+    width: 100%;
     background-color: #EEE;
-    color: #444;
-    font-weight: bold;
     padding: 20px;
     border-radius: 10px;
-    text-align: left;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
 }
 fieldset{
     border-color: #BBC;
@@ -25,12 +23,10 @@ fieldset{
 */
 form span{/* PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
     color: red;
-    margin-left: 3px;
     font-weight: bolder;
     font-size: 25px;
-    vertical-align: top;
 }
-form label > span{
+form label > span{ /* PARA O TEXTO 'SENHA NÃO CONFERE' */
     font-size: 12px;
     font-weight: normal;
 }
@@ -43,21 +39,19 @@ legend{
 }
 label{
     padding-top: 5px;
-    padding-right: 10px;
     border-radius: 5px;
     border:1px solid #EEE;
     display: block;
-    font-weight: 400;
     width: 90%;
     box-sizing: border-box;
 }
 input, select, textarea, button{
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
-    border:1px solid #008f36;
+    border:1px solid rgb(50, 180, 50);
     display: inline-block;
     width: 90%;
-    box-sizing: border-box;
+    margin-left: 3%;
     resize: none; /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
 }
 input:hover, select:hover, textarea:hover{
@@ -86,35 +80,22 @@ label > input{ /* RADIOBUTTONs E CHECKBOXes */
 }
 input[type="button"], input[type="reset"], input[type="submit"], button{
     margin-top: 20px;
-    padding: 10px;
-    width: 157px;
     color: #FFF;
-    text-align: center;
     text-shadow: 2px 2px rgba(0, 0, 0, .5);
     font-weight: bolder;
-    background-color: #44F;
-    border-radius: 20px;
+    background-color: rgb(50, 180, 50);
+    border-radius: 10px;
     border-color: #444;
     border-width: 0;
     border-bottom-width: 4px;
     border-right-width: 3px;
     cursor: pointer;
 }
-input[type="reset"]{
-    background-color: #777;
+input[type="reset"], input[type="button"], button{
+    background-color: rgb(50, 50, 220);
 }
-input[type="submit"]{
-    background-color: #3A5;
-    width: 100%;
-}
-input[type="button"]:focus, input[type="button"]:hover, button:focus, button:hover{
-    background-color: #44C;
-}
-input[type="reset"]:focus, input[type="reset"]:hover{
-    background-color: #555;
-}
-input[type="submit"]:focus, input[type="submit"]:hover{
-    background-color: #394;
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, button:focus, button:hover{
+    background-color: rgb(50, 220, 220);
 }
 /* ------------------------------------------------- */
 input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile */
@@ -128,6 +109,7 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
 .inputFile{
     padding: 1px;
     margin-top: 0;
+    margin-left: 3%;
     border-radius: 5px;
     border:1px solid #008f36;
     display: inline-block;
@@ -158,26 +140,17 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
 .inputFile > span:hover{
     background-color: #44C;    
 }
+.inputFile ~ img{
+    display: inline-block;
+    margin-left: 20%;
+    max-width: 50%;
+}
 /*
 ------------------------- OUTRAS TAGS
 */
-form img{
-    width: 90%;
-    height: auto;
-    border-radius: 7px;
-}
 form a{
-    color: #3A5;
-    border-style: none;
-    font-weight: 100;
-    font-size: 12px;
-    padding: 0;
-    padding-top: 10px;
-    margin: 0;
-}
-form a:hover{
-    color: #333;
-    text-decoration: underline;
+    margin-top: 20px;
+    margin-right: 20px;
 }
 /*
 ------------------------- CANCELA FORMATAÇÕES DENTRO DE SPAN
@@ -192,21 +165,4 @@ li > form input[type="submit"]{
     display: inline;
     margin: auto;
     width: auto;
-}
-/*
-------------------------- PARA TELAS PEQUENAS
-*/
-@media screen and (max-width: 600px){
-    form{
-        width: 100%;
-        background-color: #EEE;
-        padding: 10px;
-        margin: auto;
-    }
-    fieldset{
-        padding: 5px;
-    }
-    input[type="button"], input[type="reset"], input[type="submit"], button{
-        width: 98%;
-    }
 }

@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     //QUANDO UMA OPÇÃO DO MENU É CLICADA
     $("li>a").click(function( e ){
             if($(this).attr('target') === "_blank"){
@@ -25,3 +24,27 @@ $(document).ready(function(){
         window.history.go(0);
     };
 });
+function abreMenu() {
+    var nav = document.getElementsByTagName("nav")[0];
+    if(nav.className === "menuAberto"){
+        nav.className = "";
+    }
+    else{
+        nav.className = "menuAberto";
+    }
+    window.onclick = function(event) {
+        if (event.target === $('nav')[0]) {
+            $('nav')[0].className = "";
+        }
+    };
+    
+    //QUANDO O USUÁRIO APERTA 'ESC' NO TECLADO
+    $(document).keyup(function(e) {
+        if (e.keyCode === 27) { // A TECLA ESC É REPRESENTADA PELO NÚMERO 27
+            if($('nav')[0]){
+            $('nav')[0].className = "";
+            }
+       }
+    });
+    
+}

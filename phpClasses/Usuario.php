@@ -75,35 +75,59 @@ class Usuario{
     }
     
     public function setCpf($cpf) {
-        if(strlen($cpf) == 14){
-            $this->cpf = $cpf;
-            return "";
+        if(empty($cpf)){
+            return "Informe o CPF";
+        }
+        else if(strlen($cpf) != 14){
+            return "O CPF deve possuir 11 dígitos ";
         }
         else{
-            return "O valor '".$cpf."' é inválido para CPF";
+            $this->cpf = $cpf;
+            return "";
         }
     }
 
     public function setSenha($senha) {
-        if(strlen($senha) >= 3){
+        if(empty($senha)){
+            return "Informe uma senha";
+        }
+        else if(strlen($senha) < 3){
+            return "A senha deve possuir, no mínimo, 3 caracteres: ";
+        }
+        else{
             $this->senha = $senha;
             return "";
         }
-        else{
-            return "A senha deve possuir no mínimo três caracteres";
-        }
     }
 
-    public function setNome($nome) {
-        $this->nome = $nome;
+    public function setNome($nome) {         
+        if(empty($nome)){
+            return "Informe o nome de usuário";
+        }
+        else if (!preg_match("/^[a-zA-ZãÃáÁàÀêÊéÉèÈíÍìÌôÔõÕóÓòÒúÚùÙûÛçÇ' ']+$/",$nome)) {
+            return "Apenas letras e espaços são permitidos no nome de usuário";
+        }
+        else{
+            $this->nome = $nome;
+            return "";
+        }
     }
 
     public function setMatricula($matricula) {
         $this->matricula = $matricula;
     }
 
-    public function setEmail($email) {
-        $this->email = $email;
+    public function setEmail($email) {           
+        if(empty($email)){
+            return "Informe o e-mail de usuário";
+        }
+        else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "formato de e-mail inválido!"; 
+        }
+        else{
+            $this->email = $email;
+            return "";
+        }
     }
 
     public function setNivelAcesso($nivelAcesso){
@@ -177,18 +201,64 @@ class Usuario{
         }
     }
 
+    public static function consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){      
+        $mensagem = null;
+        $usuario = null;
+        
+        $dado = UsuarioDao::consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario);
+        
+        if($dado == null){
+            $mensagem[] = "Usuário não encontrado";
+        }
+        else{
+            $usuario = new Usuario();
+            try{
+                while($obj = $dado->fetch_assoc()) {
+                    foreach ($obj as $key => $value) {
+                        $usuario->{$key} = $value;
+                    }
+                }
+            } catch (Exception $e){
+                $usuario = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $usuario;
+        }
+    }
+    
     public function salvar(){
-        $mensagem = array();
+        $mensagem = null;
+        $dado = null;
         
-        $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario);
-        
+        $dado = Usuario::consultarUsuario($this->cpf, '', '', '', -1, -1, 0);
+        //print_r($dado);
+        if(is_array($dado)){
+            $dado = Usuario::consultarUsuario('', '', $this->email, '', -1, -1, 0);
+            if(is_array($dado)){
+                $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario);
+            }
+            else{
+                $mensagem[] = "O e-mail '$this->email' já é cadastrado no sistema, esqueceu a senha?";
+            }
+        }
+        else{
+            $mensagem[] = "CPF '$this->cpf' já está cadastrado no sistema, esqueceu a senha?";
+        }
         if($dado == null){
             $mensagem[] = "Não foi possível cadastrar o usuário";
         }
-        else{
+        else if(count($mensagem) == 0){
             try{
                 while($obj = $dado->fetch_assoc()) {
-                    return $obj["idUsuario"];
+                    //print_r($obj);
+                    if($obj["idUsuario"] > 0){
+                        return $obj["idUsuario"];
+                    }
                 }
             }
             catch (Exception $e){

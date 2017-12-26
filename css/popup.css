@@ -4,30 +4,28 @@
 #popup { /* ESSA É A DIV QUE FICA MEIO TRANSPARENTE ATRÁS DA TELA */    
     display: none; /* POR PADRÃO NÃO APARECE NA PÁGINA */
     position: fixed; /* IGNORAR POSIÇÃO LOCAL */
-    padding-top: 100px; /* Location of the box */
     left: 0; top: 0; /* INICIAR NAS POSIÇÕES 0x0 DA PÁGINA */
     width: 100%; /* DA LARGURA DA PÁGINA */
     height: 100%; /* DA ALTURA DA PÁGINA */
     overflow: auto; /* PERMITIR SCROLL SE FOR NECESSÁRIO */
     background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
     background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
-    box-sizing: border-box;
 }
 
 #popup > div { /* POPUP */
     position: relative; /* ANIMAÇÃO SÓ FUNCIONA COM ESSE POSITION */
-    background-color: #EEE;
+    background-color: #FFF;
     margin: auto; /* MANTÉM A POPUP CENTRALIZADA */
     border-radius: 10px;
-    width: 50%; /* LARGURA DA POPUP */
-    animation-name: animatetop; /* NOME DA ANIMAÇÃO DEFINIDA ABAIXO */
+    width: 80%; /* LARGURA DA POPUP */
+    top:10%; /* DISTÂNCIA DA MARGEM SUPERIOR EM QUE DEVE FICAR */
+    animation-name: animaPopup; /* NOME DA ANIMAÇÃO DEFINIDA ABAIXO */
     animation-duration: 0.5s; /* TEMPO DE EXECUÇÃO DA ANIMAÇÃO */
-    box-sizing: border-box;
 }
 
-@keyframes animatetop {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE CIMA PARA A POSIÇÃO DEFINIDA) */
+@keyframes animaPopup {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE CIMA PARA A POSIÇÃO DEFINIDA) */
     from {top:-300px; opacity:0}
-    to {top:0; opacity:1}
+    to {top:10%; opacity:1}
 }
 /*
 ------------------------- CONFIGURAÇÕES DOS COMPONENTES DA POPUP
@@ -37,63 +35,22 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #444;
-    color: #FFE;
-    overflow: auto;
+    color: #FFF;
 }
 
 #popup > div > div { /* ÁREA DE CONTEÚDO */
     padding: 10px;
-    color: #000;
 }
 
 #popup img.fecharPopup { /* BOTÃO DE FECHAR */
     width: 25px;
     height: auto;
-    color: #FFE;
     float: right;
-    font-size: 28px;
-    font-weight: bold;
-    box-sizing: border-box;
+    cursor: pointer;
 }
 
 #popup img.fecharPopup:hover,
 #popup img.fecharPopup:focus { /* QUANDO O MOUSE PASSAR EM CIMA, OU ESTIVER EM FOCO */
     border: 2px solid #FFF;
     border-radius: 12px;
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-#popup input[type="submit"], #popup input[type="button"]{
-    width: 48%;
-}
-#popup input[type="button"].fecharPopup {
-    background-color: #B00;
-    margin-left: 3px;
-}
-#popup input[type="button"].fecharPopup:hover {
-    background-color: #900;
-}
-/*
-------------------------- PARA TELAS PEQUENAS
-*/
-@media screen and (max-width: 600px){
-    #popup, #popup > div, #popup > div > header{
-        padding: 0;
-        margin: auto;
-        box-sizing: border-box;
-    }
-    #popup > div { /* POPUP */
-        width: 90%; /* LARGURA DA POPUP */
-    }
-    #popup > div > header{
-        padding: 10px;
-    }
-    #popup form{
-        width: 100%;
-        background-color: transparent;
-    }
-    #popup input[type="submit"], #popup input[type="button"]{
-        width: 90%;
-    }
 }

@@ -7,7 +7,7 @@
         <meta name="keywords" content="usuario, ifrn, cadastro">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - Cadastro</title>
-        <?php 
+        <?php
         include './includes/css.php';
         include './includes/javascript.php';
         require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
@@ -32,7 +32,7 @@
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
 
-                <form action="<?php echo htmlspecialchars("phpFuncoes/cadastrarUsuario.php"); ?>" method="post" enctype="multipart/form-data">
+                <form action="<?= htmlspecialchars("phpFuncoes/cadastrarUsuario.php");?>" method="post" enctype="multipart/form-data">
                     <label for="txtCpf">CPF</label>
                     <input type="text" id="txtCpf" name="pCpf" class="cpf" autofocus required>
                     <label for="txtNome">Nome completo</label>
@@ -60,8 +60,8 @@
                     <?php
                     }//FECHA O IF SE É ADMINISTRADOR
                     ?>
-                    <label for="imgInp">Foto</label>
-                    <input type="file" id="imgInp" name="pImagem" class="upImagem">                
+                    <label for="imgInp">Foto <span>(Máximo 5MB)</span></label>
+                    <input type="file" id="imgInp" name="pImagem" class="upImagem" placeholder="Preview da imagem do usuário">                
                     <input type="submit" class="botao" value="Cadastrar">
                     <?php
                     if (!$usuario->ehAdministrador()) {

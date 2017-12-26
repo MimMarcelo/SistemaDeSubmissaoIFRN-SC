@@ -36,6 +36,8 @@ function formularios(){
      */
     $("form").unbind('submit').submit(function(e){
         var href = $(this).attr("action");//PEGA O DESTINO DO FORMULÁRIO
+//        var dados = paraJson($(this).serializeArray());
+//        console.log(dados);
         
         //RESPONSÁVEL POR MUDAR O CONTEÚDO DA PÁGINA SEM RECARREGÁ-LA
         $.ajax({
@@ -45,8 +47,9 @@ function formularios(){
             contentType: false,
             cache: false,
             data: new FormData($(this)[0]), // DADOS A SEREM ENVIADOS PARA O .PHP
+            //data: dados,
             success: function(data){
-                //console.log(data);
+                console.log(data);
         
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
@@ -83,6 +86,15 @@ function formularios(){
         
     });
 };
+function paraJson(formulario){
+    var json = "{";
+    for(var tx in formulario){
+        if(tx > 0) json += ",";
+        json += "'"+formulario[tx].name+"': '"+formulario[tx].value+"' ";
+    }
+    json += "}";
+    return JSON.stringify(json);
+}
 /**
  * VERIFICA SE O PARÂMETRO INFORMADO É UM OBJETO JSON [TRUE], OU NÃO [FALSE]
  * @param {Objeto} data CONTEÚDO IMPRESSO PELA PÁGINA .PHP
@@ -221,7 +233,7 @@ function mostraNomeInputFile(){
         btn = "<span>Selecione</span>";
         label = "<label for='"+$(input).attr("id")+"' class='inputFile'>"+btn+"</label>";
         if($(input).attr("class") === "upImagem"){
-            label = label+"<img src='img/iconSemFoto.gif' alt='preview da imagem'>";
+            label = label+"<img src='img/iconSemFoto.gif' alt='"+$(input).attr("placeholder")+"'>";
         }
         
         if($(input).next().attr("for") !== $(input).attr("id")){
