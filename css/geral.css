@@ -13,6 +13,7 @@
 body{
     background-color: #FFF;
     color: #006;
+    padding-top: 45px;/* PARA O MENU */
 }
 /*
 ------------------------- TAGs ESTRUTURAIS
@@ -22,7 +23,6 @@ header{
 nav{
 }
 section#conteudo{
-    margin-top: 45px;
 }
 footer{
     clear: both;

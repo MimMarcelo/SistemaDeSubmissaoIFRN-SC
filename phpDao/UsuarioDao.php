@@ -30,7 +30,7 @@ class UsuarioDao{
         return null;
     }
     public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario){
-        
+        //echo "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);";
         $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
         
         if(is_object($resultado)){

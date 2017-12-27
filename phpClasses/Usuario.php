@@ -95,7 +95,7 @@ class Usuario{
             return "A senha deve possuir, no mínimo, 3 caracteres: ";
         }
         else{
-            $this->senha = $senha;
+            $this->senha = md5($senha);
             return "";
         }
     }
@@ -206,6 +206,7 @@ class Usuario{
         $usuario = null;
         
         $dado = UsuarioDao::consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario);
+        //print_r($dado);
         
         if($dado == null){
             $mensagem[] = "Usuário não encontrado";

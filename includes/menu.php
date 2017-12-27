@@ -13,7 +13,7 @@
         if($usuario->ehAdministrador()){
             //OPÇÕES RESTRITAS AO ADMINISTRADOR
     ?>
-    Administrador
+    <a class="menuTitulo">Administrador</a>
     <a href="cadastrarUsuario.php" title="Cadastrar usuário">Cadastrar Usuário</a>
     <a href="cadastrarEvento.php" title="Cadastrar evento">Cadastrar Evento</a>
     <a href="crudStatusInscricao.php" title="Status inscricao">Gerenciar Status Inscrição</a>
@@ -21,5 +21,5 @@
     <?php
         }//FIM DAS OPÇÕES RESTRITAS AO ADMINISTRADOR
     ?>
-    <a href="phpFuncoes/logout.php" title="Sair">Sair</a>
+    <a class="menuSair" href="phpFuncoes/logout.php" title="Sair">Sair</a>
 </nav>

@@ -28,6 +28,13 @@ nav a:first-child span{
     margin: 3px 0;
     transition: 0.5s;
 }
+nav a.menuSair{
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #E22;
+}
 /*
 ------------------------- TAGs COMPORTAMENTAIS
 */
@@ -48,6 +55,12 @@ nav.menuAberto a:not(:first-child){
     display: block;
     animation-name: animaMenuAbrir;
     animation-duration: 0.5s;
+}
+nav.menuAberto a.menuTitulo, nav.menuAberto a.menuTitulo:hover{
+    background-color: #444;
+    margin-left: 0px;
+    padding-left: 30px;
+    text-decoration: none;
 }
 nav.menuAberto a:first-child .barra1{
     -webkit-transform: rotate(-45deg) translate(-6px, 0);

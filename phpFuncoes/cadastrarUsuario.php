@@ -180,14 +180,15 @@
                             }
                             else{
                                 $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
-                                $_SESSION["mensagem"] = "Usuário: '";$usuario->getNome()."' cadastrado com sucesso!";
+                                $_SESSION["mensagem"] = "Usuário: '".$usuario->getNome()."' cadastrado com sucesso!";
                                 echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
                             }
                         }
                     }
                     else{
+                        
                         $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
-                        $_SESSION["mensagem"] = "Usuário: '";$usuario->getNome()."' cadastrado com sucesso!";
+                        $_SESSION["mensagem"] = "Usuário: \'".$usuario->getNome()."\' cadastrado com sucesso!";
                         echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
                     }
                 }

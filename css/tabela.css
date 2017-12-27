@@ -2,9 +2,9 @@ table{
     width: 100%;
 }
 table thead{
-    background-color: #333;
+    background-color: #000;
+    color: #FFF;
 }
-
 table tbody{
     background-color: #EEE;
 }

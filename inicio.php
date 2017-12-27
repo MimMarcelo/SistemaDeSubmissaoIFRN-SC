@@ -1,5 +1,3 @@
-<?php
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -23,7 +21,7 @@
         <div id="carregaPagina">
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-                <p>Você é um visitante!</p>
+                <p>Olá <?=$usuario->getNome();?>, seja bem vindo ao sistema de submissão de arquivos do IFRN SC</p>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>

@@ -34,7 +34,7 @@
         
         if(isset($p_senha)){// VALIDA SENHA
             if(!empty($p_senha)){
-                $senha = get($p_senha);
+                $senha = md5(get($p_senha));
             }
             else{
                 $mensagem[] = "O campo: 'Senha' não pode ser vazio!";
