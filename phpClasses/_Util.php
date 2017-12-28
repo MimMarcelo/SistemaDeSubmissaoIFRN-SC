@@ -32,7 +32,11 @@ class _Util {
     }
     
     public static function periodoValido($inicio, $fim){
-        if($inicio > $fim){
+//        echo "\n$inicio, "._Util::getDataParaBd($inicio);
+//        echo "\n$fim, "._Util::getDataParaBd($fim);
+//        echo "\n".($inicio>$fim);
+//        echo "\n".(_Util::getDataParaBd($inicio)>_Util::getDataParaBd($fim));
+        if(_Util::getDataParaBd($inicio)>=_Util::getDataParaBd($fim)){
             return false;
         }
         else{

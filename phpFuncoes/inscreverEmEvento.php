@@ -1,40 +1,52 @@
 <?php
 
     require_once dirname(__FILE__).'/../phpClasses/Usuario.php';
-    session_start();
+    require_once dirname(__FILE__).'/../includes/sessaoDeUsuario.php';
+    loginObrigatorio();
     
-    $usuario = new Usuario();
-    if(isset($_SESSION["usuario"])){
-        $usuario = $_SESSION["usuario"];
+    function testaCampo($campo) {
+        $campo = trim($campo);
+        $campo = stripslashes($campo);
+        $campo = htmlspecialchars($campo);
+        return $campo;
     }
+    
+    $metodoHttp = $_SERVER['REQUEST_METHOD'];
     $mensagem = array();
     $titulo = "Atenção";
-
-    if(isset($_POST["pIdEvento"])){
-        if(empty($_POST["pIdEvento"])){
-            $mensagem[] = "Evento para inscrição não informado!";
-        }
-    }
-    else{
-        $mensagem[] = "Evento para inscrição não informado!";
-    }
-    if(isset($_POST["pEvento"])){
-        if(empty($_POST["pEvento"])){
-            $mensagem[] = "Evento para inscrição não informado!";
-        }
-    }
-    else{
-        $mensagem[] = "Evento para inscrição não informado!";
-    }
     
-    if(count($mensagem) == 0){
-        if($usuario->inscreverEmEvento($_POST["pIdEvento"]) === TRUE){
-            $mensagem[] = "Você foi inscrito no evento ".$_POST["pEvento"]." com sucesso!";
-            $titulo = "Sucesso";
+    if($metodoHttp == 'POST'){
+        $idEvento = 0;
+        $nomeEvento = "";
+        
+        if(isset($_POST["pIdEvento"])){
+            $idEvento = testaCampo($_POST["pIdEvento"]);
         }
         else{
-            $mensagem[] = "Erro ao tentar inscreve-lo no evento ".$_POST["pEvento"]."!";
+            $mensagem[] = "Evento para inscrição não informado!";
+        }
+        if(isset($_POST["pEvento"])){
+            $nomeEvento = testaCampo($_POST["pEvento"]);
+            if(empty($nomeEvento)){
+                $mensagem[] = "Evento para inscrição não informado!";
+            }
+        }
+        else{
+            $mensagem[] = "Evento para inscrição não informado!";
+        }
+        
+        if(count($mensagem) == 0){
+            if($usuario->inscreverEmEvento($idEvento) === TRUE){
+                $mensagem[] = "Você foi inscrito no evento ".$nomeEvento." com sucesso!";
+                $titulo = "Sucesso";
+            }
+            else{
+                $mensagem[] = "Erro ao tentar inscreve-lo no evento ".$nomeEvento."!";
+            }
         }
     }
-        
+    else{
+        $mensagem[] = "Método HTTP '".$metodoHttp."' ainda não implementado!";
+    }
+    
     echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));

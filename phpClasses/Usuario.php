@@ -53,6 +53,9 @@ class Usuario{
     }
 
     public function getImagem() {
+        if($this->imagem==""){
+            return "00000000000.gif";
+        }
         return $this->imagem;
     }
 
@@ -176,7 +179,6 @@ class Usuario{
         $usuario = null;
         
         $dado = UsuarioDao::login($cpf, $senha);// CONSULTA O BANCO DE DADOS
-        
         if($dado == null){
             $mensagem[] = "Usuário não encontrado";
         }
@@ -185,6 +187,7 @@ class Usuario{
             try{
                 while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
+                        //echo $key.", ".$value."\n";
                         $usuario->{$key} = $value;
                     }
                 }

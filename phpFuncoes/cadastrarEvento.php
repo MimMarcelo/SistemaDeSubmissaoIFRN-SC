@@ -62,10 +62,11 @@
             $mensagem[] = "A data de término das inscrições deve ser maior ou igual a data de início";
         }
         
-        if(!_Util::periodoValido($evento->getInicioSubmissao(), $evento->getFinalSubmissao())){
-            $mensagem[] = "A data de término de submissão dos trabalhos deve ser maior ou igual a data de início";
+        if($evento->getInicioSubmissao() != ''){
+            if(!_Util::periodoValido($evento->getInicioSubmissao(), $evento->getFinalSubmissao())){
+                $mensagem[] = "A data de término de submissão dos trabalhos deve ser maior ou igual a data de início";
+            }
         }
-        
         if(count($mensagem) > 0){
             echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
         }

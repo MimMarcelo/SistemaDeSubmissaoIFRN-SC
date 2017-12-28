@@ -24,13 +24,65 @@ nav{
 }
 section#conteudo{
 }
+article{
+    background-color: #EEE;
+    padding: 0;
+    margin: 5%;
+    border-radius: 10px;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+}
+article:hover{
+    background-color: #CCC;
+}
+article > span{
+    display: inline-block;
+    position: absolute;
+    margin: 8px;
+    cursor: pointer;
+}
+article > span > img{
+    width: 25px;
+}
+article > span > img:hover{
+    border: 2px solid #FFF;
+    border-radius: 12px;
+}
+article > form{
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+article > form > label{
+    width: 100%;
+    overflow: auto;
+    padding: 0;
+    border: none;
+}
+article > form > label > h2{
+    color: #FFF;
+    text-align: center;
+    background-color: rgb(50, 180, 50);
+    border-radius: 10px;
+    padding: 10px;
+}
+article > form > label > p{
+    padding-left: 10px;
+    padding-top: 5px;
+}
+article > form > label > input[type="submit"]{
+    width: auto;
+    margin: 0;
+}
 footer{
     clear: both;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO BLOCK
 */
-h1{
+h2{
+    font-size: 18px;
+    padding: 4px;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
@@ -65,9 +117,23 @@ a:visited{
     display: block;
     margin: auto;
 }
+.desaparecer{
+    display: none;
+}
 #conteudo > img, #atualizavel > img{
     display: inline-block;
-    width: 400px;
+    width: 100%;
     height: auto;
+}
+#conteudo > ul > li, #atualizavel > ul > li{
+    padding: 4px;
+    font-size: 14px;
+}
+#conteudo > ul > li > span, #atualizavel > ul > li > span{
+    display: block;
+    font-size: 16px;
+}
+#conteudo > ul > li > form, #atualizavel > ul > li > form{
     float: right;
+    width: auto;
 }

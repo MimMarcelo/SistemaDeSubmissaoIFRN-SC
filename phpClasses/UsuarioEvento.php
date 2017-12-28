@@ -1,6 +1,7 @@
 <?php
 
     require_once dirname(__FILE__).'/../phpDao/UsuarioEventoDao.php';
+    require_once dirname(__FILE__).'/StatusInscricao.php';
 
 class UsuarioEvento{
     private $idUsuarioEvento;
@@ -25,7 +26,10 @@ class UsuarioEvento{
         return $this->idNivelAcesso;
     }
 
-    public function getIdStatusInscricao() {
+    public function getStatusInscricao() {
+        if(!($this->idStatusInscricao instanceof StatusInscricao)){
+            $this->idStatusInscricao = StatusInscricao::getStatusInscricaoPorId($this->idStatusInscricao);
+        }
         return $this->idStatusInscricao;
     }
     

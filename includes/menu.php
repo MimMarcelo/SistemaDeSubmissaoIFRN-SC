@@ -6,7 +6,7 @@
         <span class="barra3"></span>
     </a>
     <a href="inicio.php" title="Início">Home</a>
-    <a href="listarEventos.php" title="Lista de Eventos">Eventos</a>
+    <a href="consultarEventos.php" title="Lista de Eventos">Eventos</a>
     <a href="consultarAvaliacoes.php" title="Consultar avaliações">Consultar Avaliações</a>
     <a href="testeCamposFormulario.php" title="Campos dos forms">Campos dos FORMs</a>
     <?php

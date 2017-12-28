@@ -21,7 +21,7 @@
         <div id="carregaPagina">
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
-                <p>Olá <?=$usuario->getNome();?>, seja bem vindo ao sistema de submissão de arquivos do IFRN SC</p>
+                <p><?php print_r($usuario);?></p>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>
