@@ -40,6 +40,9 @@ class Evento {
     }
 
     public function getLogoMarca() {
+        if($this->logoMarca==""){
+            return "../iconSemImagem.png";
+        }
         return $this->logoMarca;
     }
 

@@ -54,7 +54,7 @@ class Usuario{
 
     public function getImagem() {
         if($this->imagem==""){
-            return "00000000000.gif";
+            return "../iconSemFoto.gif";
         }
         return $this->imagem;
     }
