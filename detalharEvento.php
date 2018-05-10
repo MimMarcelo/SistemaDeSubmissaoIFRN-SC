@@ -101,7 +101,7 @@
                             <?php
                             }
                             else{
-                                echo "<span>$statusInscricao</span>";
+                                echo "Status da Inscrição: <span>$statusInscricao</span>";
                             }
                             ?>
                         </li>
@@ -116,16 +116,20 @@
                             <?php
                             $podeSubmeter = TRUE;
                             if(_Util::periodoValido($evento->getFinalSubmissao(), $hoje)){
-                                $podeSeInscrever = FALSE;//INSCRIÇÕES ENCERRADAS 
+                                $podeSubmeter = FALSE;//INSCRIÇÕES ENCERRADAS 
                                 $statusInscricao = "Submissões encerradas";
                             }
                             else if(_Util::periodoValido($hoje, $evento->getInicioSubmissao())){
-                                $podeSeInscrever = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
+                                $podeSubmeter = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
                                 $statusInscricao = "Submissões a partir de ".$evento->getInicioInscricao();
+                            }
+                            else if(!($usuarioEvento) instanceof UsuarioEvento){
+                                $podeSubmeter = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
+                                $statusInscricao = "Inscreva-se para poder submeter trabalhos!";
                             }
                             if($podeSubmeter){
                             ?>
-                            <form action="phpFuncoes/inscreverEmEvento.php" method="post">
+                            <form action="phpFuncoes/submeterTrabalho.php" method="post">
                                 <input type="hidden" name="pIdEvento" value="<?=$evento->getIdEvento(); ?>">
                                 <input type="hidden" name="pEvento" value="<?=$evento->getNome(); ?>">
                                 <input type="submit" value="Submeta trabalhos">
@@ -133,7 +137,7 @@
                             <?php
                             }
                             else{
-                                echo "<span>$statusInscricao</span>";
+                                echo "$statusInscricao";
                             }
                             ?>
                         </li>
@@ -145,6 +149,64 @@
                             de <?php echo $evento->getInicioEvento() ?>
                             a <?php echo $evento->getFinalEvento() ?>
                         </li>
+                        <?php 
+                        $subEventos = $evento->getSubEventos();
+                        
+                        if(is_array($subEventos) && count($subEventos)>0){
+                        ?>
+                        <li>
+                            <span>Eventos internos</span>
+                            <?php
+                            foreach ($subEventos as $s){
+                                //VERIFICA SE AS INSCRIÇÕES PARA O EVENTO JÁ ESTÃO ENCERRADAS
+                                $inscricaoEncerrada = FALSE;
+                                if(_Util::periodoValido($s->getFinalInscricao(), $hoje)){
+                                    $inscricaoEncerrada = TRUE;                                
+                                }
+
+                                //CRIA OBJETO COM INFORMAÇÕES DA RELAÇÃO DO USUÁRIO COM O EVENTO
+                                $usuarioEvento = $usuario->getEvento($s->getIdEvento());
+
+                                $statusInscricao = "Inscreva-se";
+                                if(($usuarioEvento) instanceof UsuarioEvento){
+                                    $statusInscricao = $usuarioEvento->getStatusInscricao()->getStatusInscricao();
+                                }
+                                else if($inscricaoEncerrada){
+                                    $statusInscricao = "Inscrições encerradas";
+                                }
+                                else if(_Util::periodoValido($hoje, $s->getInicioInscricao())){
+                                    $statusInscricao = "A partir de ".$s->getInicioInscricao();
+                                }
+                                ?>
+                                <article>
+                                    <?php if($usuario->ehAdministrador()){?>
+                                    <span>
+                                        <img src="img/iconFechar.png" title="Excluir evento <?=$s->getNome();?>"
+                                             onclick='abrePopupConfirm("Confirma a exclusão do evento \"<?=$s->getNome();?>\"?",
+                                                         "phpFuncoes/excluirEvento.php",
+                                                         "<?=$s->getIdEvento();?>",
+                                                         "<?=$s->getNome();?>")'>
+                                    </span>
+                                    <?php }// FECHA IF ADMINISTRADOR ?>
+                                    <form action="phpFuncoes/detalharEvento.php" method="post">
+                                        <label for="evento<?=$s->getIdEvento();?>">
+                                            <h2><?=$s->getNome();?></h2>
+                                            <p>Realização: <?=$s->getInicioEvento();?> - <?=$s->getFinalEvento();?></p>
+                                            <p>Inscrição: <?=$statusInscricao;?></p>
+                                            <input type="hidden" value="<?=$s->getIdEvento();?>" name="pId">
+                                            <input type="hidden" value="<?=$s->getIdEventoPrincipal();?>" name="pIdPrincipal">
+                                            <input type="submit" value="<?php echo ($statusInscricao=="Inscreva-se")?$statusInscricao:"Detalhar";?>" id="evento<?=$s->getIdEvento();?>">
+                                        </label>
+                                    </form>
+                                </article>
+                                <?php
+                            }
+                            ?>
+                        </li>
+                        <?php
+                        }//FIM DOS SUB EVENTOS
+                        ?>
+
                     </ul>
                 </div>
             </section>

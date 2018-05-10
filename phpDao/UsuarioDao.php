@@ -29,9 +29,9 @@ class UsuarioDao{
         }
         return null;
     }
-    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario){
-        //echo "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);";
-        $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
+    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario, $areasAtuacao){
+        //echo "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."');";
+        $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."');");
         
         if(is_object($resultado)){
             if($resultado->num_rows > 0){

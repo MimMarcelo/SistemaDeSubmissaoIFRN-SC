@@ -1,21 +1,22 @@
 <?php
 
     require_once dirname(__FILE__).'/../phpClasses/Usuario.php';
-    require_once dirname(__FILE__).'/../includes/sessaoDeUsuario.php';
-    loginObrigatorio();
+    session_start();
     
-    function testaCampo($campo) {
-        $campo = trim($campo);
-        $campo = stripslashes($campo);
-        $campo = htmlspecialchars($campo);
-        return $campo;
-    }
+    $usuario = new Usuario();
     
     $metodoHttp = $_SERVER['REQUEST_METHOD'];
     $mensagem = array();
     $titulo = "Atenção";
     
-    if($metodoHttp == 'POST'){
+    if(isset($_SESSION["usuario"])){
+        $usuario = $_SESSION["usuario"];
+    }
+    else{
+        $mensagem[] = "Login obrigatório!";
+    }
+    
+    if($metodoHttp == 'POST' && count($mensagem) == 0){
         $idEvento = 0;
         $nomeEvento = "";
         
@@ -50,3 +51,11 @@
     }
     
     echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
+    
+    
+    function testaCampo($campo) {
+        $campo = trim($campo);
+        $campo = stripslashes($campo);
+        $campo = htmlspecialchars($campo);
+        return $campo;
+    }

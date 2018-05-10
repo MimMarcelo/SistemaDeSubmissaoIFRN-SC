@@ -290,7 +290,7 @@ class Evento {
         $mensagem = array();
         $listaEventos = array();
         
-        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '');
+        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '', 0);
         if($dados == null){
             return null;
         }
@@ -328,10 +328,10 @@ class Evento {
         }
     }
     
-    public static function getEventoPorId($pId){
+    public static function getEventoPorId($pId, $pIdEventoPrincipal =0){
         $mensagem = array();
         
-        $dados = EventoDao::getEventos($pId, '', '', '', '', '', '', '', '');
+        $dados = EventoDao::getEventos($pId, '', '', '', '', '', '', '', '', $pIdEventoPrincipal);
         if($dados == null){
             return null;
         }
@@ -361,6 +361,48 @@ class Evento {
         }
         if(count($mensagem) > 0){
             return $mensagem;
+        }
+    }
+    
+    public function getSubEventos(){
+        $mensagem = array();
+        $listaEventos = array();
+        
+        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '', $this->idEvento);
+        if($dados == null){
+            return null;
+        }
+        else{
+            try{
+                while($obj = $dados->fetch_assoc()) {
+                    $evento = new Evento();
+                    
+                    foreach ($obj as $key => $value) {
+                        if($key == "inicioEvento" ||
+                                $key == "finalEvento" ||
+                                $key == "inicioSubmissao" ||
+                                $key == "finalSubmissao" ||
+                                $key == "inicioInscricao" ||
+                                $key == "finalInscricao"){
+                            $evento->{$key} = _Util::getDataDoBd($value);
+                        }
+                        else{
+                            $evento->{$key} = $value;
+                        }
+                    }
+                    
+                    $listaEventos[] = $evento;
+                }
+            } catch (Exception $e) {
+                $listaEventos = null;
+                $mensagem[] = $e->getMessage();
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $listaEventos;
         }
     }
     

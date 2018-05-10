@@ -21,9 +21,11 @@
         $nomeImagem = "";
         $adm = 0;
         $avaliador = 0;
+        $areasAtuacao = array();
         
         //$json = json_decode(file_get_contents("php://input"));
         //print_r($_POST);
+        //return;
         //print_r($_FILES);
         //VALIDAR CAMPOS
         if(isset($_POST["pCpf"])){
@@ -71,6 +73,10 @@
         
         if(isset($_POST["pMatricula"])){
             $matricula = testaCampo($_POST["pMatricula"]);
+        }
+        
+        if(isset($_POST["pAreaAtuacao"])){
+            $areasAtuacao = $_POST["pAreaAtuacao"];
         }
         
         if(isset($_POST["pAdministrador"])){
@@ -140,6 +146,11 @@
                 $mensagem[] = $aux;
             }
 
+            $aux = $usuario->setAreasAtuacao($areasAtuacao);
+            if(strlen($aux) > 0){
+                $mensagem[] = $aux;
+            }
+            
             $aux = $usuario->setNivelAcesso($adm);
             if(strlen($aux) > 0){
                 $mensagem[] = $aux;

@@ -169,6 +169,26 @@ function focaLabel(){
             $(this).parent().css("border-color", corDeSaida);
     });
 }
+function adicionarAreaAtuacao(botao, lista){
+    var label = document.createElement('label');
+    var btnRemover = document.createElement('input');
+    $(btnRemover).attr('type', 'button');
+    $(btnRemover).attr('onclick', 'removerAreaAtuacao(this);')
+    
+    var select = document.createElement('select');
+    $(select).attr('name', 'pAreaAtuacao[]');
+    $(select).html($(lista).children().clone());
+    
+    $(label).append(select);
+    $(label).append(btnRemover);
+    
+    $(label).insertBefore(botao);
+}
+
+function removerAreaAtuacao(este){
+    $(este).parent().remove();
+}
+
 /**
  * FAZ COM QUE OS CAMPOS COM A CLASSE .calendario APRESENTEM UM CALENDÁRIO PARA PREENCHIMENTO
  * @returns NENHUM

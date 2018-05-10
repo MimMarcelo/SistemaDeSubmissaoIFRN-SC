@@ -3,9 +3,14 @@
     
     $mensagem = array();
     $titulo = "Atenção";
-
+    //print_r($_POST);
     if(isset($_POST) && !empty($_POST)){
-        $mensagem = Evento::getEventoPorId($_POST['pId']);
+        if(isset($_POST['pIdPrincipal'])){
+            $mensagem = Evento::getEventoPorId($_POST['pId'], $_POST['pIdPrincipal']);
+        }
+        else{
+            $mensagem = Evento::getEventoPorId($_POST['pId']);
+        }
         //print_r($mensagem);
         if($mensagem instanceof Evento){
             session_start();

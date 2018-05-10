@@ -6,9 +6,9 @@ require_once '_Conexao.php';
 class EventoDao {
     
     //Exemplo que consulta vários registros no banco
-    public static function getEventos($idEvento, $nome, $descricao, $inicioInscricao, $fimInscricao, $inicioSubmissao, $fimSubmissao, $inicioEvento, $fimEvento) {
-        
-        $resultado = _Conexao::executar("CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento');");
+    public static function getEventos($idEvento, $nome, $descricao, $inicioInscricao, $fimInscricao, $inicioSubmissao, $fimSubmissao, $inicioEvento, $fimEvento, $idEventoPrincipal) {
+        //echo "CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento', $idEventoPrincipal);";
+        $resultado = _Conexao::executar("CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento', $idEventoPrincipal);");
         
         if(is_object($resultado)){
             if($resultado->num_rows > 0){

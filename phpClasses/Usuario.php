@@ -2,6 +2,7 @@
 
     require_once dirname(__FILE__).'/../phpDao/UsuarioDao.php';
     require_once dirname(__FILE__).'/UsuarioEvento.php';
+    require_once dirname(__FILE__).'/AreaAtuacao.php';
     
 class Usuario{
     private $idUsuario;
@@ -10,6 +11,7 @@ class Usuario{
     private $nome;
     private $email;
     private $matricula;
+    private $areasAtuacao;
     private $administrador;
     private $avaliador;
     private $imagem;
@@ -40,6 +42,28 @@ class Usuario{
         return $this->matricula;
     }
 
+    public function getAreasAtuacao(){
+        if($this->areasAtuacao == null){
+            $this->areasAtuacao = AreaAtuacao::getAreasPorIdUsuario($this->getId());
+        }
+        return $this->areasAtuacao;
+    }
+    
+    public function getAreasAtuacaoParaBD(){
+        $areasAtuacao = "";
+        if(is_array($this->areasAtuacao)){
+            foreach ($this->areasAtuacao as $area){
+                if($areasAtuacao == ""){
+                    $areasAtuacao = $area;
+                }
+                else{
+                    $areasAtuacao = $areasAtuacao.",".$area;
+                }
+            }
+        }
+        return $areasAtuacao;
+    }
+        
     public function getNivelAcesso() {
         return $this->administrador;
     }
@@ -120,6 +144,22 @@ class Usuario{
         $this->matricula = $matricula;
     }
 
+    public function setAreasAtuacao($areasAtuacao) {
+        if (is_array($areasAtuacao)) {
+            $this->areasAtuacao = $areasAtuacao;
+        }
+        else{
+            return "Áreas de atuação inválidas";
+        }
+    }
+    
+    public function addAreaAtuacao($areaAtuacao){
+        if($this->areasAtuacao == null){
+            $this->areasAtuacao = array();
+        }
+        $this->areasAtuacao->append($areaAtuacao);
+    }
+        
     public function setEmail($email) {           
         if(empty($email)){
             return "Informe o e-mail de usuário";
@@ -239,12 +279,15 @@ class Usuario{
         $mensagem = null;
         $dado = null;
         
+        //VERIFICA SE O CPF INSERIDO JÁ ESTÁ CADASTRADO
         $dado = Usuario::consultarUsuario($this->cpf, '', '', '', -1, -1, 0);
-        //print_r($dado);
         if(is_array($dado)){
+            
+            //VERIFICA SE O E-MAIL INSERIDO JÁ ESTÁ CADASTRADO
             $dado = Usuario::consultarUsuario('', '', $this->email, '', -1, -1, 0);
             if(is_array($dado)){
-                $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario);
+                
+                $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario, $this->getAreasAtuacaoParaBD());
             }
             else{
                 $mensagem[] = "O e-mail '$this->email' já é cadastrado no sistema, esqueceu a senha?";

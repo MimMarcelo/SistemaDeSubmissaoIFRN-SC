@@ -27,6 +27,16 @@
             include './includes/cabecalho.php';
             include './includes/menu.php';
         } //FIM DA ÁREA DE ADMINISTRADOR
+        
+        //CONSTROI LISTA DAS ÁREAS DE ATUAÇÃO
+        include_once './phpClasses/AreaAtuacao.php';
+        $areasAtuacao = AreaAtuacao::getTodasAreasAtuacao();
+        
+        echo "<datalist id='listAreasAtuacao'>";
+        foreach ($areasAtuacao as $area){
+            echo "<option value='".$area->getIdAreaAtuacao()."'>".$area->getAreaAtuacao()."</option>";
+        }
+        echo "</datalist>";
         ?>
         <div id="carregaPagina">
             <section id="conteudo">
@@ -45,6 +55,10 @@
                     <input type="password" id="txtConfirmarSenha" name="pConfirmarSenha" class="confirmarSenha" required>
                     <label for="txtMatricula">Matrícula SUAP</label>
                     <input type="text" id="txtMatricula" name="pMatricula" placeholder="Informe sua matrícula SUAP">
+                    <fieldset>
+                        <legend>Area de atuação</legend>
+                        <input type="button" value="Adicionar Area" onclick="adicionarAreaAtuacao(this, '#listAreasAtuacao')">
+                    </fieldset>
                     <?php
                     if ($usuario->ehAdministrador()) {
                         //INICIA ÁREA QUE APENAS O ADMINISTRADOR PODE EXECUTAR
