@@ -2,25 +2,79 @@
 ------------------------- TAGs GERAIS
 */
 nav{
-    background-color: rgb(51,51,51);
-    margin: auto;
-    color: #DDD;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }
-nav > ul > li > a{
-    color: #DDD;
-    text-decoration: none;
-    font-weight: bolder;
-    padding: 10px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+nav a {
     display: block;
+    font-weight: bolder;
+    color: #FFF;
+    background-color: #000;
+    padding: 14px 16px;
+    transition: 0.5s;
 }
-nav > ul > li > a:hover{
-    color: #3A5;
+nav a:first-child{
+    height: 45px;
 }
-nav > ul > li > a:last-child{
-    border-bottom-style: none;
+nav a:not(:first-child){
+    display: none;
+}
+nav a:first-child span{
+    display: block;
+    background-color: #FFF;
+    width: 20px;
+    height: 3px;
+    margin: 3px 0;
+    transition: 0.5s;
+}
+nav a.menuSair{
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #E22;
 }
 /*
-------------------------- CONFIGURAÇÕES ESPECÍFICAS DA PÁGINA DE LOGIN
+------------------------- TAGs COMPORTAMENTAIS
 */
+nav a:hover{
+    background-color: rgb(50, 180, 50);
+    color: #FFF;
+}
+nav a:visited{
+    color: #FFF;
+}
+nav.menuAberto{
+    height: 100%;
+    background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
+    background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
+}
+nav.menuAberto a:not(:first-child){
+    position: relative;
+    display: block;
+    animation-name: animaMenuAbrir;
+    animation-duration: 0.5s;
+}
+nav.menuAberto a.menuTitulo, nav.menuAberto a.menuTitulo:hover{
+    background-color: #444;
+    margin-left: 0px;
+    padding-left: 30px;
+    text-decoration: none;
+}
+nav.menuAberto a:first-child .barra1{
+    -webkit-transform: rotate(-45deg) translate(-6px, 0);
+    transform: rotate(-45deg) translate(-6px, 0);
+}
+nav.menuAberto a:first-child .barra2{
+    display: none;
+}
+nav.menuAberto a:first-child .barra3{
+    -webkit-transform: rotate(45deg) translate(-4px, 2px);
+    transform: rotate(45deg) translate(-4px, 2px);
+}
+@keyframes animaMenuAbrir {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE ESQUERDA PARA A POSIÇÃO DEFINIDA) */
+    from {left:-300px; opacity:0}
+    to {left:0; opacity:1}
+}

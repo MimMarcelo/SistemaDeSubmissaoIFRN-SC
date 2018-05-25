@@ -29,7 +29,7 @@
     
     if(count($mensagem) == 0){
         if(StatusTrabalho::editarStatusTrabalho($_POST["pIdStatusTrabalho"], $_POST["pStatusTrabalho"]) === TRUE){
-            $mensagem[] = "Status: ".$_POST["pStatusTrabalho"]." salvo com sucesso!";
+            $mensagem[] = "Status: '".$_POST["pStatusTrabalho"]."' salvo com sucesso!";
             $titulo = "Sucesso";
         }
         else{

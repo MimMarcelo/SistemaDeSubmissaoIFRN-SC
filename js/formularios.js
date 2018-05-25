@@ -36,6 +36,8 @@ function formularios(){
      */
     $("form").unbind('submit').submit(function(e){
         var href = $(this).attr("action");//PEGA O DESTINO DO FORMULÁRIO
+//        var dados = paraJson($(this).serializeArray());
+//        console.log(dados);
         
         //RESPONSÁVEL POR MUDAR O CONTEÚDO DA PÁGINA SEM RECARREGÁ-LA
         $.ajax({
@@ -45,8 +47,9 @@ function formularios(){
             contentType: false,
             cache: false,
             data: new FormData($(this)[0]), // DADOS A SEREM ENVIADOS PARA O .PHP
+            //data: dados,
             success: function(data){
-                //console.log(data);
+                console.log(data);
         
                 if(EhJSON(data)){ //SE NA RESPOSTA VIER UM JSON
                     var o = JSON.parse(data);//CONVERTE OS DADOS EM JSON
@@ -82,7 +85,19 @@ function formularios(){
         return false;
         
     });
+    $('header>form>select').on('change', function(){
+        $(this).closest('form').submit();
+    });
 };
+function paraJson(formulario){
+    var json = "{";
+    for(var tx in formulario){
+        if(tx > 0) json += ",";
+        json += "'"+formulario[tx].name+"': '"+formulario[tx].value+"' ";
+    }
+    json += "}";
+    return JSON.stringify(json);
+}
 /**
  * VERIFICA SE O PARÂMETRO INFORMADO É UM OBJETO JSON [TRUE], OU NÃO [FALSE]
  * @param {Objeto} data CONTEÚDO IMPRESSO PELA PÁGINA .PHP
@@ -157,6 +172,26 @@ function focaLabel(){
             $(this).parent().css("border-color", corDeSaida);
     });
 }
+function adicionarAreaAtuacao(botao, lista){
+    var label = document.createElement('label');
+    var btnRemover = document.createElement('input');
+    $(btnRemover).attr('type', 'button');
+    $(btnRemover).attr('onclick', 'removerAreaAtuacao(this);')
+    
+    var select = document.createElement('select');
+    $(select).attr('name', 'pAreaAtuacao[]');
+    $(select).html($(lista).children().clone());
+    
+    $(label).append(select);
+    $(label).append(btnRemover);
+    
+    $(label).insertBefore(botao);
+}
+
+function removerAreaAtuacao(este){
+    $(este).parent().remove();
+}
+
 /**
  * FAZ COM QUE OS CAMPOS COM A CLASSE .calendario APRESENTEM UM CALENDÁRIO PARA PREENCHIMENTO
  * @returns NENHUM
@@ -221,7 +256,7 @@ function mostraNomeInputFile(){
         btn = "<span>Selecione</span>";
         label = "<label for='"+$(input).attr("id")+"' class='inputFile'>"+btn+"</label>";
         if($(input).attr("class") === "upImagem"){
-            label = label+"<img src='img/iconSemFoto.gif' alt='preview da imagem'>";
+            label = label+"<img src='img/iconSemFoto.gif' alt='"+$(input).attr("placeholder")+"'>";
         }
         
         if($(input).next().attr("for") !== $(input).attr("id")){
@@ -230,8 +265,8 @@ function mostraNomeInputFile(){
         $(input).change(function(){
             $(this).next().text("");
             txt = $(this)[0].value.toString();
-            if(txt.length > 10){
-                txt = "..." + txt.substr(txt.length-10);
+            if(txt.length > 16){
+                txt = "..." + txt.substr(txt.length-16);
             }
             $(this).next().append(btn+txt);
             
@@ -300,17 +335,4 @@ function confirmarSenha(){
             }
         });
     });
-}
-
-function addCoAutor(este, select, nome){
-    input = "<div class='autor'>";
-    input += "<img src='img/iconFechar.png' onClick='removerCoAutor(this)'>";
-    input += "<label>Co-autor: "+$(select +" option:selected").text()+"</label>";
-    input += "<label>Orientador <input type='checkbox' name='pOrientador'>";
-    input += "<input type='hidden' name='p"+nome+"' value='"+$(select).val()+"'></label></div>";
-    $(este).parent().parent().after(input);
-    focaLabel();
-}
-function removerCoAutor(este){
-    $(este).parent().remove();
 }

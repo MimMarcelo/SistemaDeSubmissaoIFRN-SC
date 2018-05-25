@@ -6,3 +6,4 @@
         <link rel="stylesheet" href="css/rodape.css">
         <link rel="stylesheet" href="css/calendario.css">
         <link rel="stylesheet" href="css/tabela.css">
+        <link rel="stylesheet" href="css/botaoFlutuante.css">

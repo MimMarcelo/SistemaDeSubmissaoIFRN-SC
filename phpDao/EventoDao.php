@@ -6,22 +6,34 @@ require_once '_Conexao.php';
 class EventoDao {
     
     //Exemplo que consulta vários registros no banco
-    public static function getEventos($idEvento, $principal, $nome, $descricao, $inicioInscricao, $fimInscricao, $inicioSubmissao, $fimSubmissao, $inicioEvento, $fimEvento) {
-        return _Conexao::executar("CALL consultarEvento($idEvento, 0, $principal, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento');");
+    public static function getEventos($idEvento, $nome, $descricao, $inicioInscricao, $fimInscricao, $inicioSubmissao, $fimSubmissao, $inicioEvento, $fimEvento, $idEventoPrincipal) {
+        //echo "CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento', $idEventoPrincipal);";
+        $resultado = _Conexao::executar("CALL consultarEvento($idEvento, '$nome', '$descricao', '$inicioInscricao', '$fimInscricao', '$inicioSubmissao', '$fimSubmissao', '$inicioEvento', '$fimEvento', $idEventoPrincipal);");
+        
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+        }
+        return null;
     }
     
-    public static function getSubEventos($idEventoPrincipal){
-        return _Conexao::executar("CALL consultarEvento(0, $idEventoPrincipal, 0, '', '', '', '', '', '', '', '');");
-    }
-
     public static function salvar($idEvento, $idEventoPrincipal, $nome, $descricao, 
                                   $local, $logoMarca, $numVagas, $inicioInscricao,
                                   $finalInscricao, $inicioSubmissao, $finalSubmissao,
                                   $inicioEvento, $finalEvento){
         
-        return _Conexao::executar("CALL cadastrarEvento($idEvento, $idEventoPrincipal, '$nome', '$descricao', "
+        $resultado = _Conexao::executar("CALL cadastrarEvento($idEvento, $idEventoPrincipal, '$nome', '$descricao', "
                 . "'$local', '$logoMarca', $numVagas, '$inicioInscricao', '$finalInscricao', '$inicioSubmissao', "
                 . "'$finalSubmissao', '$inicioEvento', '$finalEvento');");
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+            else{
+                return null;
+            }
+        }
     }
     
     public static function excluirEvento($id){

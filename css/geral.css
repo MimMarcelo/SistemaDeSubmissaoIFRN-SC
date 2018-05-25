@@ -5,23 +5,74 @@
     padding: 0;
     margin: 0;
     border-width: 0;
-    border: none;
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
     box-sizing: border-box;
 }
 body{
-    background-color: #444;
-    padding: 10px;
-    color: #FFE;
+    background-color: #FFF;
+    color: #006;
+    padding-top: 45px;/* PARA O MENU */
 }
 /*
 ------------------------- TAGs ESTRUTURAIS
 */
-nav{
-    width: 100%;
+header{
 }
-section{
+nav{
+}
+section#conteudo{
+}
+article{
+    background-color: #EEE;
+    padding: 0;
+    margin: 5%;
+    border-radius: 10px;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
+}
+article:hover{
+    background-color: #CCC;
+}
+article > span{
+    display: inline-block;
+    position: absolute;
+    margin: 8px;
+    cursor: pointer;
+}
+article > span > img{
+    width: 25px;
+}
+article > span > img:hover{
+    border: 2px solid #FFF;
+    border-radius: 12px;
+}
+article > form{
+    padding: 0;
+    background-color: transparent;
+    border: none;
+}
+article > form > label{
+    width: 100%;
+    overflow: auto;
+    padding: 0;
+    border: none;
+}
+article > form > label > h2{
+    color: #FFF;
+    text-align: center;
+    background-color: rgb(50, 180, 50);
+    border-radius: 10px;
+    padding: 10px;
+}
+article > form > label > p{
+    padding-left: 10px;
+    padding-top: 5px;
+}
+article > form > label > input[type="submit"]{
+    width: auto;
+    margin: 0;
 }
 footer{
     clear: both;
@@ -30,14 +81,8 @@ footer{
 ------------------------- TAGs DISPLAY PADRÃO BLOCK
 */
 h2{
-    width: 100%;
-}
-section h2, h2 span{
-    font-size: 30px;
-    display: inline-block;
-}
-ul{
-    list-style: none;
+    font-size: 18px;
+    padding: 4px;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
@@ -46,28 +91,49 @@ ul{
 ------------------------- TAGs a
 */
 a{
-    color: #383;
+    color: rgb(50, 180, 50);
+    text-decoration: none;
+    font-weight: normal;
+    font-size: 12px;
+    display: inline-block;
+}
+a:hover{
+    color: rgb(50, 220, 220);
+    text-decoration: underline;
+}
+a:visited{
+    color: rgb(200, 200, 50);
 }
 /*
-------------------------- CLASSES GENÉRICAS
+------------------------- CLASSES CONTROLADORAS DO LAYOUT
 */
+.coluna{
+    width: 100%;
+    display: block;
+    padding: 5px;
+}
+.coluna > img{
+    width: 50%;
+    display: block;
+    margin: auto;
+}
 .desaparecer{
     display: none;
 }
-/*
-------------------------- IDs GENÉRICOS
-*/
 #conteudo > img, #atualizavel > img{
     display: inline-block;
-    width: 400px;
+    width: 100%;
     height: auto;
-    float: right;
 }
-/*
-------------------------- DISPLAYS GRANDES
-*/
-@media screen and (min-width: 601px){
-    .desaparecer{
-        display: inline-block;
-    }
+#conteudo > ul > li, #atualizavel > ul > li{
+    padding: 4px;
+    font-size: 14px;
+}
+#conteudo > ul > li > span, #atualizavel > ul > li > span{
+    display: block;
+    font-size: 16px;
+}
+#conteudo > ul > li > form, #atualizavel > ul > li > form{
+    float: right;
+    width: auto;
 }

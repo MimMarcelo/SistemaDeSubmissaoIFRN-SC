@@ -11,7 +11,7 @@
         include './includes/css.php';
         include './includes/javascript.php';
         require_once dirname(__FILE__).'/phpClasses/Evento.php';
-        require_once dirname(__FILE__).'/includes/sessaoDeUsuario.php';
+        require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
 
         loginObrigatorio(); //LOGIN OBRIGATÓRIO
         
@@ -28,6 +28,7 @@
                 if(isset($_SESSION["evento"])){
                     if(!empty($_SESSION["evento"])){
                         $evento = $_SESSION["evento"];
+                        //unset($_SESSION["evento"]);
                     }
                     else{
                         $_SESSION["mensagem"] = "Selecione um evento para detalhar!";
@@ -40,18 +41,16 @@
                 }
                 ?>
                 <div id="atualizavel">
-                    <h2 class="detalhes"><span>Evento: </span><?php echo $evento->getNome() ?></h2>
-                    <?php if(strlen($evento->getLogoMarca()) > 0 ){ ?>
-                    <img src="img/fotosEventos/<?php echo $evento->getLogoMarca() ?>" alt="<?php echo $evento->getDescricao() ?>">
-                    <?php }?>
-                    <ul class="detalhes">
+                    <h2><span>Evento: </span><?=$evento->getNome() ?></h2>
+                    <img src="img/fotosEventos/<?=$evento->getLogoMarca() ?>" alt="<?=$evento->getDescricao() ?>">
+                    <ul>
                         <li>
                             <span>Descricao: </span>
-                            <?php echo $evento->getDescricao() ?>
+                            <?=$evento->getDescricao() ?>
                         </li>
                         <li>
                             <span>Local: </span>
-                            <?php echo "<a href='https://www.google.com.br/maps/place/".$evento->getLocal()."' target='_blank'>".$evento->getLocal()."</a>" ?>
+                            <a href='https://www.google.com.br/maps/place/<?=$evento->getLocal();?>' target='_blank'><?=$evento->getLocal();?></a>
                         </li>
                         <li>
                             <span>Número de vagas: </span>
@@ -67,80 +66,150 @@
                         </li>
                         <li>
                             <span>Inscrições: </span>
-                            de <?php echo $evento->getInicioInscricao() ?>
-                            a <?php echo $evento->getFinalInscricao() ?>
+                            de <?=$evento->getInicioInscricao() ?>
+                            a <?=$evento->getFinalInscricao() ?>
                             
                             <?php
-                            //var_dump($usuario->estaInscritoNoEvento($evento->getIdEvento()));
+                            
+                            //CRIA OBJETO COM INFORMAÇÕES DA RELAÇÃO DO USUÁRIO COM O EVENTO
+                            $usuarioEvento = $usuario->getEvento($evento->getIdEvento());
+                            
                             $hoje = date("Y-m-d");
-                            if((_Util::getDataParaBd($evento->getInicioInscricao()) <= $hoje &&
-                                _Util::getDataParaBd($evento->getFinalInscricao()) >= $hoje) &&
-                                !$usuario->estaInscritoNoEvento($evento->getIdEvento())){
+                            //VERIFICA SE PODE SE INSCREVER
+                            $podeSeInscrever = TRUE;
+                            $statusInscricao = "Inscreva-se";
+                            if(($usuarioEvento) instanceof UsuarioEvento){
+                                $podeSeInscrever = FALSE;//JÁ ESTÁ INSCRITO
+                                $statusInscricao = $usuarioEvento->getStatusInscricao()->getStatusInscricao();
+                            }
+                            else if(_Util::periodoValido($evento->getFinalInscricao(), $hoje)){
+                                $podeSeInscrever = FALSE;//INSCRIÇÕES ENCERRADAS 
+                                $statusInscricao = "Inscrições encerradas";
+                            }
+                            else if(_Util::periodoValido($hoje, $evento->getInicioInscricao())){
+                                $podeSeInscrever = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
+                                $statusInscricao = "Inscrições a partir de ".$evento->getInicioInscricao();
+                            }
+                            
+                            if($statusInscricao == "Inscreva-se"){
                             ?>
                             <form action="phpFuncoes/inscreverEmEvento.php" method="post">
-                                <input type="hidden" name="pIdEvento" value="<?php echo $evento->getIdEvento(); ?>">
-                                <input type="hidden" name="pEvento" value="<?php echo $evento->getNome(); ?>">
+                                <input type="hidden" name="pIdEvento" value="<?=$evento->getIdEvento(); ?>">
+                                <input type="hidden" name="pEvento" value="<?=$evento->getNome(); ?>">
                                 <input type="submit" value="Inscreva-se">
                             </form>
                             <?php
                             }
+                            else{
+                                echo "Status da Inscrição: <span>$statusInscricao</span>";
+                            }
                             ?>
                         </li>
                         <?php
-                        if(strlen($evento->getInicioSubmissao()) > 0){
+                        //VERIFICAÇÃO SE ACEITA SUBMISSÃO DE TRABALHOS
+                        if($evento->getInicioSubmissao() != ""){
                         ?>
                         <li>
                             <span>Submissão de trabalhos: </span>
                             de <?php echo $evento->getInicioSubmissao() ?>
                             a <?php echo $evento->getFinalSubmissao() ?>
-                            
                             <?php
-                            if(_Util::getDataParaBd($evento->getInicioSubmissao()) <= $hoje &&
-                                _Util::getDataParaBd($evento->getFinalSubmissao()) >= $hoje){
+                            $podeSubmeter = TRUE;
+                            if(_Util::periodoValido($evento->getFinalSubmissao(), $hoje)){
+                                $podeSubmeter = FALSE;//INSCRIÇÕES ENCERRADAS 
+                                $statusInscricao = "Submissões encerradas";
+                            }
+                            else if(_Util::periodoValido($hoje, $evento->getInicioSubmissao())){
+                                $podeSubmeter = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
+                                $statusInscricao = "Submissões a partir de ".$evento->getInicioInscricao();
+                            }
+                            else if(!($usuarioEvento) instanceof UsuarioEvento){
+                                $podeSubmeter = FALSE;//INSCRIÇÕES AINDA NÃO ABERTAS 
+                                $statusInscricao = "Inscreva-se para poder submeter trabalhos!";
+                            }
+                            if($podeSubmeter){
                             ?>
-                            <a href="submeterTrabalho.php">submeter</a>
+                            <form action="phpFuncoes/submeterTrabalho.php" method="post">
+                                <input type="hidden" name="pIdEvento" value="<?=$evento->getIdEvento(); ?>">
+                                <input type="hidden" name="pEvento" value="<?=$evento->getNome(); ?>">
+                                <input type="submit" value="Submeta trabalhos">
+                            </form>
                             <?php
                             }
-                        ?>
+                            else{
+                                echo "$statusInscricao";
+                            }
+                            ?>
                         </li>
                         <?php
-                        }
-                        ?>
+                            }//FIM DA VERIFICAÇÃO SE ACEITA SUBMISSÃO DE TRABALHOS
+                            ?>
                         <li>
                             <span>Realização: </span>
                             de <?php echo $evento->getInicioEvento() ?>
                             a <?php echo $evento->getFinalEvento() ?>
                         </li>
-                    </ul>
-                    <?php
-                    if(strlen($evento->getIdEventoPrincipal()) > 0){
-                    ?>
-                    <form action="phpFuncoes/detalharEvento.php" method="post" class="itemAcessivel">
-                            <input type="hidden" value="<?php echo $evento->getIdEventoPrincipal() ?>" name="pId">
-                            <h3>Voltar para evento principal</h3>
-                            <input type="submit" value="Acessar">
-                        </form>
-                    <?php
-                    }
-                    if($usuario->estaInscritoNoEvento($evento->getIdEvento())){
+                        <?php 
                         $subEventos = $evento->getSubEventos();
-
-                        if($subEventos != null){
-                            foreach ($subEventos as $subEvento){
+                        
+                        if(is_array($subEventos) && count($subEventos)>0){
                         ?>
-                                <form action="phpFuncoes/detalharEvento.php" method="post" class="itemAcessivel">
-                                    <input type="hidden" value="<?php echo $subEvento->getIdEvento() ?>" name="pId">
-                                    <input type="hidden" value="0" name="pPrincipal">
-                                    <h3><?php echo $subEvento->getNome() ?></h3>
-                                    <p><?php echo substr($subEvento->getDescricao(), 0, 68)."..."; ?></p>
-                                <input type="submit" value="Acessar">
-                                </form>
-                        <?php
+                        <li>
+                            <span>Eventos internos</span>
+                            <?php
+                            foreach ($subEventos as $s){
+                                //VERIFICA SE AS INSCRIÇÕES PARA O EVENTO JÁ ESTÃO ENCERRADAS
+                                $inscricaoEncerrada = FALSE;
+                                if(_Util::periodoValido($s->getFinalInscricao(), $hoje)){
+                                    $inscricaoEncerrada = TRUE;                                
+                                }
+
+                                //CRIA OBJETO COM INFORMAÇÕES DA RELAÇÃO DO USUÁRIO COM O EVENTO
+                                $usuarioEvento = $usuario->getEvento($s->getIdEvento());
+
+                                $statusInscricao = "Inscreva-se";
+                                if(($usuarioEvento) instanceof UsuarioEvento){
+                                    $statusInscricao = $usuarioEvento->getStatusInscricao()->getStatusInscricao();
+                                }
+                                else if($inscricaoEncerrada){
+                                    $statusInscricao = "Inscrições encerradas";
+                                }
+                                else if(_Util::periodoValido($hoje, $s->getInicioInscricao())){
+                                    $statusInscricao = "A partir de ".$s->getInicioInscricao();
+                                }
+                                ?>
+                                <article>
+                                    <?php if($usuario->ehAdministrador()){?>
+                                    <span>
+                                        <img src="img/iconFechar.png" title="Excluir evento <?=$s->getNome();?>"
+                                             onclick='abrePopupConfirm("Confirma a exclusão do evento \"<?=$s->getNome();?>\"?",
+                                                         "phpFuncoes/excluirEvento.php",
+                                                         "<?=$s->getIdEvento();?>",
+                                                         "<?=$s->getNome();?>")'>
+                                    </span>
+                                    <?php }// FECHA IF ADMINISTRADOR ?>
+                                    <form action="phpFuncoes/detalharEvento.php" method="post">
+                                        <label for="evento<?=$s->getIdEvento();?>">
+                                            <h2><?=$s->getNome();?></h2>
+                                            <p>Realização: <?=$s->getInicioEvento();?> - <?=$s->getFinalEvento();?></p>
+                                            <p>Inscrição: <?=$statusInscricao;?></p>
+                                            <input type="hidden" value="<?=$s->getIdEvento();?>" name="pId">
+                                            <input type="hidden" value="<?=$s->getIdEventoPrincipal();?>" name="pIdPrincipal">
+                                            <input type="submit" value="<?php echo ($statusInscricao=="Inscreva-se")?$statusInscricao:"Detalhar";?>" id="evento<?=$s->getIdEvento();?>">
+                                        </label>
+                                    </form>
+                                </article>
+                                <?php
                             }
-                        }
-                    }
-                    ?>
+                            ?>
+                        </li>
+                        <?php
+                        }//FIM DOS SUB EVENTOS
+                        ?>
+
+                    </ul>
                 </div>
+                <?php include './includes/botaoFlutuante.php'; ?>
             </section>
         </div>
         <?php include './includes/rodape.php'; ?>

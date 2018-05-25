@@ -2,12 +2,13 @@
 ------------------------- TAGs GERAIS
 */
 form{
+    display: block;
     width: 100%;
     background-color: #EEE;
-    color: #444;
-    font-weight: bold;
     padding: 20px;
     border-radius: 10px;
+    border-right: solid 1px black;
+    border-bottom: solid 1px black;
 }
 fieldset{
     border-color: #BBC;
@@ -22,10 +23,12 @@ fieldset{
 */
 form span{/* PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
     color: red;
-    margin-left: 3px;
     font-weight: bolder;
     font-size: 25px;
-    vertical-align: top;
+}
+form label > span{ /* PARA O TEXTO 'SENHA NÃO CONFERE' */
+    font-size: 12px;
+    font-weight: normal;
 }
 label, button, input[type="button"], input[type="submit"], input[type="reset"]{/* PARA SEPARAR OS CAMPOS */
     margin-top: 10px;
@@ -35,18 +38,20 @@ legend{
     padding-right: 5px;
 }
 label{
+    padding-top: 5px;
     border-radius: 5px;
-    border: 1px solid #EEE;
+    border:1px solid #EEE;
     display: block;
-    font-weight: 400;
     width: 90%;
+    box-sizing: border-box;
 }
 input, select, textarea, button{
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
-    border: 1px solid #008f36;
+    border:1px solid rgb(50, 180, 50);
     display: inline-block;
     width: 90%;
+    margin-left: 3%;
     resize: none; /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
 }
 input:hover, select:hover, textarea:hover{
@@ -73,41 +78,24 @@ label > input{ /* RADIOBUTTONs E CHECKBOXes */
     width: auto;
     float: right;
 }
-label > img{ /* BOTÃO DE REMOVER */
-    cursor: pointer;
-    float: right;
-    width: 20px;
-}
 input[type="button"], input[type="reset"], input[type="submit"], button{
-    margin: auto;
     margin-top: 20px;
-    padding: 10px;
-    width: 98%;
     color: #FFF;
     text-shadow: 2px 2px rgba(0, 0, 0, .5);
     font-weight: bolder;
-    background-color: #44F;
-    border-radius: 20px;
+    background-color: rgb(50, 180, 50);
+    border-radius: 10px;
     border-color: #444;
     border-width: 0;
     border-bottom-width: 4px;
     border-right-width: 3px;
     cursor: pointer;
 }
-input[type="reset"]{
-    background-color: #777;
+input[type="reset"], input[type="button"], button{
+    background-color: rgb(50, 50, 220);
 }
-input[type="submit"]{
-    background-color: #3A5;
-}
-input[type="button"]:focus, input[type="button"]:hover, button:focus, button:hover{
-    background-color: #44C;
-}
-input[type="reset"]:focus, input[type="reset"]:hover{
-    background-color: #555;
-}
-input[type="submit"]:focus, input[type="submit"]:hover{
-    background-color: #394;
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, button:focus, button:hover{
+    background-color: rgb(50, 220, 220);
 }
 /* ------------------------------------------------- */
 input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile */
@@ -121,11 +109,14 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
 .inputFile{
     padding: 1px;
     margin-top: 0;
+    margin-left: 3%;
     border-radius: 5px;
-    border: 1px solid #008f36;
+    border:1px solid #008f36;
     display: inline-block;
     width: 90%;
+    box-sizing: border-box;
     background-color: #FFF;
+    line-break: strict;
 }
 .inputFile > span{/* LABEL QUE SUBSTITUI O INPUT TYPE=FILE */
     display: inline-block;
@@ -134,124 +125,44 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
     font-weight: bolder;
     vertical-align: middle;
     text-shadow: 2px 2px rgba(0, 0, 0, .5);
+    
     background-color: #44F;
     border-radius: 5px;
     border-color: #444;
     border-width: 0;
+    border-bottom-width: 4px;
+    border-right-width: 3px;
+    
     margin: 0;
     margin-right: 5px;
     padding: 5px;
 }
 .inputFile > span:hover{
-    background-color: #44B;    
+    background-color: #44C;    
+}
+.inputFile ~ img{
+    display: inline-block;
+    margin-left: 20%;
+    max-width: 50%;
 }
 /*
 ------------------------- OUTRAS TAGS
 */
-form > img{
-    width: 90%;
-    height: auto;
-    border-radius: 7px;
-}
 form a{
-    color: #3A5;
-    border-style: none;
-    font-weight: normal;
-    cursor: pointer;
-}
-form a:hover{
-    color: #333;
+    margin-top: 20px;
+    margin-right: 20px;
 }
 /*
-------------------------- CLASSES DE FORMATAÇÃO
+------------------------- CANCELA FORMATAÇÕES DENTRO DE SPAN
 */
-form.itemAcessivel{
+li form{
+    display: inline;
     padding: 0;
-    width: 95%;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    float: left;
-}
-form.itemAcessivel div{
-    height: 120px;
-}
-form.itemAcessivel h3{
-    padding: 10px;
-    font-size: 20px;
-}
-form.itemAcessivel p{
-    padding-left: 10px;
-    font-weight: normal;
-}
-form.itemAcessivel input[type="submit"]{
-    padding: 4px;
     margin: 0;
-    border: none;
-    border-radius: 0;
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
-    width: 100%;
-    background-color: #777;
-    font-weight: normal;    
+    background-color: transparent;
 }
-form.itemAcessivel input[type="submit"]:hover, form.itemAcessivel input[type="submit"]:focus{
-    background-color: #666;
-}
-form.itemAcessivel span.botaoFlutuante{
-    float: right;
-    width: 30px;
-    height: auto;
-    margin-top: 15px;
-    margin-right: 5px;
-}
-form.itemAcessivel span.botaoFlutuante img{
-    cursor: pointer;
-    width: 20px;
-    border-radius: 9px;
-}
-form.itemAcessivel span.botaoFlutuante img:hover{
-    border: 2px solid #444;
-}
-div.autor{
-    border-width: 1px;
-    border-style: solid;
-    border-color: #EEE;
-    border-radius: 6px;
-    overflow: auto;
-}
-div.autor:hover{
-    border-color: #BBB;
-}
-div.autor > label{
-    width: 90%;
-}
-div.autor > img{
-    width: 9%;
-    float: right;
-}
-div.autor > img:hover{
-    border: 2px solid #999;
-    border-radius: 50%;
-}
-/*
-------------------------- PARA TELAS GRANDES
-*/
-@media screen and (min-width: 601px){
-    input[type="button"], input[type="reset"], button{
-        width: 48%;
-    }
-    form.itemAcessivel{
-        width: 48%;
-    }
-    div.autor > img{
-        width: 30px;
-    }
-}
-@media screen and (min-width: 901px){
-    form.itemAcessivel{
-        width: 32%;
-    }
-    input[type="button"], input[type="reset"], button{
-        width: 32%;
-    }
+li > form input[type="submit"]{
+    display: inline;
+    margin: auto;
+    width: auto;
 }

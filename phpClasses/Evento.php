@@ -40,6 +40,9 @@ class Evento {
     }
 
     public function getLogoMarca() {
+        if($this->logoMarca==""){
+            return "../iconSemImagem.png";
+        }
         return $this->logoMarca;
     }
 
@@ -287,7 +290,7 @@ class Evento {
         $mensagem = array();
         $listaEventos = array();
         
-        $dados = EventoDao::getEventos(0, 1, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '');
+        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '', 0);
         if($dados == null){
             return null;
         }
@@ -325,10 +328,10 @@ class Evento {
         }
     }
     
-    public static function getEventoPorId($pId, $principal){
+    public static function getEventoPorId($pId, $pIdEventoPrincipal =0){
         $mensagem = array();
         
-        $dados = EventoDao::getEventos($pId, $principal, '', '', '', '', '', '', '', '');
+        $dados = EventoDao::getEventos($pId, '', '', '', '', '', '', '', '', $pIdEventoPrincipal);
         if($dados == null){
             return null;
         }
@@ -361,15 +364,11 @@ class Evento {
         }
     }
     
-    public static function excluirEvento($id){
-        return EventoDao::excluirEvento($id);
-    }
-    
-    public function getSubEventos() {
+    public function getSubEventos(){
         $mensagem = array();
         $listaEventos = array();
         
-        $dados = EventoDao::getSubEventos($this->idEvento);
+        $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '', $this->idEvento);
         if($dados == null){
             return null;
         }
@@ -395,10 +394,16 @@ class Evento {
                     $listaEventos[] = $evento;
                 }
             } catch (Exception $e) {
-                return null;
+                $listaEventos = null;
+                $mensagem[] = $e->getMessage();
             }
         }
-        return $listaEventos;
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $listaEventos;
+        }
     }
     
     public function salvar(){
@@ -428,4 +433,7 @@ class Evento {
         }
     }
     
+    public static function excluirEvento($id){
+        return EventoDao::excluirEvento($id);
+    }
 }

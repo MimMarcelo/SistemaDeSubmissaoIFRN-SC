@@ -1,0 +1,44 @@
+
+#btnFlutuante{
+    cursor: pointer;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 70px;
+    height: 70px;
+    background-image: url("../img/btnEngrenagem.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+#btnFlutuante:hover{
+    background-image: url("../img/btnEngrenagem2.png");
+}
+/* OPÇÕES DO BOTÃO FLUTUANTE */
+#btnFlutuante > .opcoesFlutuantes {
+    visibility: hidden;
+    background-color: #000000BB;
+    color: #fff;
+    text-align: right;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+ 
+    /* POSICIONA AS OPÇÕES*/
+    width: auto;
+    bottom: 90%;
+    right: 10%;
+}
+
+#btnFlutuante > .opcoesFlutuantes a{
+    color: #FFF;
+    font-weight: bold;
+    display: block;
+    padding: 5px 20px;
+    white-space: nowrap;
+    font-size: 16px;
+    border-radius: 6px;
+}
+#btnFlutuante > .opcoesFlutuantes a:hover{
+    background-color: rgb(50, 180, 50);
+    text-decoration: none;
+}

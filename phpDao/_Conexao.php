@@ -20,15 +20,6 @@ class _Conexao{
         $con->query("SET NAMES 'utf8'");
         $resultado = $con->query($sql);
         $con->close();
-        
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-        }
-        else if(is_bool ($resultado)){
-            return $resultado;
-        }
-        return null;
+        return $resultado;
     }
 }

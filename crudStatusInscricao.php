@@ -57,39 +57,44 @@
                             <?php
                             $listaStatusTrabalho = StatusInscricao::getTodosStatusInscricao();
                             if($listaStatusTrabalho != null){
-                                foreach($listaStatusTrabalho as $status){
-                            ?>
-                                    <tr>
-                                        <td><?php echo $status->getId() ?></td>
-                                        <td><?php echo $status->getStatusInscricao() ?></td>
-                                        <td>
-                                            <span>
-                                                <img src="img/iconEditar.png"
-                                                     onclick='abrePopupForm("Editar Status Inscrição",
-                                                                 "Editar", "phpFuncoes/editarStatusInscricao.php",
-                                                                 <?php
-                                                                 echo json_encode(array(
-                                                                     "pIdStatusInscricao"=>$status->getId(),
-                                                                     "pStatusInscricao"=>$status->getStatusInscricao()));
-                                                                 ?>,
-                                                                 {
-                                                                     pIdStatusInscricao:["hidden", ""],
-                                                                     pStatusInscricao:["text", "Status inscrição"]
-                                                                 });
-                                                                 return false;'>
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span>
-                                                <img src="img/iconFechar.png"
-                                                     onclick='abrePopupConfirm("Confirma a exclusão do status \"<?php echo $status->getStatusInscricao(); ?>\"?",
-                                                                 "phpFuncoes/excluirStatusInscricao.php",
-                                                                 "<?php echo $status->getId(); ?>",
-                                                                 "<?php echo $status->getStatusInscricao(); ?>")'>
-                                            </span>
-                                        </td>
-                                    </tr>
-                            <?php
+                                if(is_object($listaStatusTrabalho[0])){
+                                    foreach($listaStatusTrabalho as $status){
+                                ?>
+                                        <tr>
+                                            <td><?php echo $status->getId() ?></td>
+                                            <td><?php echo $status->getStatusInscricao() ?></td>
+                                            <td>
+                                                <span>
+                                                    <img src="img/iconEditar.png"
+                                                         onclick='abrePopupForm("Editar Status Inscrição",
+                                                                     "Editar", "phpFuncoes/editarStatusInscricao.php",
+                                                                     <?php
+                                                                     echo json_encode(array(
+                                                                         "pIdStatusInscricao"=>$status->getId(),
+                                                                         "pStatusInscricao"=>$status->getStatusInscricao()));
+                                                                     ?>,
+                                                                     {
+                                                                         pIdStatusInscricao:["hidden", ""],
+                                                                         pStatusInscricao:["text", "Status inscrição"]
+                                                                     });
+                                                                     return false;'>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span>
+                                                    <img src="img/iconFechar.png"
+                                                         onclick='abrePopupConfirm("Confirma a exclusão do status \"<?php echo $status->getStatusInscricao(); ?>\"?",
+                                                                     "phpFuncoes/excluirStatusInscricao.php",
+                                                                     "<?php echo $status->getId(); ?>",
+                                                                     "<?php echo $status->getStatusInscricao(); ?>")'>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                }
+                                else{
+                                    echo "<tr><td colspan='4'>Nenhum registro encontrado!</td></tr>";
                                 }
                             }
                             else{

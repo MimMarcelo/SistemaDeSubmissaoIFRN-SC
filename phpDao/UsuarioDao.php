@@ -10,18 +10,38 @@ require_once '_Conexao.php';
 class UsuarioDao{
     
     public static function login($cpf, $senha){
-        return _Conexao::executar("CALL login('$cpf', '$senha')");
+        $resultado = _Conexao::executar("CALL login('$cpf', '$senha')");
+        
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+        }
+        return null;
     }
-    
-    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario){
-        return _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario);");
+    public static function consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){ 
+        $resultado = _Conexao::executar("CALL consultarUsuario('$cpf', '$nome', '$email', '$matricula', $avaliador, $administrador, $idUsuario)");
+        
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+        }
+        return null;
+    }
+    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario, $areasAtuacao){
+        //echo "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."');";
+        $resultado = _Conexao::executar("CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."');");
+        
+        if(is_object($resultado)){
+            if($resultado->num_rows > 0){
+                return $resultado;
+            }
+        }
+        return null;
     }
     
     public static function inscreverEmEvento($idUsuario, $idEvento){
         return _Conexao::executar("CALL inscreverEmEvento($idUsuario, $idEvento)");
-    }
-    
-    public static function consultarUsuariosPorEvento($idEvento){
-        return _Conexao::executar("CALL consultarUsuarioEvento(0, $idEvento, 0, 0)");
     }
 }

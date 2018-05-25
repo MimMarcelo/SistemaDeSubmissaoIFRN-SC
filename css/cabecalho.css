@@ -1,5 +1,5 @@
 header{
-    height: 80px;
+    height: auto;
     width: 100%;
     padding: 10px;
     background-color: rgb(50, 180, 50);
@@ -15,4 +15,10 @@ header > h1{
 }
 header > p{
     font-size: 13px;
+}
+header > form{
+    display: inline;
+    padding: 0;
+    background-color: transparent;
+    border: none;
 }

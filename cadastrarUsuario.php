@@ -7,7 +7,7 @@
         <meta name="keywords" content="usuario, ifrn, cadastro">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SS IFRN-SC - Cadastro</title>
-        <?php 
+        <?php
         include './includes/css.php';
         include './includes/javascript.php';
         require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
@@ -27,12 +27,22 @@
             include './includes/cabecalho.php';
             include './includes/menu.php';
         } //FIM DA ÁREA DE ADMINISTRADOR
+        
+        //CONSTROI LISTA DAS ÁREAS DE ATUAÇÃO
+        include_once './phpClasses/AreaAtuacao.php';
+        $areasAtuacao = AreaAtuacao::getTodasAreasAtuacao();
+        
+        echo "<datalist id='listAreasAtuacao'>";
+        foreach ($areasAtuacao as $area){
+            echo "<option value='".$area->getIdAreaAtuacao()."'>".$area->getAreaAtuacao()."</option>";
+        }
+        echo "</datalist>";
         ?>
         <div id="carregaPagina">
             <section id="conteudo">
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
 
-                <form action="<?php echo htmlspecialchars("phpFuncoes/cadastrarUsuario.php"); ?>" method="post" enctype="multipart/form-data">
+                <form action="<?= htmlspecialchars("phpFuncoes/cadastrarUsuario.php");?>" method="post" enctype="multipart/form-data">
                     <label for="txtCpf">CPF</label>
                     <input type="text" id="txtCpf" name="pCpf" class="cpf" autofocus required>
                     <label for="txtNome">Nome completo</label>
@@ -45,6 +55,10 @@
                     <input type="password" id="txtConfirmarSenha" name="pConfirmarSenha" class="confirmarSenha" required>
                     <label for="txtMatricula">Matrícula SUAP</label>
                     <input type="text" id="txtMatricula" name="pMatricula" placeholder="Informe sua matrícula SUAP">
+                    <fieldset>
+                        <legend>Area de atuação</legend>
+                        <input type="button" value="Adicionar Area" onclick="adicionarAreaAtuacao(this, '#listAreasAtuacao')">
+                    </fieldset>
                     <?php
                     if ($usuario->ehAdministrador()) {
                         //INICIA ÁREA QUE APENAS O ADMINISTRADOR PODE EXECUTAR
@@ -60,8 +74,8 @@
                     <?php
                     }//FECHA O IF SE É ADMINISTRADOR
                     ?>
-                    <label for="imgInp">Foto</label>
-                    <input type="file" id="imgInp" name="pImagem" class="upImagem">                
+                    <label for="imgInp">Foto <span>(Máximo 5MB)</span></label>
+                    <input type="file" id="imgInp" name="pImagem" class="upImagem" placeholder="Preview da imagem do usuário">                
                     <input type="submit" class="botao" value="Cadastrar">
                     <?php
                     if (!$usuario->ehAdministrador()) {
