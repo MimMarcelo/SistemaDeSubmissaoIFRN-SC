@@ -11,7 +11,7 @@
         include './includes/css.php';
         include './includes/javascript.php';
         require_once dirname(__FILE__) . '/phpClasses/Evento.php';
-        require_once dirname(__FILE__) . '/phpClasses/Area.php';
+        require_once dirname(__FILE__) . '/phpClasses/AreaAtuacao.php';
         require_once dirname(__FILE__) . '/includes/sessaoDeUsuario.php';
 
         loginObrigatorio();
@@ -19,7 +19,7 @@
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
-        <?php include './includes/menu.php'; ?>
+        <?php //include './includes/menu.php'; ?>
         <div id="carregaPagina">
             <section id="conteudo">
                 <?php
@@ -35,69 +35,82 @@
                     $_SESSION["mensagem"] = "Selecione um evento para detalhar!";
                     header("location: listarEventos.php");
                 }
+                
+                //CONSTROI LISTA DE PARTICIPANTES DO EVENTO
+                include_once './phpClasses/UsuarioEvento.php';
+                $usuariosDoEvento = UsuarioEvento::getTodosUsuariosEvento($evento->getIdEvento());
+                
+                echo "<datalist id='listUsuariosEvento'>";
+                echo "<option disabled selected>Selecione</option>";
+                foreach ($usuariosDoEvento as $usuarioEvento){
+                    //print_r($usuarioEvento);
+                    //print_r(Usuario::consultarUsuario(0, '', '', '', -1, -1, $usuarioEvento->getIdUsuario()));
+                    echo "<option value='".$usuarioEvento->getIdUsuario()."'>".Usuario::consultarUsuario(0, '', '', '', -1, -1, $usuarioEvento->getIdUsuario())->getNome()."</option>";
+                }
+                echo "</datalist>";
+                
+                //CONSTROI LISTA DAS ÁREAS DE ATUAÇÃO
+                include_once './phpClasses/AreaAtuacao.php';
+                $areasAtuacao = AreaAtuacao::getTodasAreasAtuacao();
+
+                echo "<datalist id='listAreasAtuacao'>";
+                foreach ($areasAtuacao as $area){
+                    echo "<option value='".$area->getIdAreaAtuacao()."'>".$area->getAreaAtuacao()."</option>";
+                }
+                echo "</datalist>";
                 ?>
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
                 <h2 class="detalhes">
                     <span>Submissão de trabalhos para:</span>
+                    <br>
                     <?php
                     $nome = "";
                     if ($evento->getIdEventoPrincipal() <> 0) {
-                        $nome = Evento::getEventoPorId($evento->getIdEventoPrincipal(), 1)->getNome();
-                        $nome .= " (" . $evento->getNome() . ")";
+                        $nome = Evento::getEventoPorId($evento->getIdEventoPrincipal(), 0)->getNome();
+                        $nome .= "<br>(" . $evento->getNome() . ")";
                     } else {
                         $nome = $evento->getNome();
                     }
                     echo $nome;
                     ?>
                 </h2>
-                <form action="phpFuncoes/submeterTrabalho.php" method="post" enctype="multipart/form-data">
-                    <div class="autor">
-                        <label>
-                            Autor: <?php echo $usuario->getNome(); ?>
-                        </label>
-                        <label>
-                            Orientador
-                            <input type="checkbox" id="rbtOrientador" name="pOrientador">
-                            <input type="hidden" value="<?php echo $usuario->getId(); ?>" id="txtAutor" name="pAutor">
-                        </label>
-                    </div>
-                     
-                    <label>Adicionar co-autor</label>
-                    <select id="sltCoAutor" name="pCoAutor">
-                        <option selected disabled>Selecione</option>
-                        <?php
-                        $lista = Usuario::consultarUsuariosPorEvento($evento->getIdEventoPrincipal());
-                        if ($lista != null) {
-                            foreach ($lista as $u) {
-                                if ($usuario->getId() == $u->getId()) {
-                                    continue;
-                                }
-                                echo "<option value='" . $u->getId() . "'>" . $u->getNome() . "</option>";
-                            }
-                        }
-                        ?>
-                    </select>
-                    <input type="button" value="Adicionar co-autor" onclick="addCoAutor('#txtAutor', '#sltCoAutor', 'CoAutor[]')">
-                    <label for="sltArea">Área</label>
-                    <select id="sltArea" name="pArea">
-                        <option selected disabled>Selecione</option>
-                        <?php
-                        $lista = Area::consultarAreas(0, '');
-                        if ($lista != null) {
-                            foreach ($lista as $u) {
-                                echo "<option value='" . $u->getIdArea() . "'>" . $u->getArea() . "</option>";
-                            }
-                        }
-                        ?>
-                    </select>
+                <form action="<?= htmlspecialchars("phpFuncoes/cadastrarTrabalho.php");?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="<?=$usuario->getId();?>" name="pCoAutor[]">
+                    <input type="hidden" value="<?=$evento->getIdEvento();?>" name="pEvento">
+                    <fieldset>
+                        <legend>Autores</legend>
+                        <div class="divTabela" id="tblAutores">
+                            <ul class="cabecalho">
+                                <li>Ori.</li>
+                                <li>Nome</li>
+                                <li>Excluir</li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <input type="checkbox" value="<?=$usuario->getId();?>" name="pOrientador[]" placeholder="É orientador?">
+                                </li>
+                                <li>
+                                    Autor: <?php echo $usuario->getNome(); ?>
+                                </li>
+                                <li>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <input type="button" value="Adicionar coautor" onclick="adicionarCoAutor('#tblAutores', 'pOrientador', 'pCoAutor', '#listUsuariosEvento')">
+                    </fieldset>
+                    <fieldset>
+                        <legend>Área(s) de atuação do trabalho</legend>
+                        <input type="button" value="Adicionar Area" onclick="adicionarSelectDinamicamente(this, '#listAreasAtuacao', 'pAreaAtuacao')" required>
+                    </fieldset>
                     <label for="txtInstituicao">Instituição</label>
-                    <input type="text" id="txtInstituicao" name="pInstituicao" placeholder="Informe a que instituição a produção do trabalho está vinculada">
+                    <input type="text" id="txtInstituicao" name="pInstituicao" placeholder="Informe a que instituição a produção do trabalho está vinculada" required>
                     <label for="txtTitulo">Título do trabalho</label>
                     <input type="text" id="txtTitulo" name="pTitulo" placeholder="Título do trabalho" required>
                     <label for="txtResumo">Resumo</label>
                     <textarea id="txtResumo" name="pResumo" placeholder="Faça um resumo breve do trabalho" rows="10" required></textarea>
                     <label for="txtPalavrasChave">Palavras chave (separe cada termo com vírgula)</label>
-                    <input type="text" id="txtPalavrasChave" name="pPalavrasChave">
+                    <input type="text" id="txtPalavrasChave" name="pPalavrasChave" required>
                     <label for="txtArquivo">Arquivo (PDF)</label>
                     <input type="file" id="txtArquivo" name="pArquivo" required>
                     <input type="submit" value="Submeter">

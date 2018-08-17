@@ -36,7 +36,8 @@ class NivelAcesso{
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $nivelAcesso = new NivelAcesso();
                     
                     foreach ($obj as $key => $value) {
@@ -74,7 +75,8 @@ class NivelAcesso{
         else{
             $nivelAcesso = new NivelAcesso();
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
                         $nivelAcesso->{$key} = $value;
                     }

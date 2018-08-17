@@ -2,103 +2,79 @@
 ------------------------- TAGs GERAIS
 */
 form{
-    display: block;
-    width: 100%;
-    background-color: #EEE;
-    padding: 20px;
-    border-radius: 10px;
-    border-right: solid 1px black;
-    border-bottom: solid 1px black;
+    padding: 10px;
 }
 fieldset{
-    border-color: #BBC;
-    border-width: 1px;
-    border-radius: 5px;
+    border-width: 2px;
     border-style: solid;
-    padding: 10px;
-    margin-top: 15px;
+    border-color: #cfcfcf;
+    display: block;
+    width: 90%;
+    margin-left: 5px;
 }
-/*
-------------------------- TAGs DE CONTEÚDO
-*/
-form span{/* PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
-    color: red;
+legend{
+    margin-left: 25px;
     font-weight: bolder;
-    font-size: 25px;
 }
-form label > span{ /* PARA O TEXTO 'SENHA NÃO CONFERE' */
+::placeholder{
+    color: #888;    /*corTextoTerciaria*/
+}
+.etiqueta{
+    display: block;
+    width: 90%;
+    margin-left: 5px;
+    margin-top: 15px;
+    font-weight: bolder;
+    border-width: 2px;
+    border-color: #efefef;
+}
+.campoDeEntrada{
+    color: #073b4c;
+    border-color: #cfcfcf;
+    border-radius: 3px;
+    border-style: ridge;
+    border-width: 2px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: #FFF;
+    width: 90%;
+    height: 40px;
+    margin-left: 5px;
+    resize: none;  /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
+}
+.campoDeEntrada:hover, .campoDeEntrada:focus{
+    background-color: #efefff;
+}
+.labelHover{  /*PARA UM COMPORTAMENTO NO JAVASCRIPT DE "HOVER" NO LABEL-CHECKBOX */
+    border-color: #cfcfcf;    
+    background-color: #efefff;
+}
+form span{ /*PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) */
+    color: red;
+    font-size: 30px;
+    vertical-align: top;
+    padding-left: 5px;
+}
+form label > span{  /*PARA OS TEXTOS COMPLEMENTARES DOS LABELS */
     font-size: 12px;
     font-weight: normal;
 }
-label, button, input[type="button"], input[type="submit"], input[type="reset"]{/* PARA SEPARAR OS CAMPOS */
-    margin-top: 10px;
+label > *{
+    display: inline-block !important;
+    margin: 0 !important;
 }
-legend{
-    padding-left: 5px;
-    padding-right: 5px;
+label > span.botao{
+    max-width: 100px;
 }
-label{
-    padding-top: 5px;
-    border-radius: 5px;
-    border:1px solid #EEE;
-    display: block;
-    width: 90%;
-    box-sizing: border-box;
-}
-input, select, textarea, button{
-    padding: 10px;
-    border-radius: 5px;
-    border:1px solid rgb(50, 180, 50);
-    display: inline-block;
-    width: 90%;
-    margin-left: 3%;
-    resize: none; /* IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO */
-}
-input:hover, select:hover, textarea:hover{
-    background-color: #EEF;
-}
-input:focus, select:focus, textarea:focus{
-    background-color: #CCF;
-    outline: none;
-}
-optgroup{
-    background-color: #FFF;
-    font-style: normal;
-    color: #444;
-}
-option{
-    padding: 5px;
-    padding-left: 10px;
-    color: #444;
-}
-/*
-------------------------- TIPOS DE INPUT E COMBINAÇÕES
-*/
-label > input{ /* RADIOBUTTONs E CHECKBOXes */
+label > input[type="radio"], label > input[type="checkbox"]{  /*RADIOBUTTONs E CHECKBOXes*/ 
+    height: auto;  /*SÓ É POSSÍVEL ESPECIFICAR O TAMANHO DESEJADO NO CHROME */
     width: auto;
     float: right;
 }
-input[type="button"], input[type="reset"], input[type="submit"], button{
-    margin-top: 20px;
-    color: #FFF;
-    text-shadow: 2px 2px rgba(0, 0, 0, .5);
-    font-weight: bolder;
-    background-color: rgb(50, 180, 50);
-    border-radius: 10px;
-    border-color: #444;
-    border-width: 0;
-    border-bottom-width: 4px;
-    border-right-width: 3px;
-    cursor: pointer;
+textarea{
+    height: auto !important;
 }
-input[type="reset"], input[type="button"], button{
-    background-color: rgb(50, 50, 220);
-}
-input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, button:focus, button:hover{
-    background-color: rgb(50, 220, 220);
-}
-/* ------------------------------------------------- */
-input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile */
+input[type="file"]{  /*ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile */
     float: left;
     margin: 0;
     padding: 0;
@@ -107,62 +83,162 @@ input[type="file"]{ /* ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE
     border: none;
 }
 .inputFile{
-    padding: 1px;
-    margin-top: 0;
-    margin-left: 3%;
-    border-radius: 5px;
-    border:1px solid #008f36;
     display: inline-block;
     width: 90%;
-    box-sizing: border-box;
-    background-color: #FFF;
-    line-break: strict;
+    height: auto;
+    padding: 0;
 }
-.inputFile > span{/* LABEL QUE SUBSTITUI O INPUT TYPE=FILE */
-    display: inline-block;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: bolder;
-    vertical-align: middle;
-    text-shadow: 2px 2px rgba(0, 0, 0, .5);
-    
-    background-color: #44F;
-    border-radius: 5px;
-    border-color: #444;
-    border-width: 0;
-    border-bottom-width: 4px;
-    border-right-width: 3px;
-    
+.inputFile > span{ /*LABEL QUE SUBSTITUI O INPUT TYPE=FILE */
     margin: 0;
-    margin-right: 5px;
-    padding: 5px;
-}
-.inputFile > span:hover{
-    background-color: #44C;    
+    padding: 10px;
+    display: inline-block;
+    font-weight: bolder;    
 }
 .inputFile ~ img{
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+}
+.botao{
     display: inline-block;
-    margin-left: 20%;
-    max-width: 50%;
+    width: 90%;
+    border-width: 2px;
+    border-color: #073b4c;
+    border-radius: 5px;
+    background-color: #073b4c;
+    color: #FFF;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
 }
 /*
-------------------------- OUTRAS TAGS
+------------------------- TAGs DE CONTEÚDO
 */
+/*form span{ PARA OS '*' DOS CAMPOS OBRIGATÓRIOS (INSERIDOS VIA JAVASCRIPT) 
+    color: red;
+    font-size: 30px;
+    vertical-align: top;
+    padding-left: 5px;
+}
+form label > span{  PARA OS TEXTOS COMPLEMENTARES DOS LABELS 
+    font-size: 12px;
+    font-weight: normal;
+}
+label, fieldset, form button, input[type="button"], input[type="submit"], input[type="reset"]{ PARA SEPARAR OS CAMPOS 
+    margin-top: 15px;
+}
+label{
+    display: block;
+    width: 90%;
+    border-width: 1px;
+    border-color: #FFF;    corFundoPrimaria
+}
+
+ LAYOUT PADRÃO PARA OS CAMPOS DE ENTRADA 
+input, select, textarea, form button, .inputFile{
+    display: inline-block;
+    width: 90%;
+    height: 35px; importante para o select
+    padding: 2px 1px 2px 5px;
+    margin: 0;  importante para o .inputFile
+    border-width: 1px;
+    border-style: ridge;
+    border-color: #3A3;    corTextoSecundaria
+    color: #363;    corTextoPrimaria
+    background-color: #FFF;    corFundoPrimaria
+    font-size: 18px;
+    resize: none;  IMPEDE QUE O textarea POSSA SER REDIMENSIONADO PELO USUÁRIO 
+}
+textarea{
+    height: 150px !important;
+}
+.inputFile{
+    overflow: hidden;
+}
+input:hover, select:hover, textarea:hover, .inputFile:hover, 
+input:focus, select:focus, textarea:focus, .inputFile:focus,
+input[type="file"]:focus ~ .inputFile, input[type="file"]:focus + .inputFile{
+    background-color: #EEE;    corFundoSecundaria
+    color: #363;    corTextoPrimaria
+    outline: none;
+}
+optgroup, option{
+    background-color: #EEE;    corFundoSecundaria
+    font-style: normal;
+    color: #363;    corTextoPrimaria
+}
+option{
+    padding: 5px;
+    padding-left: 10px;
+}
+
+------------------------- TIPOS DE INPUT E COMBINAÇÕES
+
+label > input[type="radio"], label > input[type="checkbox"]{  RADIOBUTTONs E CHECKBOXes 
+    height: auto;  SÓ É POSSÍVEL ESPECIFICAR O TAMANHO DESEJADO NO CHROME 
+    width: auto;
+    float: right;
+}
+label > select{  PARA OS SELECTS ADICIONADOS DINAMICAMENTE 
+    width: 90%;
+}
+ PARA OS BOTÕES 
+input[type="button"], input[type="reset"], input[type="submit"],
+form button, .inputFile > span{
+    border-color: #363;    corTextoPrimaria
+    border-bottom-width: 4px;
+    border-right-width: 3px;
+    margin-top: 20px;
+    color: #8D8;    corTextoTerciaria
+    background-color: #000;    corFundoTerciaria
+    cursor: pointer;
+}
+input[type="file"]{  ESTE CAMPO NÃO PODE SER FORMATADO A CONTENTO, ENTÃO USE UM LABEL COM A CLASSE .inputFile 
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+    border: none;
+}
+.inputFile > span{ LABEL QUE SUBSTITUI O INPUT TYPE=FILE 
+    margin: -2px -1px -2px -5px;
+    padding: 10px;
+    display: inline-block;
+    font-weight: bolder;
+    
+}
+input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover,  form button:hover, .inputFile > span:hover,
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus, form button:focus{
+    background-color: #888;    corFundoSecundaria
+}
+ ------------------------------------------------- 
+.inputFile ~ img{
+    display: block;
+    margin: auto;
+    max-width: 85%;
+}
+
+------------------------- OUTRAS TAGS
+
 form a{
     margin-top: 20px;
     margin-right: 20px;
 }
-/*
-------------------------- CANCELA FORMATAÇÕES DENTRO DE SPAN
-*/
-li form{
+
+------------------------- CANCELA FORMATAÇÕES DENTRO DE LI
+
+li form, td form{
     display: inline;
     padding: 0;
     margin: 0;
     background-color: transparent;
 }
-li > form input[type="submit"]{
+li > form input[type="submit"], td form input[type="submit"], .divTabela input[type="checkbox"]{
     display: inline;
     margin: auto;
     width: auto;
-}
+    height: auto;
+}*/

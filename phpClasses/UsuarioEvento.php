@@ -34,34 +34,44 @@ class UsuarioEvento{
     }
     
     public static function getUsuarioEvento($idUsuario, $idEvento, $idStatusInscricao, $idNivelAcesso){
-        $mensagem = array();
+        $mensagem = "";
         $listaUsuarioEvento = array();
         
         $dado = UsuarioEventoDao::getUsuarioEvento($idUsuario, $idEvento, $idStatusInscricao, $idNivelAcesso);
+        //print_r($dado);
         if($dado == null){
-            $mensagem[] = "Nenhum registro encontrado!";
+            $mensagem = "Nenhum registro encontrado!";
         }
         else{
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
                     $usuarioEvento = new UsuarioEvento();
             
                     foreach ($obj as $key => $value) {
                         $usuarioEvento->{$key} = $value;
                     }
-                    
                     $listaUsuarioEvento[] = $usuarioEvento;
                 }
             } catch (Exception $e) {
                 $listaUsuarioEvento = null;
-                $mensagem[] = $e->getMessage();
+                $mensagem = $e->getMessage();
             }
         }
-        if(count($mensagem) > 0){
+        if($mensagem != ""){
             return $mensagem;
         }
         else{
             return $listaUsuarioEvento;
         }
     }
+    
+    public static function getTodosUsuariosEvento($idEvento){
+        return UsuarioEvento::getUsuarioEvento(0, $idEvento, 0, 0);
+    }
+    
+    public static function inscreverEmEvento($idUsuario, $idEvento){
+        //echo $idUsuario." - ".$idEvento;
+        return UsuarioEventoDao::inscreverEmEvento($idUsuario, $idEvento);
+    }
+    
 }

@@ -25,17 +25,22 @@ class AreaAtuacao {
         $this->area = $areaAtuacao;
     }
 
+    /**
+     * Consulta todas as áreas de atuação registradas no banco de dados
+     * @return AreaAtuacao[]
+     */
     public static function getTodasAreasAtuacao(){
         $mensagem = array();
         $areasAtuacao = array();
         
         $dados = AreaAtuacaoDao::getAreaAtuacao(0, '');
-        if($dados == null){
+        
+        if($dados == null){//Caso não hajam dados
             $mensagem[] = "Nenhuma área de atuação encontrada!";
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
                     $areaAtuacao = new AreaAtuacao();
                     
                     foreach ($obj as $key => $value) {
@@ -63,7 +68,8 @@ class AreaAtuacao {
         $dados = AreaAtuacaoDao::getAreasPorIdUsuario($idUsuario);
         if($dados != null){
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $areaAtuacao = new AreaAtuacao();
                     
                     foreach ($obj as $key => $value) {

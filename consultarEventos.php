@@ -17,7 +17,7 @@
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
-        <?php include './includes/menu.php'; ?>
+        <?php //include './includes/menu.php'; ?>
         
         <div id="carregaPagina">
             <section id="conteudo">
@@ -26,6 +26,23 @@
                 ?>
                 <h2>Lista de eventos</h2>
                 <div id="atualizavel">
+                    <table id="idTabela" cellspacing="0">
+                        <thead>
+                            <th onclick="ordenarTabela('idTabela', 0)">
+                                Dias
+                            </th>
+                            <th onclick="ordenarTabela('idTabela', 1)">
+                                Evento
+                            </th>
+                            <th>
+                                Local
+                            </th>
+                            <th>
+                                Ações
+                            </th>
+                        </thead>
+                        <tbody>
+                            
                     <?php
                     $listaEventos = Evento::getTodosEventos();
                     
@@ -54,30 +71,40 @@
                                 $statusInscricao = "A partir de ".$evento->getInicioInscricao();
                             }
                             ?>
-                            <article>
-                                <?php if($usuario->ehAdministrador()){?>
-                                <span>
-                                    <img src="img/iconFechar.png" title="Excluir evento <?=$evento->getNome();?>"
-                                         onclick='abrePopupConfirm("Confirma a exclusão do evento \"<?=$evento->getNome();?>\"?",
-                                                     "phpFuncoes/excluirEvento.php",
-                                                     "<?=$evento->getIdEvento();?>",
-                                                     "<?=$evento->getNome();?>")'>
-                                </span>
-                                <?php }// FECHA IF ADMINISTRADOR ?>
-                                <form action="phpFuncoes/detalharEvento.php" method="post">
-                                    <label for="evento<?=$evento->getIdEvento();?>">
-                                        <h2><?=$evento->getNome();?></h2>
-                                        <p>Realização: <?=$evento->getInicioEvento();?> - <?=$evento->getFinalEvento();?></p>
-                                        <p>Inscrição: <?=$statusInscricao;?></p>
+                            
+                            <tr>
+                                <td class="centralizado">
+                                    <?=$evento->getInicioEvento();?><br>-<br><?=$evento->getFinalEvento();?>
+                                </td>
+                                <td>
+                                    <?=$evento->getNome();?>
+                                </td>
+                                <td class="centralizado">
+                                    <a href="https://www.google.com.br/maps/place/<?=$evento->getLocal();?>" target='_blank'>Google Maps</a>
+                                </td>
+                                <td class="centralizado">
+                                    <form action="phpFuncoes/detalharEvento.php" method="post">
                                         <input type="hidden" value="<?=$evento->getIdEvento();?>" name="pId">
-                                        <input type="submit" value="<?php echo ($statusInscricao=="Inscreva-se")?$statusInscricao:"Detalhar";?>" id="evento<?=$evento->getIdEvento();?>">
-                                    </label>
-                                </form>
-                            </article>
+                                        <input type="submit" class="botao menosPadding" value="<?php echo ($statusInscricao=="Inscreva-se")?$statusInscricao:"Detalhar";?>" id="evento<?=$evento->getIdEvento();?>">
+                                    </form>
+                                    <?php if($usuario->ehAdministrador()){?>
+                                    <span>
+                                        <img src="img/iconFechar.png" class="fechar" title="Excluir evento <?=$evento->getNome();?>"
+                                             onclick='abrePopupConfirm("Confirma a exclusão do evento \"<?=$evento->getNome();?>\"?",
+                                                         "phpFuncoes/excluirEvento.php",
+                                                         "<?=$evento->getIdEvento();?>",
+                                                         "<?=$evento->getNome();?>")'>
+                                    </span>
+                                    <?php }// FECHA IF ADMINISTRADOR ?>
+                                </td>
+                            </tr>
                             <?php
                         }//FECHA FOREACH
                     }//FECHA VERIFICAÇÃO SE EVENTOS É DIFERENTE DE NULL
                     ?>
+                        
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </div>

@@ -1,24 +1,87 @@
 header{
-    height: auto;
+    color: #F1F1F3;
+    padding-top: 80px;
+}
+header > #barraSuperior{
+    background-color: #073b4c;
+    position: fixed;
+    top: 0;
     width: 100%;
-    padding: 10px;
-    background-color: rgb(50, 180, 50);
 }
-header > img{
-    width: 60px;
-    border-radius: 30px;
+header > #barraSuperior h1{
     float: left;
-    margin-right: 10px;
+    display: inline-block;
+    width: auto;
+    margin: 10px 0 0 10px;
+    border: 0;
+    padding: 0;
 }
-header > h1{
-    font-size: 17px;
+header > #barraSuperior h1:hover {
+    background-color: #074b5c;
+    text-decoration: none;
 }
-header > p{
-    font-size: 13px;
+header > #barraSuperior h1 img{
+    float: left;
+    height: 50px;
+    width: auto;
+    border-radius: 0;
+}
+
+header > #barraSuperior h1 span{
+    color: #F1F1FF;
+    text-align: center;
+    font-weight: bolder;
+    display: inline-block;
+    margin-top: 10px;
+    padding-top: 5px;
+}
+header > #barraSuperior > nav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 10px 0 10px 0;
+}
+
+header #usuario{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+header #usuario img{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+}
+header #usuario div{
+    margin: auto;
+    width: 60%;
+    margin-top: -60px;
+    padding-top: 60px;
+    text-align: center;
+}
+header p{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+header p.nome{
+    margin-top: 20px;
+    font-weight: bolder;
 }
 header > form{
-    display: inline;
+    display: block;
+    clear: both;
+    margin: auto;
     padding: 0;
     background-color: transparent;
     border: none;
+}
+
+@media screen and (max-width: 800px) {
+    header #usuario div{
+        width: 80%;
+    }
+}
+@media screen and (max-width: 500px) {
+    header #usuario div{
+        width: 100%;
+    }
 }

@@ -17,7 +17,7 @@ $(document).ajaxComplete(function(){
 function popup(){
     
     // QUANDO O USUÁRIO CLICAR NO 'X' DA POPUP
-    $('.fecharPopup').each(function(i, e){
+    $('#popup .fechar').each(function(i, e){
         $(e)[0].onclick = function(){
             $('#popup').css("display", "none");
         };

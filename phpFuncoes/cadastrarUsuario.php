@@ -1,216 +1,185 @@
 <?php
-    require dirname(__FILE__).'/../phpClasses/Usuario.php';
-    
-    function testaCampo($campo) {
-        $campo = trim($campo);
-        $campo = stripslashes($campo);
-        $campo = htmlspecialchars($campo);
-        return $campo;
+
+require dirname(__FILE__) . '/../phpClasses/Usuario.php';
+require dirname(__FILE__) . '/validaUpload.php';
+require dirname(__FILE__) . '/validaCampos.php';
+
+$metodoHttp = $_SERVER['REQUEST_METHOD'];
+$mensagem = array();
+$aux = "";
+$titulo = "Atenção";
+
+if ($metodoHttp == 'POST') {
+
+//    print_r($_POST);
+//    exit();
+    $localParaSalvar = dirname(__FILE__) . '/../upload/usuarios/';
+    $tipoArquivo = "/(.jpg)(.jpeg)(.gif)(.png)/";
+
+    $cpf = "";
+    $nome = "";
+    $email = "";
+    $senha = "";
+    $matricula = "";
+    $nomeArquivo = "";
+    $adm = 0;
+    $avaliador = 0;
+    $areasAtuacao = array();
+
+    //VERIFICA SE OS CAMPOS FORAM PREENCHIDOS
+    if (isset($_POST["pCpf"])) {
+        $cpf = testaCampo($_POST["pCpf"]);
+    } else {
+        $mensagem[] = "Informe o CPF";
+    }
+
+    if (isset($_POST["pNome"])) {
+        $nome = testaCampo($_POST["pNome"]);
+    } else {
+        $mensagem[] = "Informe o nome de usuário";
+    }
+
+    if (isset($_POST["pEmail"])) {
+        $email = testaCampo($_POST["pEmail"]);
+    } else {
+        $mensagem[] = "Informe o e-mail de usuário";
+    }
+
+    if (isset($_POST["pSenha"])) {
+        $senha = testaCampo($_POST["pSenha"]);
+    } else {
+        $mensagem[] = "Informe uma senha";
+    }
+
+    if (isset($_POST["pConfirmarSenha"])) {
+        $cSenha = testaCampo($_POST["pConfirmarSenha"]);
+        if (empty($cSenha)) {
+            $mensagem[] = "Confirme sua senha";
+        } else {
+            if (strcmp($senha, $cSenha) != 0) {
+                $mensagem[] = "As senhas não conferem";
+            }
+        }
+    } else {
+        $mensagem[] = "Confirme sua senha";
+    }
+
+    if (isset($_POST["pMatricula"])) {
+        $matricula = testaCampo($_POST["pMatricula"]);
+    }
+
+    if (isset($_POST["pAreaAtuacao"])) {
+        $areasAtuacao = $_POST["pAreaAtuacao"];
+        $avaliador = 2;//INDICA QUE O USUÁRIO QUER SER AVALIADOR
+    }
+
+    if (isset($_POST["pAdministrador"])) {
+        if (!empty($_POST["pAdministrador"])) {
+            $adm = 1;
+        }
+    }
+
+    if (isset($_POST["pAvaliador"])) {
+        if (!empty($_POST["pAvaliador"])) {
+            $avaliador = 1;
+        }
     }
     
-    $metodoHttp = $_SERVER['REQUEST_METHOD'];
-    $mensagem = array();
-    $titulo = "Atenção";
-    
-    if($metodoHttp == 'POST'){
-        $cpf = "";
-        $nome = "";
-        $email = "";
-        $senha = "";
-        $matricula = "";
-        $nomeImagem = "";
-        $adm = 0;
-        $avaliador = 0;
-        $areasAtuacao = array();
-        
-        //$json = json_decode(file_get_contents("php://input"));
-        //print_r($_POST);
-        //return;
-        //print_r($_FILES);
-        //VALIDAR CAMPOS
-        if(isset($_POST["pCpf"])){
-            $cpf = testaCampo($_POST["pCpf"]);
+    if(isset($_FILES["pImagem"])){
+        $nomeArquivo = str_replace(".", "", $cpf);
+        $nomeArquivo = str_replace("-", "", $nomeArquivo);
+        $nomeArquivo = $nomeArquivo . "_";
+        $aux = validaUpload($_FILES["pImagem"], FALSE, $tipoArquivo, 4, $localParaSalvar, $nomeArquivo);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
         }
-        else{
-            $mensagem[] = "Informe o CPF";
-        }
-        
-        if(isset($_POST["pNome"])){
-            $nome = testaCampo($_POST["pNome"]);   
-        }
-        else{
-            $mensagem[] = "Informe o nome de usuário";
-        }
-        
-        if(isset($_POST["pEmail"])){
-            $email = testaCampo($_POST["pEmail"]); 
-        }
-        else{
-            $mensagem[] = "Informe o e-mail de usuário";
-        }
-        
-        if(isset($_POST["pSenha"])){
-            $senha = testaCampo($_POST["pSenha"]);
-        }
-        else{
-            $mensagem[] = "Informe uma senha";
-        }
-        
-        if(isset($_POST["pConfirmarSenha"])){
-            $cSenha = testaCampo($_POST["pConfirmarSenha"]);
-            if(empty($cSenha)){
-                $mensagem[] = "Confirme sua senha";
-            }
-            else{
-                if(strcmp($senha, $cSenha) != 0){
-                    $mensagem[] = "As senhas não conferem";
-                }
-            }
-        }
-        else{
-            $mensagem[] = "Confirme sua senha";
-        }
-        
-        if(isset($_POST["pMatricula"])){
-            $matricula = testaCampo($_POST["pMatricula"]);
-        }
-        
-        if(isset($_POST["pAreaAtuacao"])){
-            $areasAtuacao = $_POST["pAreaAtuacao"];
-        }
-        
-        if(isset($_POST["pAdministrador"])){
-            if(!empty($_POST["pAdministrador"])){
-                $adm = 1;
-            }
-        }
-        
-        if(isset($_POST["pAvaliador"])){
-            if(!empty($_POST["pAvaliador"])){
-                $avaliador = 1;
-            }
-        }
-        
-        $imagem = $_FILES["pImagem"];
-        if(!empty($imagem["name"])){
-            $tamanhoMaximoDoArquivo = 5242880;
-            // Verifica se o arquivo é uma imagem
-            if(!preg_match("/^image\/(pjpeg|jpeg|png|gif|bmp)$/", $imagem["type"])){
-                $mensagem[] = "Arquivo selecionado não é uma imagem.";
-            }
-            // Verifica se o tamanho da imagem é maior que o tamanho permitido
-            if($imagem["size"] > $tamanhoMaximoDoArquivo) {
-                $mensagem[] = "A imagem deve possuir, no máximo, 5 MB";
-            }
-            
-            if(!count($mensagem) > 0){
-                // Pega extensão da imagem
-                preg_match("/\.(gif|bmp|png|jpg|jpeg){1}$/i", $imagem["name"], $ext);
-                $nomeImagem = str_replace(".", "", $cpf);
-                $nomeImagem = str_replace("-", "", $nomeImagem);
-                $nomeImagem .= ".".$ext[1];
-            }
-        }
-        
-        if(count($mensagem) > 0){
-            echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
-        }
-        else{
+    }
+    if (count($mensagem) == 0) {
+        $usuario = new Usuario();
 
-            $usuario = new Usuario();
+        $usuario->setId(0);
 
-            $usuario->setId(0);
+        $aux = $usuario->setCpf($cpf);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setCpf($cpf);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setNome($nome);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setNome($nome);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setEmail($email);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setEmail($email);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setSenha($senha);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setSenha($senha);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setMatricula($matricula);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setMatricula($matricula);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setAreasAtuacao($areasAtuacao);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setAreasAtuacao($areasAtuacao);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
-            
-            $aux = $usuario->setNivelAcesso($adm);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setNivelAcesso($adm);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setAvaliador($avaliador);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
+        $aux = $usuario->setAvaliador($avaliador);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
 
-            $aux = $usuario->setImagem($nomeImagem);
-            if(strlen($aux) > 0){
-                $mensagem[] = $aux;
-            }
-            
-            if(count($mensagem) > 0){
-                echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
-            }
-            else{
-                $aux = $usuario->salvar();
-                //print_r($aux);
-                if(!is_array($aux)){
-                    $usuario->setId($aux);
-                    if(!move_uploaded_file($imagem["tmp_name"], "../img/fotosUsuarios/".$nomeImagem)){
-                        $mensagem[] = "Erro no envio da imagem";
+        $aux = $usuario->setImagem($nomeArquivo);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+
+        if (count($mensagem) == 0) {
+            $aux = $usuario->salvar();
+            //print_r($aux);
+            if (!is_array($aux)) {
+                $usuario->setId($aux);
+
+                if($nomeArquivo !== ""){
+                    if (!move_uploaded_file($_FILES["pImagem"]["tmp_name"], $localParaSalvar . $nomeArquivo)) {
+                        $mensagem[] = "Erro ao enviar a imagem";
                     }
-                    
-                    //print_r($usuario);
+                }
+                if (count($mensagem) == 0) {
                     session_start();
 
                     //SE JÁ ESTIVER LOGADO COMO ADMINISTRADOR
-                    if(isset($_SESSION["usuario"])){
+                    if (isset($_SESSION["usuario"])) {
                         $administrador = $_SESSION["usuario"];
-                        if($administrador instanceof Usuario){
-                            if($administrador->ehAdministrador()){
-                                $mensagem[] = "Usuário: '".$usuario->getNome()."' cadastrado com sucesso!";
-                                echo json_encode(array("mensagem" => $mensagem, "titulo" => "Sucesso"));
+                        if ($administrador instanceof Usuario) {
+                            if (!$administrador->ehAdministrador()) {
+                                $_SESSION["usuario"] = $usuario; // ARMAZENA O OBJETO NA SESSÃO
                             }
-                            else{
-                                $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
-                                $_SESSION["mensagem"] = "Usuário: '".$usuario->getNome()."' cadastrado com sucesso!";
-                                echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
-                            }
+                            $_SESSION["mensagem"] = "Usuário: \'" . $usuario->getNome() . "\' cadastrado com sucesso!";
+                            echo json_encode(array("redirecionar" => "inicio.php")); //REDIRECIONA PARA A PÁGINA DE INÍCIO
                         }
+                    } else {
+                        $_SESSION["usuario"] = $usuario; // ARMAZENA O OBJETO NA SESSÃO
+                        $_SESSION["mensagem"] = "Usuário: \'" . $usuario->getNome() . "\' cadastrado com sucesso!";
+                        echo json_encode(array("redirecionar" => "inicio.php")); //REDIRECIONA PARA A PÁGINA DE INÍCIO
                     }
-                    else{
-                        
-                        $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
-                        $_SESSION["mensagem"] = "Usuário: \'".$usuario->getNome()."\' cadastrado com sucesso!";
-                        echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
-                    }
+                    exit();
                 }
-                else{
-                    $mensagem = $aux;
-                    echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
-                }
+            }
+            else{
+                $mensagem = $aux;
             }
         }
     }
-    else{
-        $mensagem[] = "Método HTTP '".$metodoHttp."' ainda não implementado!";
-        echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));
-    }
+}
+echo json_encode(array("mensagem" => $mensagem, "titulo" => $titulo));

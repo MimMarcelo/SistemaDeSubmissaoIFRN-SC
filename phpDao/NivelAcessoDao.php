@@ -3,21 +3,24 @@
 //IMPORTE DO ARQUIVO QUE GERENCIA O BANCO DE DADOS
 require_once '_Conexao.php';
 
-/**********************
- * CLASSE DE EXEMPLO DE ACESSO AO BANCO DE DADOS
+/**
+ * Prepara as queries de banco de dados que podem ser executadas pela Classe
+ * _Conexao
+ *
+ * @author Marcelo Júnior
  */
 class NivelAcessoDao{
     
-    //Exemplo que consulta vários registros no banco
+    /**
+     * Cria instrução SQL que retorna lista de NivelAcesso, atendendo aos 
+     * critérios passados por parâmetro
+     * @param int $id
+     * @param string $nivelAcesso
+     * @return array Lista dos níveis de acesso correspondentes à consulta
+     */
     public static function getNivelAcesso($id, $nivelAcesso) {
-        $resultado = _Conexao::executar("CALL consultarNivelAcesso($id, '$nivelAcesso')");
-        
-        if($resultado->num_rows > 0){
-            return $resultado;
-        }
-        else{
-            return null;
-        }
+        $sql = "CALL consultarNivelAcesso($id, '$nivelAcesso')";
+        return _Conexao::executar($sql);
     }
     
 //    public static function salvarNivelAcesso($descricao) {

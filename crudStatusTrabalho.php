@@ -21,7 +21,7 @@
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
-        <?php include './includes/menu.php'; ?>
+        <?php //include './includes/menu.php'; ?>
         
         <div id="carregaPagina">
             <section id="conteudo">
@@ -82,7 +82,7 @@
                                             </td>
                                             <td>
                                                 <span>
-                                                    <img src="img/iconFechar.png"
+                                                    <img src="img/iconFechar.png" class="fechar"
                                                          onclick='abrePopupConfirm("Confirma a exclusão do status \"<?php echo $status->getDescricao(); ?>\"?",
                                                                      "phpFuncoes/excluirStatusTrabalho.php",
                                                                      "<?php echo $status->getId(); ?>",

@@ -146,6 +146,9 @@ function camposObrigatorios(){
             if($(e).next().html() !== "*"){
                 $(e).after("<span>*</span>");
             }
+//            if($(e).prev().html() != "*"){
+//                $(e).before("<span>*</span>");
+//            }
         }
     });
 }
@@ -154,32 +157,36 @@ function camposObrigatorios(){
  * @returns NENHUM
  */
 function focaLabel(){
-    corDeEntrada = "#BBC";
-    corDeSaida = "#EEE";
+    classeHover = "labelHover";
     $('input[type="radio"], input[type="checkbox"]').each(function(i, input){
+        $(input).parent().css("padding", "15px");
+        $(input).parent().css("padding-left", "0");
         $(input).parent().hover(
             function(){
-                $(this).css("border-color", corDeEntrada);
+                $(this).addClass(classeHover);
             },
             function(){
-                $(this).css("border-color", corDeSaida);
+                $(this).removeClass(classeHover);
             });
     });
     $('input[type="radio"], input[type="checkbox"]').focus(function(){
-            $(this).parent().css("border-color", corDeEntrada);
+            $(this).parent().addClass(classeHover);
     });
     $('input[type="radio"], input[type="checkbox"]').focusout(function(){
-            $(this).parent().css("border-color", corDeSaida);
+            $(this).parent().removeClass(classeHover);
     });
 }
-function adicionarAreaAtuacao(botao, lista){
+function adicionarSelectDinamicamente(botao, lista, nomeSelect){
     var label = document.createElement('label');
     var btnRemover = document.createElement('input');
-    $(btnRemover).attr('type', 'button');
-    $(btnRemover).attr('onclick', 'removerAreaAtuacao(this);')
+    $(btnRemover).attr('type', 'image');
+    $(btnRemover).attr('class', 'fechar');
+    $(btnRemover).attr('src', 'img/iconFechar.png');
+    $(btnRemover).attr('onclick', 'removerSelectDinamicamente(this);');
     
     var select = document.createElement('select');
-    $(select).attr('name', 'pAreaAtuacao[]');
+    $(select).attr('class', 'campoDeEntrada');
+    $(select).attr('name', nomeSelect+'[]');
     $(select).html($(lista).children().clone());
     
     $(label).append(select);
@@ -188,10 +195,49 @@ function adicionarAreaAtuacao(botao, lista){
     $(label).insertBefore(botao);
 }
 
-function removerAreaAtuacao(este){
+function removerSelectDinamicamente(este){
     $(este).parent().remove();
 }
+function adicionarCoAutor(idTabela, nameOrientador, nameSelect, listaDeAutores){
+    var linha = document.createElement('ul');
+    var celOrientador = document.createElement('li');
+    var celAutor = document.createElement('li');
+    var celExcluir = document.createElement('li');
+    
+    var ckbOrientador = document.createElement('input');
+    $(ckbOrientador).attr('type', 'checkbox');
+    $(ckbOrientador).attr('placeholder', 'É orientador?');
+    $(ckbOrientador).attr('name', nameOrientador+'[]');
+    celOrientador.appendChild(ckbOrientador);
+    
+    var select = document.createElement('select');
+    $(select).attr('name', nameSelect+'[]');
+    $(select).attr('onchange', 'selecionarCoAutor(this)');
+    $(select).html($(listaDeAutores).children().clone());
+    celAutor.appendChild(select);
+    
+    var btnRemover = document.createElement('input');
+    $(btnRemover).attr('type', 'image');
+    $(btnRemover).attr('class', 'fechar');
+    $(btnRemover).attr('src', 'img/iconFechar.png');
+    $(btnRemover).attr('onclick', 'removerCoAutor(this);');
+    celExcluir.appendChild(btnRemover);
+    
+    linha.appendChild(celOrientador);
+    linha.appendChild(celAutor);
+    linha.appendChild(celExcluir);
+    $(idTabela).append(linha);
+    
+}
 
+function selecionarCoAutor(este){
+    var ckb = $(este).parent().parent().find('input[type=checkbox]')[0];
+    //alert($(este).val());
+    $(ckb).val($(este).val());
+}
+function removerCoAutor(este){
+    $(este).parent().parent().remove();
+}
 /**
  * FAZ COM QUE OS CAMPOS COM A CLASSE .calendario APRESENTEM UM CALENDÁRIO PARA PREENCHIMENTO
  * @returns NENHUM
@@ -221,7 +267,7 @@ function dataLimite(de, ate){
 function habilitaCpf(){
     $(".cpf").each(function(i, input){
         $(input).mask("999.999.999-99");
-        $(input).val("");
+        var valor = $(input).val();
         $(input).keydown(function (e) {
             // Permite: "backspace" "delete" "tab" "escape" "enter" "-" "."
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 116, 189, 190]) !== -1 ||
@@ -245,6 +291,7 @@ function habilitaCpf(){
                 e.preventDefault();
             }
         });
+        $(input).val(valor);
     });
 }
 /**
@@ -253,8 +300,8 @@ function habilitaCpf(){
  */
 function mostraNomeInputFile(){
     $("input[type='file']").each(function(i, input){
-        btn = "<span>Selecione</span>";
-        label = "<label for='"+$(input).attr("id")+"' class='inputFile'>"+btn+"</label>";
+        btn = "<span class='botao'>Selecione</span>";
+        label = "<label for='"+$(input).attr("id")+"' class='inputFile campoDeEntrada'>"+btn+"</label>";
         if($(input).attr("class") === "upImagem"){
             label = label+"<img src='img/iconSemFoto.gif' alt='"+$(input).attr("placeholder")+"'>";
         }
@@ -265,33 +312,14 @@ function mostraNomeInputFile(){
         $(input).change(function(){
             $(this).next().text("");
             txt = $(this)[0].value.toString();
-            if(txt.length > 16){
-                txt = "..." + txt.substr(txt.length-16);
+            if(txt.length > 10){
+                txt = "..." + txt.substr(txt.length-10);
             }
             $(this).next().append(btn+txt);
             
             if($(this).attr("class") === "upImagem"){
                 carregarImagem(this);
             }
-        });
-        
-        /* NECESSÁRIO POIS O COMBINADOR CSS "+" NÃO ESTÁ FUNCIONANDO DE ACORDO NO FIREFOX */
-        $(input).next().hover(
-            function(){
-                if($(this).css("background-color") !== "rgb(204, 204, 255)"){//O VALOR PADRÃO ARMAZENADO É EM RGB
-                    $(this).css("background-color", "#EEF");
-                }
-            },
-            function(){
-                if($(this).css("background-color") !== "rgb(204, 204, 255)"){
-                    $(this).css("background-color", "#FFF");
-                }
-            });
-        $(input).focus(function(){
-            $(this).next().css("background-color", "#CCF");
-        });
-        $(input).focusout(function(){
-            $(this).next().css("background-color", "#FFF");
         });
     });
 }
@@ -335,4 +363,64 @@ function confirmarSenha(){
             }
         });
     });
+}
+function ordenarTabela(idTabela, indexDaColuna) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById(idTabela);
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("tr");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("td")[indexDaColuna];
+    //console.log(x.innerHTML.toLowerCase().trim());
+      y = rows[i + 1].getElementsByTagName("td")[indexDaColuna];
+    //console.log(y.innerHTML.toLowerCase().trim());
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
+function mostrarCampoInvisivel(check){
+    if($('#areaAtuacao').length === 0){
+        var fieldset = document.createElement("fieldset");
+        var legend = document.createElement("legend");
+        var botao = document.createElement("input");
+        
+        $(botao).attr("type", "button");
+        $(botao).attr("value", "Adicionar Área");
+        $(botao).attr("class", "botao");
+        $(botao).attr("onclick", "adicionarSelectDinamicamente(this, '#listAreasAtuacao', 'pAreaAtuacao')");
+        
+        $(legend).html("Área de atuação");
+        
+        $(fieldset).attr("id", 'areaAtuacao');
+        fieldset.appendChild(legend);
+        fieldset.appendChild(botao);
+        $(fieldset).insertAfter($(check).parent());
+    }
+    else{
+        $('#areaAtuacao').remove();
+    }
+//        $(check).insertAfter(fieldset);
 }

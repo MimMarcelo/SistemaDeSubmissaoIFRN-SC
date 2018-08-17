@@ -3,6 +3,7 @@
     require_once dirname(__FILE__).'/../phpDao/UsuarioDao.php';
     require_once dirname(__FILE__).'/UsuarioEvento.php';
     require_once dirname(__FILE__).'/AreaAtuacao.php';
+    require_once dirname(__FILE__).'/Trabalho.php';
     
 class Usuario{
     private $idUsuario;
@@ -78,12 +79,21 @@ class Usuario{
 
     public function getImagem() {
         if($this->imagem==""){
-            return "../iconSemFoto.gif";
+            return "iconSemFoto.gif";
         }
         return $this->imagem;
     }
 
     public function getTrabalhos() {
+        if($this->trabalhos == null){
+            $aux = Trabalho::getTrabalhosPorUsuario($this->idUsuario);
+            if(is_array($aux)){
+                $this->trabalhos = $aux;
+            }
+            else{
+                return $aux;
+            }
+        }
         return $this->trabalhos;
     }
     
@@ -225,7 +235,8 @@ class Usuario{
         else{
             $usuario = new Usuario();
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
                         //echo $key.", ".$value."\n";
                         $usuario->{$key} = $value;
@@ -257,7 +268,8 @@ class Usuario{
         else{
             $usuario = new Usuario();
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
                         $usuario->{$key} = $value;
                     }
@@ -274,9 +286,38 @@ class Usuario{
             return $usuario;
         }
     }
+    public static function consultarUsuarios($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){      
+        $mensagem = array();
+        $usuarios = array();
+        
+        $dado = UsuarioDao::consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario);
+        //print_r($dado);
+        
+        if($dado == null){
+            $mensagem[] = "Usuário não encontrado";
+        }
+        else{
+            foreach ($dado as $obj){
+                $usuario = new Usuario();
+                foreach ($obj as $key => $value) {
+                    $usuario->{$key} = $value;
+                }
+                $usuarios[] = $usuario;
+            }
+        }
+        if(count($mensagem) > 0){
+            return $mensagem;
+        }
+        else{
+            return $usuarios;
+        }
+    }
+    public static function alterarAvaliadoresAdms($idUsuarios, $avaliadores, $adms){
+        return UsuarioDao::alterarAvaliadoresAdms($idUsuarios, $avaliadores, $adms);
+    }
     
     public function salvar(){
-        $mensagem = null;
+        $mensagem = array();
         $dado = null;
         
         //VERIFICA SE O CPF INSERIDO JÁ ESTÁ CADASTRADO
@@ -301,7 +342,8 @@ class Usuario{
         }
         else if(count($mensagem) == 0){
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     //print_r($obj);
                     if($obj["idUsuario"] > 0){
                         return $obj["idUsuario"];
@@ -318,6 +360,36 @@ class Usuario{
     }
     
     public function inscreverEmEvento($idEvento){
-        return UsuarioDao::inscreverEmEvento($this->idUsuario, $idEvento);
+        return UsuarioEvento::inscreverEmEvento($this->idUsuario, $idEvento);
+    }
+    
+    public static function consultarInscritosPorEvento($idEvento, $idStatusInscricao) {
+        $mensagem = "";
+        $usuarios = array();
+        
+        $dado = UsuarioDao::consultarInscritosPorEvento($idEvento, $idStatusInscricao);
+        //print_r($dado);
+        
+        if($dado == null){
+            $mensagem = "Nenhum usuário encontrado";
+        }
+        else{
+            foreach ($dado as $obj){
+                $usuario = new Usuario();
+                foreach ($obj as $key => $value) {
+                    $usuario->{$key} = $value;
+                }
+                $usuarios[] = $usuario;
+            }
+        }
+        if($mensagem !== ""){
+            return $mensagem;
+        }
+        else{
+            return $usuarios;
+        }
+    }
+    public static function credenciar($idUsuario, $idEvento) {
+        return UsuarioDao::credenciar($idUsuario, $idEvento);
     }
 }    

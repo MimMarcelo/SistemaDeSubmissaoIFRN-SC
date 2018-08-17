@@ -3,32 +3,34 @@
 //IMPORTE DO ARQUIVO QUE GERENCIA O BANCO DE DADOS
 require_once '_Conexao.php';
 
-
 /**
- * Description of AreaAtuacaoDao
+ * Prepara as queries de banco de dados que podem ser executadas pela Classe
+ * _Conexao
  *
  * @author Marcelo Júnior
  */
 class AreaAtuacaoDao {
+    
+    /**
+     * Cria uma query que permite consultar as Áreas de Atuação gravadas no Banco.
+     * Aceitando restrições de Id e/ou nome da Área desejada
+     * @param int $id
+     * @param String $areaAtuacao
+     * @return array Lista com as Áreas de atuação retornadas pela query
+     */
     public static function getAreaAtuacao($id, $areaAtuacao) {
-        $resultado = _Conexao::executar("CALL consultarAreaAtuacao($id, '$areaAtuacao')");
-        
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-        }
-        return null;
+        $sql = "CALL consultarAreaAtuacao($id, '$areaAtuacao')";
+        return _Conexao::executar($sql);
     }
     
+    /**
+     * Cria uma query que permite consultar as Áreas de Atuação vinculadas a um
+     * dado Usuário
+     * @param int $idUsuario Id do Usuário
+     * @return array Lista das Áreas de atuação ligadas ao Usuário
+     */
     public static function getAreasPorIdUsuario($idUsuario){
-        $resultado = _Conexao::executar("CALL consultarAreasPorIdUsuario($idUsuario)");
-        
-        if(is_object($resultado)){
-            if($resultado->num_rows > 0){
-                return $resultado;
-            }
-        }
-        return null;
+        $sql = "CALL consultarAreasPorIdUsuario($idUsuario)";
+        return _Conexao::executar($sql);
     }
 }

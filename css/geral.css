@@ -3,137 +3,226 @@
 */
 *{
     padding: 0;
-    margin: 0;
     border-width: 0;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
+    border-radius: 0;
+    border-style: solid;
+    border-color: #7B7;
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    overflow: auto;
     box-sizing: border-box;
 }
 body{
-    background-color: #FFF;
-    color: #006;
-    padding-top: 45px;/* PARA O MENU */
+    background: #073b4c;
+    color: #000;    /*corTextoPrimaria*/
 }
-/*
-------------------------- TAGs ESTRUTURAIS
-*/
-header{
+body > div{
+    background: #efefef;
+    color: #073b4c;
 }
-nav{
+.painelDegrade{
+    background-color: #efefef;
+    background: linear-gradient(#efefef, transparent);
+    border-radius: 4px;
 }
-section#conteudo{
+.centralizado{
+    text-align: center;
 }
-article{
-    background-color: #EEE;
-    padding: 0;
-    margin: 5%;
-    border-radius: 10px;
-    border-right: solid 1px black;
-    border-bottom: solid 1px black;
+.aEsquerda{
+    float: left;
 }
-article:hover{
-    background-color: #CCC;
-}
-article > span{
+.cartao{
+    width: 100%;
+    max-width: 400px;
     display: inline-block;
-    position: absolute;
-    margin: 8px;
+    margin: 10px;
+    background-color: #FFF;
+    border-radius: 5px;
+}
+.cartao > img{
+    width: 100%;
+    height: 250px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+}
+.inscrevase{
+    min-width: 150px;
+    border-width: 2px;
+    border-color: #149dcc;
+    border-radius: 20px;
+    color: #073b4c;
+    background-color: transparent;
+    padding: 10px;
+    margin: 10px;
     cursor: pointer;
 }
-article > span > img{
-    width: 25px;
-}
-article > span > img:hover{
-    border: 2px solid #FFF;
-    border-radius: 12px;
-}
-article > form{
-    padding: 0;
-    background-color: transparent;
-    border: none;
-}
-article > form > label{
-    width: 100%;
-    overflow: auto;
-    padding: 0;
-    border: none;
-}
-article > form > label > h2{
+.inscrevase.saibaMais{
+    background-color: #149dcc;
     color: #FFF;
+}
+.inscrevase:hover{
+    background-color: #073b4c;
+    color: #FFF;
+    text-decoration: none;
+}
+.menosPadding{
+    padding: 2px !important;
+    margin: 0 !important;
+    min-width: 80px;
+}
+h1{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: #8D8;    /*corTextoTerciaria*/
+    font-size: 20px;
     text-align: center;
-    background-color: rgb(50, 180, 50);
-    border-radius: 10px;
-    padding: 10px;
+    text-transform: uppercase;
 }
-article > form > label > p{
-    padding-left: 10px;
-    padding-top: 5px;
-}
-article > form > label > input[type="submit"]{
-    width: auto;
-    margin: 0;
-}
-footer{
-    clear: both;
-}
-/*
-------------------------- TAGs DISPLAY PADRÃO BLOCK
-*/
 h2{
-    font-size: 18px;
-    padding: 4px;
+    color: #073b4c;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: calc( 1.7rem + (3 - 1.7) * ((100vw - 20rem) / (48 - 20)));
+    line-height: calc( 1.4 * (1.7rem + (3 - 1.7) * ((100vw - 20rem) / (48 - 20))));
+    font-weight: bolder;
+    text-align: center;
+    text-transform: uppercase;
+}
+h3{
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+h4{
+    color: #000;
+    font-weight: bolder;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 /*
 ------------------------- TAGs DISPLAY PADRÃO INLINE
 */
+img{
+    display: block;
+    margin: auto;
+    width: 90%;
+}
+.fechar{ /* BOTÃO DE FECHAR */
+    border-width: 0;
+    padding: 0;
+    width: 26px;
+    height: auto;
+    float: right;
+    cursor: pointer;
+    background-color: transparent;
+}
+.fechar:hover, .fechar:focus { /* QUANDO O MOUSE PASSAR EM CIMA, OU ESTIVER EM FOCO */
+    border-width: 3px;
+    border-style: solid; /* por causa do input[type='image']*/
+    border-color: #FFF;    /*corFundoPrimaria*/
+    border-radius: 12px;
+}
+.divTabela .fechar{
+    float: none;
+}
+.evento{
+    text-align: center;
+    width: 90%;
+    margin: auto;
+}
+.evento > div > img{
+    display: block;
+    margin: auto;
+    max-width: 70%;
+    min-width: 300px;
+    height: auto;
+    
+}
+.evento > div > p{
+    text-align: center;
+}
+.evento .tag{
+    text-align: left;
+    display: inline-block;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    vertical-align: middle;
+}
+.evento .tag *{
+    font-weight: bolder;
+}
+.evento .tag a{
+    color: #073b4c;
+}
+.evento .aEsquerda img{
+    height: 90px;
+    width: auto;
+    margin-right: 30px;
+}
 /*
 ------------------------- TAGs a
 */
 a{
-    color: rgb(50, 180, 50);
+    color: #FFF;
     text-decoration: none;
     font-weight: normal;
-    font-size: 12px;
     display: inline-block;
 }
 a:hover{
-    color: rgb(50, 220, 220);
     text-decoration: underline;
 }
-a:visited{
-    color: rgb(200, 200, 50);
-}
-/*
-------------------------- CLASSES CONTROLADORAS DO LAYOUT
-*/
-.coluna{
-    width: 100%;
-    display: block;
-    padding: 5px;
-}
-.coluna > img{
-    width: 50%;
-    display: block;
-    margin: auto;
-}
-.desaparecer{
+
+
+
+.invisivel{
     display: none;
 }
-#conteudo > img, #atualizavel > img{
-    display: inline-block;
-    width: 100%;
-    height: auto;
-}
-#conteudo > ul > li, #atualizavel > ul > li{
-    padding: 4px;
-    font-size: 14px;
-}
-#conteudo > ul > li > span, #atualizavel > ul > li > span{
+
+form.paginaLogin{
     display: block;
-    font-size: 16px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    padding-bottom: 50px;
 }
-#conteudo > ul > li > form, #atualizavel > ul > li > form{
-    float: right;
-    width: auto;
+form.paginaLogin label{
+    border-width: 0;
+}
+form.paginaLogin a{
+    margin-top: 20px;
+    display: block;
+}
+section.paginaLogin{
+    margin-bottom: 100px;
+}
+section.paginaLogin + footer{
+    position: fixed;
+    bottom: 0;
+}
+@media screen and (max-width: 500px) {
+    .cartao{
+        width: 400px;
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    .cartao > img{
+        
+    }
+    form.paginaLogin{
+        width: 90%;
+    }
+}
+@media screen and (min-width: 900px) {
+    .evento > div:not(:last-child){
+        vertical-align: top;
+        display: inline-block;
+        word-break: break-all;
+    }
+    .evento > div > img{
+        max-width: 300px;
+    }
 }

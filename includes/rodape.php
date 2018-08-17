@@ -1,5 +1,6 @@
 <footer>
+    <p>Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte | Santa Cruz</p>
     <p>
-        Desenvolvido por: Fernanda Guilherme, Jhonatas Costa, Juliana Dias, Marcelo Júnior, Matheus Emanuel, Ranna Raabe
+        &copy; Grupo de informática IFRN-SC
     </p>
 </footer>

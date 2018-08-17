@@ -2,6 +2,7 @@
 
     require_once dirname(__FILE__).'/../phpClasses/Usuario.php';
     require_once dirname(__FILE__).'/../includes/popup.php'; 
+    require_once dirname(__FILE__).'/../phpClasses/Evento.php';
     session_start();
     
     $usuario = new Usuario();
@@ -12,6 +13,7 @@
     /*
      * TODA PÁGINA QUE POSSUIR UM FORMULÁRIO PRECISA DESSE INCLUDE
      */
+    //print_r($_SESSION);
     if(isset($_SESSION["mensagem"]) && $_SESSION["mensagem"] !== null){
         echo "<script>abrePopup('Atenção', '".$_SESSION["mensagem"]."');</script>";
         $_SESSION["mensagem"] = null;

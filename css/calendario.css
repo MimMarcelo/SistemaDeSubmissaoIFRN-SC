@@ -1,15 +1,14 @@
 #ui-datepicker-div{ /* DIV DO CALENDÁRIO */
     display: none;
-    background-color: #FFF;
+    width: 250px;
+    background-color: #FFF;    /*corFundoPrimaria*/
     border-radius: 10px;
-    border-color: #BBC;
     border-width: 3px;
     border-style: solid;
-    width: 250px;
     padding-bottom: 5px;
 }
 #ui-datepicker-div > div:first-child{ /* DIV DO CABECALHO */
-    background-color: #444;
+    background-color: #FFF;    /*corFundoPrimaria*/
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     padding: 2px;
@@ -37,8 +36,7 @@
 }
 #ui-datepicker-div > div > div{ /* TÍTULOS "MÊS ANO" */
     display: block;
-    padding-bottom: 5px;
-    padding-top: 3px;
+    padding-top: 5px;
     text-align: center;
     font-weight: bolder;
 }
@@ -48,23 +46,28 @@
     text-align: center;
 }
 #ui-datepicker-div td, #ui-datepicker-div th{ /* CÉLULAS DA TABELA */
-    background-color: #EEF;
-    border-color: #FFF;
-    border-style: none;
-    border-width: 0;
-    border-radius: 3px;
+    background-color: #FFF;    /*corFundoPrimaria*/
+}
+#ui-datepicker-div a, td.ui-datepicker-week-end a{
+    color: #363;    /*corTextoPrimaria*/
+    font-weight: bolder;
 }
 #ui-datepicker-div th{ /* LINHA COM OS TÍTULOS DOS DIAS DA SEMANA */
-    background-color: #444;
+    background-color: #888;    /*corFundoSecundaria*/
 }
-#ui-datepicker-div td.ui-datepicker-week-end{ /* CÉLULAS DA TABELA */
-    background-color: #FEE;
+#ui-datepicker-div td:hover, td.ui-datepicker-week-end:hover{
+    background-color: #888;    /*corFundoSecundaria*/
 }
-#ui-datepicker-div td:hover{ /* CÉLULAS DA TABELA */
-    background-color: #CCF;
+#ui-datepicker-div td:hover a, td.ui-datepicker-week-end:hover a,
+#ui-datepicker-div td a:hover, td.ui-datepicker-week-end a:hover{ /* CÉLULAS DA TABELA */
+    color: #3D3;    /*corTextoSecundaria*/
 }
-#ui-datepicker-div td.ui-state-disabled, #ui-datepicker-div td.ui-state-disabled:hover{ /* CÉLULAS DA TABELA QUE ESTÃO DESABILITADAS*/
-    background-color: #EEF; /* MESMA COR DA CÉLULA PADRÃO */
+#ui-datepicker-div td.ui-state-disabled, #ui-datepicker-div td.ui-state-disabled:hover, #ui-datepicker-div td:disabled, .ui-datepicker-unselectable,
+#ui-datepicker-div td.ui-state-disabled span, #ui-datepicker-div td.ui-state-disabled:hover span, #ui-datepicker-div td:disabled span{
+    color: #363;    /*corTextoPrimaria*/
+    background-color: #CCC;
+    font-weight: normal;
+    cursor: default;
 }
 #ui-datepicker-div td.ui-datepicker-today{ /* DIA ATUAL (HOJE) */
     background-color: #AFA;

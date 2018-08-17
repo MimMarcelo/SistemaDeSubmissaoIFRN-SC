@@ -1,64 +1,39 @@
-table{
-    width: 94%;
+table, .divTabela{
+    display: table;
+    width: 90%;
     margin: auto;
+    margin-bottom: 50px;
+    border-width: 2px;
+    border-color: #afafaf;
 }
-table thead{
-    background-color: #000;
-    color: #FFF;
+table > thead, .divTabela > ul.cabecalho{
+    color: #000;    /*corTextoTerciaria*/
+    font-weight: bolder;
+    background-color: #FFF;    /*corFundoTerciaria*/
 }
-table tbody{
-    background-color: #EEE;
+table > tbody > tr, .divTabela > ul{
+    display: table-row;
+    background-color: #FFF;
+    border: solid 2px;
 }
-table td, table th{
-    border-radius: 2px;
-    padding: 5px;
+table > tbody > tr:not(:nth-child(even)), .divTabela > ul:nth-child(even){
+    background-color: #efefef;
 }
-table tbody tr.desabilitado{
-    background-color: #BBC;
+table > tbody > tr:hover, .divTabela > ul:hover{
+    background-color: #afafaf;    /*corFundoSecundaria*/
 }
-table tbody tr:hover{
-    background-color: #AAA;
+table > thead th, .divTabela > ul.cabecalho > li{
+    padding: 10px;
+    font-weight: bolder;
 }
-table td{
-    color: #333;
-}
-td form{
-    margin: 0;
-    padding: 0;
-    border: 0;
+table > tbody td, .divTabela > ul > li{
+    display: table-cell;
     text-align: center;
-    background-color: transparent;
-}
-td span{
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-}
-td span img, td span input[type='image']{
-    padding: 0;
-    margin: 0;
-    width: 25px;
-    height: auto;
+    height: 40px;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
     border: none;
-    border-radius: 12px;
-    box-sizing: border-box;
 }
-td span img:hover, td span input[type='image']:hover{
-    padding: 2px;
-    background-color: #333;
-}
-/*
-------------------------- BORDAS ARREDONDADAS DA TABELA
-*/
-table thead tr th:first-child{
-    border-top-left-radius: 10px;
-}
-table thead tr th:last-child{
-    border-top-right-radius: 10px;
-}
-table tbody tr:last-child td:first-child{
-    border-bottom-left-radius: 10px;
-}
-table tbody tr:last-child td:last-child{
-    border-bottom-right-radius: 10px;
-}
+
+

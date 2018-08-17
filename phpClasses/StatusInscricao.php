@@ -32,7 +32,8 @@ class StatusInscricao{
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $statusInscricao = new StatusInscricao();
                     
                     foreach ($obj as $key => $value) {
@@ -65,7 +66,8 @@ class StatusInscricao{
         else{
             $statusInscricao = new StatusInscricao();
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     foreach ($obj as $key => $value) {
                         $statusInscricao->{$key} = $value;
                     }

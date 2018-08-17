@@ -2,79 +2,127 @@
 ------------------------- TAGs GERAIS
 */
 nav{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
+    background-color: #073b4c;
 }
-nav a {
+nav a{
+    float: left;
     display: block;
-    font-weight: bolder;
-    color: #FFF;
-    background-color: #000;
+    color: #F1F1FF;
+    text-align: center;
+    background-color: #073b4c;
     padding: 14px 16px;
-    transition: 0.5s;
+    font-weight: bolder;
+    transition: 0.3s;
 }
-nav a:first-child{
-    height: 45px;
-}
-nav a:not(:first-child){
+nav a.opcoes{
     display: none;
 }
-nav a:first-child span{
+
+nav a.opcoes span{
     display: block;
     background-color: #FFF;
-    width: 20px;
-    height: 3px;
-    margin: 3px 0;
+    width: 30px;
+    height: 2.5px;
+    margin: 4px 0;
     transition: 0.5s;
 }
-nav a.menuSair{
-    display: inline-block;
-    position: fixed;
-    top: 0;
-    right: 0;
-    background-color: #E22;
+
+nav .dropdown {
+    float: left;
 }
-/*
-------------------------- TAGs COMPORTAMENTAIS
-*/
-nav a:hover{
-    background-color: rgb(50, 180, 50);
-    color: #FFF;
+
+nav .dropdown .dropdownBtn {
+    margin: 0;
+    border: none;
+    outline: none;
+    padding: 14px 16px;
+    color: #F1F1FF;
+    font-weight: bolder;
+    background-color: #073b4c;
+    transition: 0.3s;
 }
-nav a:visited{
-    color: #FFF;
+
+nav .dropdown > div {
+    display: none;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
-nav.menuAberto{
-    height: 100%;
-    background-color: rgb(0,0,0); /* COR DE FUNDO CASO NÃO SUPORTE OPACIDADE */
-    background-color: rgba(0,0,0,0.4); /* COR DE FUNDO CASO SUPORTE OPACIDADE */
-}
-nav.menuAberto a:not(:first-child){
-    position: relative;
+
+nav .dropdown > div a {
+    float: none;
+    padding: 12px 16px;
     display: block;
-    animation-name: animaMenuAbrir;
-    animation-duration: 0.5s;
+    text-align: left;
 }
-nav.menuAberto a.menuTitulo, nav.menuAberto a.menuTitulo:hover{
-    background-color: #444;
-    margin-left: 0px;
-    padding-left: 30px;
+
+nav a:hover, nav .dropdown:hover .dropdownBtn {
+    background-color: #074b5c;
     text-decoration: none;
 }
-nav.menuAberto a:first-child .barra1{
-    -webkit-transform: rotate(-45deg) translate(-6px, 0);
-    transform: rotate(-45deg) translate(-6px, 0);
+
+nav .dropdown:hover > div{
+    position: fixed;
+    display: block;
 }
-nav.menuAberto a:first-child .barra2{
+
+nav .dropdown > div a:hover {
+    background-color: #074b5c;
+    text-decoration: none;
+}
+
+nav.menuAberto a.opcoes .barra1{
+    transform: rotate(-45deg) translate(0px, 5px) scale(1.2, 2);
+}
+nav.menuAberto a.opcoes .barra2{
     display: none;
 }
-nav.menuAberto a:first-child .barra3{
-    -webkit-transform: rotate(45deg) translate(-4px, 2px);
-    transform: rotate(45deg) translate(-4px, 2px);
+nav.menuAberto a.opcoes .barra3{
+    transform: rotate(45deg) translate(0px, -5px) scale(1.2, 2);
 }
-@keyframes animaMenuAbrir {/* PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE ESQUERDA PARA A POSIÇÃO DEFINIDA) */
+@keyframes animaMenuAbrir { /*PARÂMETROS DA ANIMAÇÃO (DESLIZAR DE ESQUERDA PARA A POSIÇÃO DEFINIDA) */
     from {left:-300px; opacity:0}
     to {left:0; opacity:1}
+}
+
+@media screen and (max-width: 800px) {
+    nav a, nav .dropdown .dropdownBtn {
+        display: none;
+    }
+    nav.paginaLogin a{
+        display: block !important;
+    }
+    nav a.opcoes {
+        display: block;
+    }
+    nav.menuAberto {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,.4);
+        z-index: 1030;
+    }
+    nav.menuAberto a.opcoes {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    nav .dropdown:hover > div{
+        position: relative;
+    }
+    nav.menuAberto a:not(.opcoes), nav.menuAberto .dropdown {
+        float: none;
+        display: block;
+        text-align: left;
+        animation-name: animaMenuAbrir;
+        animation-duration: 0.5s;
+    }
+    nav.menuAberto .dropdown {
+        width: 100%;
+    }
+    nav.menuAberto .dropdown .dropdownBtn {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
 }

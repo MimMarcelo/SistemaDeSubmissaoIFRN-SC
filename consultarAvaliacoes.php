@@ -17,7 +17,7 @@
     </head>
     <body>
         <?php include './includes/cabecalho.php'; ?>
-        <?php include './includes/menu.php'; ?>
+        <?php //include './includes/menu.php'; ?>
         
         <div id="carregaPagina">
             <section id="conteudo">

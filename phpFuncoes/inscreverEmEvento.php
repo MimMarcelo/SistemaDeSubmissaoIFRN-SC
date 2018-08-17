@@ -19,7 +19,7 @@
     if($metodoHttp == 'POST' && count($mensagem) == 0){
         $idEvento = 0;
         $nomeEvento = "";
-        
+        //print_r($_POST);
         if(isset($_POST["pIdEvento"])){
             $idEvento = testaCampo($_POST["pIdEvento"]);
         }

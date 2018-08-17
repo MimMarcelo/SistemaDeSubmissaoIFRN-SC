@@ -15,17 +15,26 @@
         if (!$usuario->ehAdministrador() && !empty($usuario->getId())) {//SE ESTIVER LOGADO E
             header("location: inicio.php"); //NÃO FOR O ADMINISTRADOR, REDIRECIONAR PARA A TELA INICIAL
         }
+        
         /*
-         * NESTA PÁGINA O LOGIN NÃO É OBRIGATÓRIO
+         * NESTA PÁGINA, O LOGIN NÃO É OBRIGATÓRIO
          * MAS SE ESTIVER LOGADO, APENAS O ADIMINISTRADOR PODE TER ACESSO
          */
         ?>
     </head>
     <body>
         <?php
+        
+        $editar = false;
+        
         if ($usuario->ehAdministrador()) {
             include './includes/cabecalho.php';
-            include './includes/menu.php';
+            //include './includes/menu.php';
+            
+            if(isset($_GET['id'])){
+                $editar = true;
+                $usr = Usuario::consultarUsuario('', '', '', '', -1, -1, $_GET['id']);
+            }
         } //FIM DA ÁREA DE ADMINISTRADOR
         
         //CONSTROI LISTA DAS ÁREAS DE ATUAÇÃO
@@ -43,39 +52,39 @@
                 <!-- O CONTEÚDO DAS PÁGINAS DEVE APARECER AQUI -->
 
                 <form action="<?= htmlspecialchars("phpFuncoes/cadastrarUsuario.php");?>" method="post" enctype="multipart/form-data">
-                    <label for="txtCpf">CPF</label>
-                    <input type="text" id="txtCpf" name="pCpf" class="cpf" autofocus required>
-                    <label for="txtNome">Nome completo</label>
-                    <input type="text" id="txtNome" name="pNome" required placeholder="Nome que aparecerá nos certificados">
-                    <label for="txtEmail">e-mail</label>
-                    <input type="text" id="txtEmail" name="pEmail" required placeholder="Informe seu e-mail">
-                    <label for="txtSenha">Senha</label>
-                    <input type="password" id="txtSenha" name="pSenha" required>
-                    <label for="txtConfirmarSenha">Confirmar senha</label>
-                    <input type="password" id="txtConfirmarSenha" name="pConfirmarSenha" class="confirmarSenha" required>
-                    <label for="txtMatricula">Matrícula SUAP</label>
-                    <input type="text" id="txtMatricula" name="pMatricula" placeholder="Informe sua matrícula SUAP">
-                    <fieldset>
-                        <legend>Area de atuação</legend>
-                        <input type="button" value="Adicionar Area" onclick="adicionarAreaAtuacao(this, '#listAreasAtuacao')">
-                    </fieldset>
+                    <label for="txtCpf" class="etiqueta">CPF</label>
+                    <input type="text" id="txtCpf" name="pCpf" class="campoDeEntrada cpf" autofocus required <?= $editar?'value="'.$usr->getCpf().'" disabled':'';?>>
+                    <label for="txtNome" class="etiqueta">Nome completo</label>
+                    <input type="text" id="txtNome" name="pNome" class="campoDeEntrada" required placeholder="Nome que aparecerá nos certificados"<?= $editar?'value="'.$usr->getNome().'"':'';?>>
+                    <label for="txtEmail" class="etiqueta">e-mail</label>
+                    <input type="email" id="txtEmail" name="pEmail" class="campoDeEntrada" required placeholder="Informe seu e-mail" <?= $editar?'value="'.$usr->getEmail().'"':'';?>>
+                    <label for="txtSenha" class="etiqueta">Senha</label>
+                    <input type="password" id="txtSenha" name="pSenha" class="campoDeEntrada" required>
+                    <label for="txtConfirmarSenha" class="etiqueta">Confirmar senha</label>
+                    <input type="password" id="txtConfirmarSenha" name="pConfirmarSenha" class="campoDeEntrada confirmarSenha" required>
+                    <label for="txtMatricula" class="etiqueta">Matrícula SUAP</label>
+                    <input type="text" id="txtMatricula" class="campoDeEntrada" name="pMatricula" placeholder="Informe sua matrícula SUAP"<?= $editar?'value="'.$usr->getMatricula().'"':'';?>>
+                    <label class="etiqueta">
+                        Candidatar-se como avaliador:
+                        <input type="checkbox" onchange="mostrarCampoInvisivel(this)">
+                    </label>
                     <?php
                     if ($usuario->ehAdministrador()) {
                         //INICIA ÁREA QUE APENAS O ADMINISTRADOR PODE EXECUTAR
                     ?>
-                        <label for="ckbAdministrador">
+                        <label for="ckbAdministrador" class="etiqueta">
                             Administrador
-                            <input type="checkbox" name="pAdministrador" id="ckbAdministrador">
+                            <input type="checkbox" name="pAdministrador" id="ckbAdministrador" <?php if($editar){ echo $usr->ehAdministrador()?'checked':'';}?>>
                         </label>
-                        <label for="ckbAvaliador">
+                        <label for="ckbAvaliador" class="etiqueta">
                             Avaliador
-                            <input type="checkbox" name="pAvaliador" id="ckbAvaliador">
+                            <input type="checkbox" name="pAvaliador" id="ckbAvaliador" <?php if($editar){ echo ($usr->getAvaliador()>0)?'checked':'';}?>>
                         </label>
                     <?php
                     }//FECHA O IF SE É ADMINISTRADOR
                     ?>
-                    <label for="imgInp">Foto <span>(Máximo 5MB)</span></label>
-                    <input type="file" id="imgInp" name="pImagem" class="upImagem" placeholder="Preview da imagem do usuário">                
+                    <label for="imgInp" class="etiqueta">Foto <span>(Máximo 5MB)</span></label>
+                    <input type="file" id="imgInp" name="pImagem" class="upImagem" placeholder="Preview da imagem do usuário" <?= $editar?'value="'.$usr->getImagem().'"':'';?>>
                     <input type="submit" class="botao" value="Cadastrar">
                     <?php
                     if (!$usuario->ehAdministrador()) {

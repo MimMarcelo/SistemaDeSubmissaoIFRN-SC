@@ -32,7 +32,8 @@ class StatusTrabalho {
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $statusTrabalho = new StatusTrabalho();
                     
                     foreach ($obj as $key => $value) {
@@ -55,7 +56,27 @@ class StatusTrabalho {
     }
     
     public static function getStatusTrabalho($id, $statusTrabalho) {
-        return StatusTrabalhoDao::getStatusTrabalho($id, $statusTrabalho);
+        $mensagem = "";
+        $status = null;
+        
+        $dado = StatusTrabalhoDao::getStatusTrabalho($id, $statusTrabalho);
+        if($dado == null){
+            $mensagem = "Status de trabalho desconhecido";
+        }
+        else{
+            foreach ($dado as $obj){
+                $status = new StatusTrabalho();
+                foreach ($obj as $key => $value){
+                    $status->{$key} = $value;
+                }
+            }
+        }
+        if($mensagem !== ''){
+            return $mensagem;
+        }
+        else{
+            return $status;
+        }
     }
 
     public static function salvarStatusTrabalho($descricao){

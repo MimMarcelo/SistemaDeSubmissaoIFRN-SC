@@ -43,4 +43,11 @@ class _Util {
             return true;
         }
     }
+    
+    public static function getObject($objeto, $dados){
+        foreach ($dados as $key => $value) {
+            $objeto->{$key} = $value;
+        }
+        return $objeto;
+    }
 }

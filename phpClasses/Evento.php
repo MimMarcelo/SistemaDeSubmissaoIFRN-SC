@@ -286,38 +286,38 @@ class Evento {
         }        
     }
 
+    /**
+     * Retorna todos Eventos cadastrados no banco de dados
+     * @return Evento[]
+     */
     public static function getTodosEventos(){
         $mensagem = array();
         $listaEventos = array();
         
         $dados = EventoDao::getEventos(0, '', '', '', '', '', '', _Util::getDataParaBd(date('d/m/Y')), '', 0);
+        //print_r($dados);
         if($dados == null){
             return null;
         }
         else{
-            try{
-                while($obj = $dados->fetch_assoc()) {
-                    $evento = new Evento();
-                    
-                    foreach ($obj as $key => $value) {
-                        if($key == "inicioEvento" ||
-                                $key == "finalEvento" ||
-                                $key == "inicioSubmissao" ||
-                                $key == "finalSubmissao" ||
-                                $key == "inicioInscricao" ||
-                                $key == "finalInscricao"){
-                            $evento->{$key} = _Util::getDataDoBd($value);
-                        }
-                        else{
-                            $evento->{$key} = $value;
-                        }
+            foreach ($dados as $obj){
+                $evento = new Evento();
+
+                foreach ($obj as $key => $value) {
+                    if($key == "inicioEvento" ||
+                            $key == "finalEvento" ||
+                            $key == "inicioSubmissao" ||
+                            $key == "finalSubmissao" ||
+                            $key == "inicioInscricao" ||
+                            $key == "finalInscricao"){
+                        $evento->{$key} = _Util::getDataDoBd($value);
                     }
-                    
-                    $listaEventos[] = $evento;
+                    else{
+                        $evento->{$key} = $value;
+                    }
                 }
-            } catch (Exception $e) {
-                $listaEventos = null;
-                $mensagem[] = $e->getMessage();
+
+                $listaEventos[] = $evento;
             }
         }
         if(count($mensagem) > 0){
@@ -337,7 +337,8 @@ class Evento {
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $evento = new Evento();
                     
                     foreach ($obj as $key => $value) {
@@ -374,7 +375,8 @@ class Evento {
         }
         else{
             try{
-                while($obj = $dados->fetch_assoc()) {
+                foreach ($dados as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     $evento = new Evento();
                     
                     foreach ($obj as $key => $value) {
@@ -420,7 +422,8 @@ class Evento {
         }
         else{
             try{
-                while($obj = $dado->fetch_assoc()) {
+                foreach ($dado as $obj){
+                //while($obj = $dado->fetch_assoc()) {
                     return $obj["idEvento"];
                 }
             }
