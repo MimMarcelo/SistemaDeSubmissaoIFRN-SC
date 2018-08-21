@@ -66,7 +66,7 @@
                     <input type="text" id="txtMatricula" class="campoDeEntrada" name="pMatricula" placeholder="Informe sua matrícula SUAP"<?= $editar?'value="'.$usr->getMatricula().'"':'';?>>
                     <label class="etiqueta">
                         Candidatar-se como avaliador:
-                        <input type="checkbox" onchange="mostrarCampoInvisivel(this)">
+                        <input type="checkbox" id="candidatoAAvaliador" onclick="confirmaAvaliador(this)" value="candidato">
                     </label>
                     <?php
                     if ($usuario->ehAdministrador()) {

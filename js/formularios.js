@@ -402,7 +402,7 @@ function ordenarTabela(idTabela, indexDaColuna) {
 }
 
 function mostrarCampoInvisivel(check){
-    if($('#areaAtuacao').length === 0){
+    if($(check).is(':checked')){
         var fieldset = document.createElement("fieldset");
         var legend = document.createElement("legend");
         var botao = document.createElement("input");
