@@ -24,7 +24,7 @@
                 <?php
                     require_once dirname(__FILE__).'/phpClasses/Evento.php';
                 ?>
-                <h2>Lista de eventos</h2>
+                <h2>Eventos</h2>
                 <div id="atualizavel">
                     <table id="idTabela" cellspacing="0">
                         <thead>
@@ -80,7 +80,7 @@
                                     <?=$evento->getNome();?>
                                 </td>
                                 <td class="centralizado">
-                                    <a href="https://www.google.com.br/maps/place/<?=$evento->getLocal();?>" target='_blank'>Google Maps</a>
+                                    <a href="https://www.google.com.br/maps/place/<?=$evento->getLocal();?>" target='_blank'><?=$evento->getLocal();?></a>
                                 </td>
                                 <td class="centralizado">
                                     <form action="phpFuncoes/detalharEvento.php" method="post">

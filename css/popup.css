@@ -39,6 +39,9 @@
 }
 #popup > div > header > h2{ /* CABEÇALHO */
     padding: 4px;
+    color: #DFD;    /*corTextoTerciaria*/
+    font-size: 2em;
+    line-height: normal;
 }
 
 

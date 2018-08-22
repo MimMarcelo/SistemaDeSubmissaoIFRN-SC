@@ -101,7 +101,7 @@
                                             <form action="phpFuncoes/inscreverEmEvento.php" method="post">
                                                 <input type="hidden" name="pIdEvento" value="<?= $evento->getIdEvento(); ?>">
                                                 <input type="hidden" name="pEvento" value="<?= $evento->getNome(); ?>">
-                                                <input type="submit" value="Inscreva-se">
+                                                <input type="submit" value="Confirmar inscrição" class="botao">
                                             </form>
                                             <?php
                                         } else {
@@ -134,7 +134,7 @@
                                                 <form action="phpFuncoes/submeterTrabalho.php" method="post">
                                                     <input type="hidden" name="pIdEvento" value="<?= $evento->getIdEvento(); ?>">
                                                     <input type="hidden" name="pEvento" value="<?= $evento->getNome(); ?>">
-                                                    <input type="submit" value="Submeta trabalhos">
+                                                    <input type="submit" value="Submeta trabalhos" class="botao">
                                                 </form>
                                                 <?php
                                             } else {

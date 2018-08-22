@@ -98,6 +98,7 @@ function abrePopupForm(titulo, botao, action, valores, campos) {
     inputId = document.createElement("input");
     inputId.setAttribute("type", "submit");
     inputId.setAttribute("value", botao);
+    inputId.setAttribute("class", "botao");
     form.append(inputId);
 
     $("#conteudoPopup").append(form);//ADICIONA O <form> NA POPUP
@@ -147,12 +148,13 @@ function abrePopupConfirm(texto, action, id, descricao) {
     inputConfirm = document.createElement("input");
     inputConfirm.setAttribute("type", "submit");
     inputConfirm.setAttribute("value", "Confirmar");
+    inputConfirm.setAttribute("class", "inscrevase saibaMais");
     form.append(inputConfirm);
     //CANCELAR
     inputCancelar = document.createElement("input");
     inputCancelar.setAttribute("type", "button");
     inputCancelar.setAttribute("value", "Cancelar");
-    inputCancelar.setAttribute("class", "fecharPopup");
+    inputCancelar.setAttribute("class", "inscrevase");
     form.append(inputCancelar);
 
     $("#conteudoPopup").append(form);//ADICIONA O <form> NA POPUP
@@ -246,6 +248,7 @@ function termosParaAvaliador(ckb) {
     inputConfirm = document.createElement("input");
     inputConfirm.setAttribute("type", "submit");
     inputConfirm.setAttribute("value", "Confirmar");
+    inputConfirm.setAttribute("class", "inscrevase saibaMais");
     inputConfirm.setAttribute("id", "btnConfrimaSerAvaliador");
     inputConfirm.setAttribute("onclick", "aceitarTermosParaAvaliador();");
     $(inputConfirm).prop('disabled', true);
@@ -254,7 +257,7 @@ function termosParaAvaliador(ckb) {
     inputCancelar = document.createElement("input");
     inputCancelar.setAttribute("type", "button");
     inputCancelar.setAttribute("value", "Cancelar");
-    inputCancelar.setAttribute("class", "fecharPopup");
+    inputCancelar.setAttribute("class", "inscrevase");
     inputCancelar.setAttribute("onclick", "$('#popup').css('display', 'none');");
     $("#conteudoPopup").append(inputCancelar);
 

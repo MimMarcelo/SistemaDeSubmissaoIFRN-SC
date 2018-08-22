@@ -1,6 +1,6 @@
 <nav>
-    <a href="inicio.php" title="Início">Início</a>
-    <a href="consultarEventos.php" title="Lista de Eventos">Eventos</a>
+    <a href="consultarEventos.php" title="Início">Início</a>
+    <a href="inicio.php" title="Lista de Eventos">Meus Eventos</a>
     <!--<a href="consultarAvaliacoes.php" title="Consultar avaliações">Avaliações</a>-->
     <?php
     if ($usuario->ehAdministrador()) {

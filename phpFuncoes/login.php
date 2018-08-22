@@ -67,7 +67,7 @@
 
             $_SESSION["usuario"] = $usuario;// ARMAZENA O OBJETO NA SESSÃO
             
-            echo json_encode(array("redirecionar" => "inicio.php"));//REDIRECIONA PARA A PÁGINA DE INÍCIO
+            echo json_encode(array("redirecionar" => "consultarEventos.php"));//REDIRECIONA PARA A PÁGINA DE EVENTOS
         }
     }
     

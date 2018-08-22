@@ -89,7 +89,7 @@ if($metodoHttp == 'POST'){
     }
     
     $nomeArquivo = $idEvento."_".$coAutores[0]."_";
-    $aux = validaUpload($_FILES["pArquivo"], true, $tipoArquivo, 2, $localParaSalvar, $nomeArquivo);
+    $aux = validaUpload($_FILES["pArquivo"], true, $tipoArquivo, 5, $localParaSalvar, $nomeArquivo);
     if(strlen($aux) > 0){
         $mensagem[] = $aux;
     }
