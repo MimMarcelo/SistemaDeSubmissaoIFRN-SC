@@ -124,6 +124,10 @@ class Usuario{
         }
     }
 
+    public function clearSenha() {
+        $this->senha = "";
+    }
+
     public function setSenha($senha) {
         if(empty($senha)){
             return "Informe uma senha";
