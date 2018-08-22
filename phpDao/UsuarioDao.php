@@ -36,7 +36,7 @@ class UsuarioDao{
      */
     public static function consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){ 
         $sql = "CALL consultarUsuario('$cpf', '$nome', '$email', '$matricula', $avaliador, $administrador, $idUsuario)";
-        //echo "$sql";
+        echo "$sql";
         return _Conexao::executar($sql);
     }
     

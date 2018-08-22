@@ -267,7 +267,7 @@ class Usuario{
         //print_r($dado);
         
         if($dado == null){
-            $mensagem[] = "Usuário não encontrado";
+            $mensagem = "Usuário não encontrado";
         }
         else{
             $usuario = new Usuario();
@@ -280,10 +280,10 @@ class Usuario{
                 }
             } catch (Exception $e){
                 $usuario = null;
-                $mensagem[] = $e->getMessage();
+                $mensagem = $e->getMessage();
             }
         }
-        if(count($mensagem) > 0){
+        if($mensagem != null){
             return $mensagem;
         }
         else{

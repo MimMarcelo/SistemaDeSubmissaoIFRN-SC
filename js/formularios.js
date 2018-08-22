@@ -212,6 +212,7 @@ function adicionarCoAutor(idTabela, nameOrientador, nameSelect, listaDeAutores){
     
     var select = document.createElement('select');
     $(select).attr('name', nameSelect+'[]');
+    $(select).attr('class', 'campoDeEntrada');
     $(select).attr('onchange', 'selecionarCoAutor(this)');
     $(select).html($(listaDeAutores).children().clone());
     celAutor.appendChild(select);

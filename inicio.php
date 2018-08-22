@@ -65,8 +65,10 @@
                     ?>
                 </div>
                 <h2>Trabalhos submetidos</h2>
+                <pre>
                 <?php
                 $trabalhos = $usuario->getTrabalhos();
+                //print_r($trabalhos);
 //                if (is_string($trabalhos)) {
 //                    echo $trabalhos;
 //                } else {
@@ -77,6 +79,7 @@
 //                    }
 //                }
                 ?>
+</pre>
                 <div class="divTabela">
                     <ul class="cabecalho" id="idTabela">
                         <li onclick="ordenarTabela('idTabela', 1)">ID</li>

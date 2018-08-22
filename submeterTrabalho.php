@@ -44,8 +44,11 @@
                 echo "<option disabled selected>Selecione</option>";
                 foreach ($usuariosDoEvento as $usuarioEvento){
                     //print_r($usuarioEvento);
-                    //print_r(Usuario::consultarUsuario(0, '', '', '', -1, -1, $usuarioEvento->getIdUsuario()));
-                    echo "<option value='".$usuarioEvento->getIdUsuario()."'>".Usuario::consultarUsuario(0, '', '', '', -1, -1, $usuarioEvento->getIdUsuario())->getNome()."</option>";
+                    $uevento = Usuario::consultarUsuario('', '', '', '', -1, -1, $usuarioEvento->getIdUsuario());
+                    if($uevento instanceof Usuario){
+                        print_r($uevento);
+                        echo "<option value='".$uevento->getId()."'>".$uevento->getNome()."</option>";
+                    }
                 }
                 echo "</datalist>";
                 
@@ -97,23 +100,23 @@
                                 </li>
                             </ul>
                         </div>
-                        <input type="button" value="Adicionar coautor" onclick="adicionarCoAutor('#tblAutores', 'pOrientador', 'pCoAutor', '#listUsuariosEvento')">
+                        <input type="button" class="botao" value="Adicionar coautor" onclick="adicionarCoAutor('#tblAutores', 'pOrientador', 'pCoAutor', '#listUsuariosEvento')">
                     </fieldset>
                     <fieldset>
                         <legend>Área(s) de atuação do trabalho</legend>
-                        <input type="button" value="Adicionar Area" onclick="adicionarSelectDinamicamente(this, '#listAreasAtuacao', 'pAreaAtuacao')" required>
+                        <input type="button" class="botao" value="Adicionar Area" onclick="adicionarSelectDinamicamente(this, '#listAreasAtuacao', 'pAreaAtuacao')" required>
                     </fieldset>
-                    <label for="txtInstituicao">Instituição</label>
-                    <input type="text" id="txtInstituicao" name="pInstituicao" placeholder="Informe a que instituição a produção do trabalho está vinculada" required>
-                    <label for="txtTitulo">Título do trabalho</label>
-                    <input type="text" id="txtTitulo" name="pTitulo" placeholder="Título do trabalho" required>
-                    <label for="txtResumo">Resumo</label>
-                    <textarea id="txtResumo" name="pResumo" placeholder="Faça um resumo breve do trabalho" rows="10" required></textarea>
-                    <label for="txtPalavrasChave">Palavras chave (separe cada termo com vírgula)</label>
-                    <input type="text" id="txtPalavrasChave" name="pPalavrasChave" required>
-                    <label for="txtArquivo">Arquivo (PDF)</label>
+                    <label for="txtInstituicao" class="etiqueta">Instituição</label>
+                    <input type="text" class="campoDeEntrada" id="txtInstituicao" name="pInstituicao" placeholder="Informe a que instituição a produção do trabalho está vinculada" required>
+                    <label for="txtTitulo" class="etiqueta">Título do trabalho</label>
+                    <input type="text" class="campoDeEntrada" id="txtTitulo" name="pTitulo" placeholder="Título do trabalho" required>
+                    <label for="txtResumo" class="etiqueta">Resumo</label>
+                    <textarea class="campoDeEntrada" id="txtResumo" name="pResumo" placeholder="Faça um resumo breve do trabalho" rows="10" required></textarea>
+                    <label for="txtPalavrasChave" class="etiqueta">Palavras chave (separe cada termo com vírgula)</label>
+                    <input type="text" class="campoDeEntrada" id="txtPalavrasChave" name="pPalavrasChave" required>
+                    <label for="txtArquivo" class="etiqueta">Arquivo (PDF)</label>
                     <input type="file" id="txtArquivo" name="pArquivo" required>
-                    <input type="submit" value="Submeter">
+                    <input type="submit" class="botao" value="Submeter">
                 </form>
             </section>
         </div>
