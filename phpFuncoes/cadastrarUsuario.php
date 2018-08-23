@@ -21,6 +21,7 @@ if ($metodoHttp == 'POST') {
     $email = "";
     $senha = "";
     $matricula = "";
+    $lattes = "";
     $nomeArquivo = "";
     $adm = 0;
     $avaliador = 0;
@@ -67,7 +68,9 @@ if ($metodoHttp == 'POST') {
     if (isset($_POST["pMatricula"])) {
         $matricula = testaCampo($_POST["pMatricula"]);
     }
-
+    if (isset($_POST["pLattes"])) {
+        $lattes = testaCampo($_POST["pLattes"]);
+    }
     if (isset($_POST["pAreaAtuacao"])) {
         $areasAtuacao = $_POST["pAreaAtuacao"];
         $avaliador = 2;//INDICA QUE O USUÁRIO QUER SER AVALIADOR
@@ -124,6 +127,11 @@ if ($metodoHttp == 'POST') {
             $mensagem[] = $aux;
         }
 
+        $aux = $usuario->setLattes($lattes);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+
         $aux = $usuario->setAreasAtuacao($areasAtuacao);
         if (strlen($aux) > 0) {
             $mensagem[] = $aux;
@@ -171,7 +179,7 @@ if ($metodoHttp == 'POST') {
                     } else {
                         $_SESSION["usuario"] = $usuario; // ARMAZENA O OBJETO NA SESSÃO
                         $_SESSION["mensagem"] = "Usuário: \'" . $usuario->getNome() . "\' cadastrado com sucesso!";
-                        echo json_encode(array("redirecionar" => "inicio.php")); //REDIRECIONA PARA A PÁGINA DE INÍCIO
+                        echo json_encode(array("redirecionar" => "consultarEventos.php")); //REDIRECIONA PARA A PÁGINA DE INÍCIO
                     }
                     exit();
                 }

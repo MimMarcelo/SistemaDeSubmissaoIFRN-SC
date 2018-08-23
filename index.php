@@ -44,7 +44,7 @@
                     <input type="submit" class="botao inscrevase" value="Acessar">
 
                     <a href="cadastrarUsuario.php" title="Cadastre-se">Cadastre-se</a>
-                    <a href="index.html">Esqueceu sua senha?</a>
+                    <!--<a href="index.html">Esqueceu sua senha?</a>-->
                 </form>
             </div>
         </section>

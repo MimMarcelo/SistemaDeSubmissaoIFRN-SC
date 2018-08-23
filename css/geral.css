@@ -200,8 +200,6 @@ section.paginaLogin{
     margin-bottom: 100px;
 }
 section.paginaLogin + footer{
-    position: fixed;
-    bottom: 0;
 }
 @media screen and (max-width: 500px) {
     .cartao{

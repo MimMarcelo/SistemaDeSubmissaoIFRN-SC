@@ -36,7 +36,7 @@ class UsuarioDao{
      */
     public static function consultarUsuario($cpf, $nome, $email, $matricula, $avaliador, $administrador, $idUsuario){ 
         $sql = "CALL consultarUsuario('$cpf', '$nome', '$email', '$matricula', $avaliador, $administrador, $idUsuario)";
-        echo "$sql";
+        //echo "$sql";
         return _Conexao::executar($sql);
     }
     
@@ -67,8 +67,9 @@ class UsuarioDao{
      * @param string $areasAtuacao
      * @return int Id do Usuario cadastrado/alterado
      */
-    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario, $areasAtuacao){
-        $sql = "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."');";
+    public static function salvar($pCpf, $pSenha, $pNome, $pEmail, $pMatricula, $pAvaliador, $pImagem, $pIdNivelAcesso, $pIdUsuario, $areasAtuacao, $lattes){
+        $sql = "CALL cadastrarUsuario('".$pCpf."', '".$pSenha."', '".$pNome."', '".$pEmail."', '".$pMatricula."', $pAvaliador, '".$pImagem."', $pIdNivelAcesso, $pIdUsuario, '".$areasAtuacao."', '$lattes');";
+        //echo $sql;
         return _Conexao::executar($sql);
     }
     

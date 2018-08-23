@@ -18,6 +18,7 @@ class Usuario{
     private $imagem;
     private $trabalhos;
     private $evento;
+    private $lattes;
     
     public function getId() {
         return $this->idUsuario;
@@ -41,6 +42,10 @@ class Usuario{
 
     public function getMatricula() {
         return $this->matricula;
+    }
+
+    public function getlattes() {
+        return $this->lattes;
     }
 
     public function getAreasAtuacao(){
@@ -156,6 +161,19 @@ class Usuario{
 
     public function setMatricula($matricula) {
         $this->matricula = $matricula;
+    }
+
+    public function setLattes($lattes) {
+        if(empty($lattes)){
+            return "";
+        }
+        else if (!filter_var($lattes, FILTER_VALIDATE_URL)) {
+            return "formato do link do currículo inválido!"; 
+        }
+        else{
+            $this->lattes = $lattes;
+            return "";
+        }
     }
 
     public function setAreasAtuacao($areasAtuacao) {
@@ -326,13 +344,13 @@ class Usuario{
         
         //VERIFICA SE O CPF INSERIDO JÁ ESTÁ CADASTRADO
         $dado = Usuario::consultarUsuario($this->cpf, '', '', '', -1, -1, 0);
-        if(is_array($dado)){
+        if(!is_object($dado)){
             
             //VERIFICA SE O E-MAIL INSERIDO JÁ ESTÁ CADASTRADO
             $dado = Usuario::consultarUsuario('', '', $this->email, '', -1, -1, 0);
-            if(is_array($dado)){
+            if(!is_object($dado)){
                 
-                $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario, $this->getAreasAtuacaoParaBD());
+                $dado = UsuarioDao::salvar($this->cpf, $this->senha, $this->nome, $this->email, $this->matricula, $this->avaliador, $this->imagem, $this->administrador, $this->idUsuario, $this->getAreasAtuacaoParaBD(), $this->lattes);
             }
             else{
                 $mensagem[] = "O e-mail '$this->email' já é cadastrado no sistema, esqueceu a senha?";
