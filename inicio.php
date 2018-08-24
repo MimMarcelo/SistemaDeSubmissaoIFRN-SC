@@ -29,7 +29,7 @@
                         foreach ($eventosPorUsuario as $eUsuario) {
                             echo "<div class='cartao'>";
                             $e = Evento::getEventoPorId($eUsuario->getIdEvento(), -1);
-                            echo "<img src='upload/eventos/" . $e->getLogoMarca() . "'>";
+                            echo "<img src='upload/eventos/" . $e->getLogoMarca()->getArquivo() . "' alt='".$e->getLogoMarca()->getDescricao()."'>";
                             echo "<h4>" . $e->getNome() . "</h4>";
                             ?>
                             <form action="phpFuncoes/detalharEvento.php" method="post">

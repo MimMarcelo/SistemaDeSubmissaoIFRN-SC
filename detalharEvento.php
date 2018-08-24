@@ -44,7 +44,7 @@
                             <?= "de " . $evento->getInicioEvento() . " à " . $evento->getFinalEvento() ?>
                         </h3>
                         <div>
-                            <img src="upload/eventos/<?= $evento->getLogoMarca() ?>" alt="<?= $evento->getDescricao() ?>">
+                            <img src="upload/eventos/<?= $evento->getLogoMarca()->getArquivo(); ?>" alt="<?= $evento->getLogoMarca()->getDescricao() ?>">
                         </div>
                         <div>
                             <h4>Descrição</h4>
@@ -70,7 +70,7 @@
                                             echo "$vagas";
                                         }
                                         ?>
-                                    </li>
+                                    </li>                                    
                                     <li>
                                         <span>Inscrições: </span>
                                         de <?= $evento->getInicioInscricao() ?>
@@ -145,6 +145,16 @@
                                         <?php
                                     }//FIM DA VERIFICAÇÃO SE ACEITA SUBMISSÃO DE TRABALHOS
                                     ?>
+                                    <li>
+                                        <a class="inscrevase" href="upload/eventos/<?=$evento->getTermosDeUso()->getArquivo();?>" target="_blank"><?=$evento->getTermosDeUso()->getDescricao();?></a>
+                                        <?php
+                                        if(count($evento->getModelos()) > 0){
+                                            foreach ($evento->getModelos() as $modelo){
+                                                echo '<a class="inscrevase" href="upload/eventos/'.$modelo->getArquivo().'" target="_blank">'.$modelo->getDescricao().'</a>';
+                                            }
+                                        }
+                                        ?>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

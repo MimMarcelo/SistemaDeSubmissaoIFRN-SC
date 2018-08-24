@@ -29,7 +29,7 @@
                     require_once dirname(__FILE__).'/phpClasses/Evento.php';
                 ?>
                 <h2>Cadastrar evento</h2>
-                <form action="phpFuncoes/cadastrarEvento.php" method="post">
+                <form action="<?= htmlspecialchars("phpFuncoes/cadastrarEvento.php");?>" method="post" enctype="multipart/form-data">
                     <label for="sltEventoPrincipal" class="etiqueta">Evento principal ou subevento</label>
                     <select id="sltEventoPrincipal" class="campoDeEntrada" name="pEventoPrincipal" autofocus required>
                         <option value="0">Principal</option>
@@ -50,8 +50,6 @@
                     <input type="text" id="txtLocal" class="campoDeEntrada" name="pLocal" placeholder="Local" required>
                     <label for="txtNumeroVagas" class="etiqueta">Numero de vagas</label>
                     <input type="number" id="txtNumeroVagas" class="campoDeEntrada" name="pNumeroVagas" placeholder="0 para ilimitado" min="0" required>
-                    <label for="txtLogo" class="etiqueta">Logo do evento</label>
-                    <input type="file" id="txtLogo" class="campoDeEntrada" name="pImagem">
 
                     <fieldset>
                         <legend>Realização do evento</legend>
@@ -75,6 +73,34 @@
                         <input type="text" id="txtDataInicioTrabalho" onchange="dataLimite(this, '#txtDataFimTrabalho')" name="pDataInicioTrabalho" class="calendario campoDeEntrada">
                         <label for="txtDataFimTrabalho" class="etiqueta">Fim</label>
                         <input type="text" id="txtDataFimTrabalho" name="pDataFimTrabalho" class="calendario campoDeEntrada">
+                    </fieldset>
+                    <label for="txtLogo" class="etiqueta">Logo do evento</label>
+                    <input type="file" id="txtLogo" class="upImagem" name="pImagem">
+                    <label for="txtTermosDeUso" class="etiqueta">Termos de uso</label>
+                    <input type="file" id="txtTermosDeUso" class="campoDeEntrada" name="pTermosDeUso" required>
+                    <fieldset>
+                        <legend>Modelos</legend>
+                        <fieldset>
+                            <legend>Modelo 1</legend>
+                            <label for="txtModelo1Desc" class="etiqueta">Descrição</label>
+                            <input type="text" id="txtModelo1Desc" class="campoDeEntrada" name="pModelo1Desc">
+                            <label for="txtModelo1" class="etiqueta">Arquivo (PDF)</label>
+                            <input type="file" id="txtModelo1" class="campoDeEntrada" name="pModelo1">
+                        </fieldset>
+                        <fieldset>
+                            <legend>Modelo 2</legend>
+                            <label for="txtModelo2Desc" class="etiqueta">Descrição</label>
+                            <input type="text" id="txtModelo2Desc" class="campoDeEntrada" name="pModelo2Desc">
+                            <label for="txtModelo2" class="etiqueta">Arquivo (PDF)</label>
+                            <input type="file" id="txtModelo2" class="campoDeEntrada" name="pModelo2">
+                        </fieldset>
+                        <fieldset>
+                            <legend>Modelo 3</legend>
+                            <label for="txtModelo3Desc" class="etiqueta">Descrição</label>
+                            <input type="text" id="txtModelo3Desc" class="campoDeEntrada" name="pModelo3Desc">
+                            <label for="txtModelo3" class="etiqueta">Arquivo (PDF)</label>
+                            <input type="file" id="txtModelo3" class="campoDeEntrada" name="pModelo3">
+                        </fieldset>
                     </fieldset>
                     <input type="submit" value="Cadastrar Evento" class="botao">
                  </form>

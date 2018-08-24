@@ -11,14 +11,23 @@ $titulo = "Atenção";
 
 if ($metodoHttp == 'POST') {
     $localParaSalvar = dirname(__FILE__) . '/../upload/eventos/';
-    $tipoArquivo = "/(.jpg)(.jpeg)(.gif)(.png)/";
+    $tipoArquivoImagem = "/(.jpg)(.jpeg)(.gif)(.png)/";
+    $tipoArquivoTermosDeUso = "/(.pdf)/";
+    $tipoArquivoModelos = "/(.doc)(.docx)(.odt)/";
 
     $idEventoPrincipal = 0;
     $nome = "";
     $descricao = "";
     $local = "";
     $nVagas = 0;
-    $nomeArquivo = "";
+    $nomeArquivoImagem = "";
+    $nomeArquivoTermosDeUso = "";
+    $nomeArquivoModelo1 = "";
+    $nomeArquivoModelo2 = "";
+    $nomeArquivoModelo3 = "";
+    $descricaoModelo1 = "";
+    $descricaoModelo2 = "";
+    $descricaoModelo3 = "";
     $inicioEvento = "";
     $fimEvento = "";
     $inicioInscricoes = "";
@@ -103,10 +112,56 @@ if ($metodoHttp == 'POST') {
     }
 
     if (isset($_FILES["pImagem"])) {
-        $nomeArquivo = "evento_";
-        $aux = validaUpload($_FILES["pImagem"], FALSE, $tipoArquivo, 4, $localParaSalvar, $nomeArquivo);
+        $nomeArquivoImagem = "evento_";
+        $aux = validaUpload($_FILES["pImagem"], FALSE, $tipoArquivoImagem, 4, $localParaSalvar, $nomeArquivoImagem);
         if (strlen($aux) > 0) {
             $mensagem[] = $aux;
+        }
+    }
+    if (isset($_FILES["pTermosDeUso"])) {
+        $nomeArquivoTermosDeUso = "termos_";
+        $aux = validaUpload($_FILES["pTermosDeUso"], TRUE, $tipoArquivoTermosDeUso, 4, $localParaSalvar, $nomeArquivoTermosDeUso);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+    }
+    else{
+        $mensagem[] = "Adicione um arquivo .PDF com os Termos de Uso";
+    }
+    if (isset($_FILES["pModelo1"])) {
+        $nomeArquivoModelo1 = "modelo1_";
+        $aux = validaUpload($_FILES["pModelo1"], FALSE, $tipoArquivoModelos, 4, $localParaSalvar, $nomeArquivoModelo1);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+        else{
+            if (isset($_POST["pModelo1Desc"])) {
+                $descricaoModelo1 = testaCampo($_POST["pModelo1Desc"]);
+            }
+        }
+    }
+    if (isset($_FILES["pModelo2"])) {
+        $nomeArquivoModelo2 = "modelo2_";
+        $aux = validaUpload($_FILES["pModelo2"], FALSE, $tipoArquivoModelos, 4, $localParaSalvar, $nomeArquivoModelo2);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+        else{
+            if (isset($_POST["pModelo2Desc"])) {
+                $descricaoModelo2 = testaCampo($_POST["pModelo2Desc"]);
+            }
+        }
+    }
+    if (isset($_FILES["pModelo3"])) {
+        $nomeArquivoModelo3 = "modelo3_";
+        $aux = validaUpload($_FILES["pModelo3"], FALSE, $tipoArquivoModelos, 4, $localParaSalvar, $nomeArquivoModelo3);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+        else{
+            if (isset($_POST["pModelo3Desc"])) {
+                $descricaoModelo3 = testaCampo($_POST["pModelo3Desc"]);
+            }
         }
     }
     if (count($mensagem) == 0) {
@@ -134,12 +189,7 @@ if ($metodoHttp == 'POST') {
         if (strlen($aux) > 0) {
             $mensagem[] = $aux;
         }
-
-        $aux = $evento->setLogoMarca($nomeArquivo);
-        if (strlen($aux) > 0) {
-            $mensagem[] = $aux;
-        }
-
+        
         $aux = $evento->setInicioEvento($inicioEvento);
         if (strlen($aux) > 0) {
             $mensagem[] = $aux;
@@ -162,14 +212,51 @@ if ($metodoHttp == 'POST') {
         $evento->setInicioSubmissao($inicioSubmissoes);
         $evento->setFinalSubmissao($fimSubmissoes);
 
+        $aux = $evento->setLogoMarca($nomeArquivoImagem);
+        if (strlen($aux) > 0) {
+            $mensagem[] = $aux;
+        }
+        $evento->setTermosDeUso($nomeArquivoTermosDeUso);
+        if($nomeArquivoModelo1 != ""){
+            $evento->addModelo($nomeArquivoModelo1, $descricaoModelo1);
+        }
+        if($nomeArquivoModelo2 != ""){
+            $evento->addModelo($nomeArquivoModelo2, $descricaoModelo2);
+        }
+        if($nomeArquivoModelo3 != ""){
+            $evento->addModelo($nomeArquivoModelo3, $descricaoModelo3);
+        }
+//        print_r($_FILES);
+//        print_r($evento);
+//        exit();
         if (count($mensagem) == 0) {
             $aux = $evento->salvar();
             if (!is_array($aux)) {
                 session_start();
                 $evento->setIdEvento($aux);
-                if ($nomeArquivo !== "") {
-                    if (!move_uploaded_file($_FILES["pImagem"]["tmp_name"], $localParaSalvar . $nomeArquivo)) {
+                if ($nomeArquivoImagem !== "") {
+                    if (!move_uploaded_file($_FILES["pImagem"]["tmp_name"], $localParaSalvar . $nomeArquivoImagem)) {
                         $mensagem[] = "Erro ao enviar a imagem";
+                    }
+                }
+                if ($nomeArquivoTermosDeUso !== "") {
+                    if (!move_uploaded_file($_FILES["pTermosDeUso"]["tmp_name"], $localParaSalvar . $nomeArquivoTermosDeUso)) {
+                        $mensagem[] = "Erro ao enviar os Termos de uso";
+                    }
+                }
+                if ($nomeArquivoModelo1 !== "") {
+                    if (!move_uploaded_file($_FILES["pModelo1"]["tmp_name"], $localParaSalvar . $nomeArquivoModelo1)) {
+                        $mensagem[] = "Erro ao enviar os Termos de uso";
+                    }
+                }
+                if ($nomeArquivoModelo2 !== "") {
+                    if (!move_uploaded_file($_FILES["pModelo2"]["tmp_name"], $localParaSalvar . $nomeArquivoModelo2)) {
+                        $mensagem[] = "Erro ao enviar os Termos de uso";
+                    }
+                }
+                if ($nomeArquivoModelo3 !== "") {
+                    if (!move_uploaded_file($_FILES["pModelo3"]["tmp_name"], $localParaSalvar . $nomeArquivoModelo3)) {
+                        $mensagem[] = "Erro ao enviar os Termos de uso";
                     }
                 }
                 $_SESSION["mensagem"] = "Evento: \'" . $evento->getNome() . "\' cadastrado com sucesso!";

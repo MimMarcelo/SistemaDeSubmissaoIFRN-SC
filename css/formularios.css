@@ -11,6 +11,7 @@ fieldset{
     display: block;
     width: 90%;
     margin-left: 5px;
+    margin-top: 25px;
 }
 legend{
     margin-left: 25px;

@@ -55,12 +55,12 @@ class EventoDao {
      * @return boolean funcionou
      */
     public static function salvar($idEvento, $idEventoPrincipal, $nome, $descricao, 
-                                  $local, $logoMarca, $numVagas, $inicioInscricao,
+                                  $local, $numVagas, $inicioInscricao,
                                   $finalInscricao, $inicioSubmissao, $finalSubmissao,
                                   $inicioEvento, $finalEvento){
         
         $sql = "CALL cadastrarEvento($idEvento, $idEventoPrincipal, '$nome', '$descricao', "
-                . "'$local', '$logoMarca', $numVagas, '$inicioInscricao', '$finalInscricao', '$inicioSubmissao', "
+                . "'$local', $numVagas, '$inicioInscricao', '$finalInscricao', '$inicioSubmissao', "
                 . "'$finalSubmissao', '$inicioEvento', '$finalEvento');";
         
         return _Conexao::executar($sql);
