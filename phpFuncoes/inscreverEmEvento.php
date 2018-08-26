@@ -20,14 +20,14 @@
         $idEvento = 0;
         $nomeEvento = "";
         //print_r($_POST);
-        if(isset($_POST["pIdEvento"])){
-            $idEvento = testaCampo($_POST["pIdEvento"]);
+        if(isset($_POST["pId"])){
+            $idEvento = testaCampo($_POST["pId"]);
         }
         else{
             $mensagem[] = "Evento para inscrição não informado!";
         }
-        if(isset($_POST["pEvento"])){
-            $nomeEvento = testaCampo($_POST["pEvento"]);
+        if(isset($_POST["pDesc"])){
+            $nomeEvento = testaCampo($_POST["pDesc"]);
             if(empty($nomeEvento)){
                 $mensagem[] = "Evento para inscrição não informado!";
             }

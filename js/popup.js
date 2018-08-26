@@ -165,6 +165,82 @@ function abrePopupConfirm(texto, action, id, descricao) {
 }
 ;
 
+function confirmarTermosDeUso(urlTermosDeUso, action, id, descricao) {
+
+    $("#conteudoPopup").html("");// LIMPA QUALQUER CONTEÚDO QUE JÁ ESTEJA NA POPUP
+
+    
+    //CRIA E CONFIGURA UM ELEMENTO <form>
+    form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", action);
+
+    //CRIA E CONFIGURA OS CAMPOS DO FORMULÁRIO
+    //ID
+    inputId = document.createElement("input");
+    inputId.setAttribute("type", "hidden");
+    inputId.setAttribute("value", id);
+    inputId.setAttribute("name", "pId");
+    form.append(inputId);
+    //DESCRICÃO
+    inputDesc = document.createElement("input");
+    inputDesc.setAttribute("type", "hidden");
+    inputDesc.setAttribute("value", descricao);
+    inputDesc.setAttribute("name", "pDesc");
+    form.append(inputDesc);
+    //TEXTO DESCRITIVO DA AÇÃO
+    label = document.createElement("label");
+    label.innerHTML = "Acesse os termos de uso na íntegra clicando do link: <a target='_blank' href='"+urlTermosDeUso+"'>Termos de uso</a>.";
+    form.append(label);
+    
+    form.append(document.createElement('br'));
+    form.append(document.createElement('br'));
+    
+    ckbLiEAceito = document.createElement('input');
+    $(ckbLiEAceito).attr('type', 'checkbox');
+    $(ckbLiEAceito).attr('id', 'ckbLiEAceito');
+    $(ckbLiEAceito).click(function(){
+        if($(this).is(':checked')) {
+            $('#btnConfirmar').prop('disabled', false);
+        }
+        else{
+            $('#btnConfirmar').prop('disabled', true);
+        }
+    });
+    form.append(ckbLiEAceito);
+        
+    labelLiEAceito = document.createElement('label');
+    labelLiEAceito.innerHTML = "Li e aceito os termos de uso";
+    $(labelLiEAceito).attr('for', 'ckbLiEAceito');
+    form.append(labelLiEAceito);
+    
+    form.append(document.createElement('br'));
+    
+    //CRIA BOTÕES DE CONFIRMAÇÃO
+    //CONFIRMAÇÃO
+    inputConfirm = document.createElement("input");
+    inputConfirm.setAttribute("type", "submit");
+    inputConfirm.setAttribute("value", "Confirmar");
+    inputConfirm.setAttribute("id", "btnConfirmar");
+    inputConfirm.setAttribute("class", "inscrevase saibaMais");
+    $(inputConfirm).prop('disabled', true);
+    form.append(inputConfirm);
+    //CANCELAR
+    inputCancelar = document.createElement("input");
+    inputCancelar.setAttribute("type", "button");
+    inputCancelar.setAttribute("value", "Cancelar");
+    inputCancelar.setAttribute("class", "inscrevase");
+    inputCancelar.setAttribute("onclick", "$('#popup').css('display', 'none');");
+    form.append(inputCancelar);
+
+    $("#conteudoPopup").append(form);//ADICIONA O <form> NA POPUP
+    popup();//IMPORTANTE PARA PERMITIR O EVENTO DO BOTÃO 'CANCELAR'
+    formularios();//IMPORTANTE PARA PERMANECER NA MESMA PÁGINA, JÁ QUE O FORMULÁRIO É CRIADO APÓS O CARREGAR DA PÁGINA
+    
+    $("#tituloPopup").html("Termos de uso");//ATRIBUI O TÍTULO DA POPUP
+    $("#popup").css("display", "block");//ABRE A POPUP
+    
+}
 function confirmaAvaliador(ckb) {
     if ($(ckb).is(':checked')) {
         $('#candidatoAAvaliador').prop('checked', false);

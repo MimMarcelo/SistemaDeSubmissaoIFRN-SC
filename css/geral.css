@@ -167,7 +167,7 @@ img{
 ------------------------- TAGs a
 */
 a{
-    color: #FFF;
+    color: #073b4c;
     text-decoration: none;
     font-weight: normal;
     display: inline-block;
@@ -193,6 +193,7 @@ form.paginaLogin label{
     border-width: 0;
 }
 form.paginaLogin a{
+    color: #FFF;
     margin-top: 20px;
     display: block;
 }

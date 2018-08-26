@@ -88,21 +88,23 @@
                                         if (($usuarioEvento) instanceof UsuarioEvento) {
                                             $podeSeInscrever = FALSE; //JÁ ESTÁ INSCRITO
                                             $statusInscricao = $usuarioEvento->getStatusInscricao()->getStatusInscricao();
-                                        } else if (_Util::periodoValido($evento->getFinalInscricao(), $hoje)) {
+                                        } else if (_Util::periodoValido($evento->getFinalInscricao(), date('Y-m-d', strtotime($hoje . ' - 1 days')))) {
                                             $podeSeInscrever = FALSE; //INSCRIÇÕES ENCERRADAS 
                                             $statusInscricao = "Inscrições encerradas";
-                                        } else if (_Util::periodoValido($hoje, $evento->getInicioInscricao())) {
+                                        } else if (_Util::periodoValido(date('Y-m-d', strtotime($hoje . ' + 1 days')), $evento->getInicioInscricao())) {
                                             $podeSeInscrever = FALSE; //INSCRIÇÕES AINDA NÃO ABERTAS 
                                             $statusInscricao = "Inscrições a partir de " . $evento->getInicioInscricao();
                                         }
 
                                         if ($statusInscricao == "Inscreva-se") {
                                             ?>
-                                            <form action="phpFuncoes/inscreverEmEvento.php" method="post">
-                                                <input type="hidden" name="pIdEvento" value="<?= $evento->getIdEvento(); ?>">
-                                                <input type="hidden" name="pEvento" value="<?= $evento->getNome(); ?>">
-                                                <input type="submit" value="Confirmar inscrição" class="botao">
-                                            </form>
+                                        <button class="botao"
+                                                onclick='confirmarTermosDeUso("upload/eventos/<?= $evento->getTermosDeUso()->getArquivo(); ?>",
+                                                                "phpFuncoes/inscreverEmEvento.php",
+                                                "<?= $evento->getIdEvento(); ?>",
+                                                "<?= $evento->getNome(); ?>");'>
+                                                Confirmar inscrição
+                                            </button>
                                             <?php
                                         } else {
                                             echo "<br>Status da Inscrição: $statusInscricao";
@@ -146,11 +148,11 @@
                                     }//FIM DA VERIFICAÇÃO SE ACEITA SUBMISSÃO DE TRABALHOS
                                     ?>
                                     <li>
-                                        <a class="inscrevase" href="upload/eventos/<?=$evento->getTermosDeUso()->getArquivo();?>" target="_blank"><?=$evento->getTermosDeUso()->getDescricao();?></a>
+                                        <a class="inscrevase" href="upload/eventos/<?= $evento->getTermosDeUso()->getArquivo(); ?>" target="_blank"><?= $evento->getTermosDeUso()->getDescricao(); ?></a>
                                         <?php
-                                        if(count($evento->getModelos()) > 0){
-                                            foreach ($evento->getModelos() as $modelo){
-                                                echo '<a class="inscrevase" href="upload/eventos/'.$modelo->getArquivo().'" target="_blank">'.$modelo->getDescricao().'</a>';
+                                        if (count($evento->getModelos()) > 0) {
+                                            foreach ($evento->getModelos() as $modelo) {
+                                                echo '<a class="inscrevase" href="upload/eventos/' . $modelo->getArquivo() . '" target="_blank">' . $modelo->getDescricao() . '</a>';
                                             }
                                         }
                                         ?>
@@ -223,9 +225,9 @@
                                                         <span>
                                                             <img src="img/iconFechar.png" class="fechar" title="Excluir evento <?= $s->getNome(); ?>"
                                                                  onclick='abrePopupConfirm("Confirma a exclusão do evento \"<?= $s->getNome(); ?>\"?",
-                                                                                 "phpFuncoes/excluirEvento.php",
-                                                                                 "<?= $s->getIdEvento(); ?>",
-                                                                                 "<?= $s->getNome(); ?>")'>
+                                                                                             "phpFuncoes/excluirEvento.php",
+                                                                                             "<?= $s->getIdEvento(); ?>",
+                                                                                             "<?= $s->getNome(); ?>")'>
                                                         </span>
                                                     <?php }// FECHA IF ADMINISTRADOR  ?>
                                                     <form action="phpFuncoes/detalharEvento.php" method="post">

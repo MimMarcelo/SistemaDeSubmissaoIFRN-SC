@@ -62,7 +62,7 @@ class Anexo {
     public function salvar() {
         $mensagem = "Não foi possível cadastrar o anexo '$this->descricao'";
         $dado = AnexoDao::salvar($this->idEvento, $this->idTipoAnexo, $this->arquivo, $this->descricao);
-        print_r($dado);
+        //print_r($dado);
         if ($dado != null) {
             foreach ($dado as $obj) {
                 if ($obj["idEventoTipoAnexo"] > 0) {
